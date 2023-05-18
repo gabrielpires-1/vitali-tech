@@ -41,7 +41,7 @@
         return;
     }
     
-    fprintf(Register, "Nome: %s Email: %s Senha: %s Cpf: %s\n", ptr.name,     ptr.email, ptr.password, ptr.cpf);
+    fprintf(Register, "Nome: %s Email: %s Senha: %s Cpf: %s\n", ptr.name, ptr.email, ptr.password, ptr.cpf);
     if(option == 0) {
       fprinf(Register, "Tipo: Residente");
     }else {
