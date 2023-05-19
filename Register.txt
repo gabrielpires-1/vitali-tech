@@ -1,5 +1,0 @@
-
-Nome: gabriel Email: email@email.com Senha: email@email.com Cpf: 111111
-Tipo: Preceptor
-Nome: gabriel Email: email@email.com Senha: senha123 Cpf: 111111
-Tipo: Preceptor
