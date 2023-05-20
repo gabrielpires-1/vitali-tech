@@ -4,3 +4,4 @@ gabriel,gabriel@hospital.com,senha123,00011122233,residente
 carlos,carlos@hospital.com,senha123,11122211133,residente
 tom,tom@hospital.com,senha123,00011122233,preceptor
 aline,aline@hospital.com,senha123,01010233344,residente
+Arturaaaaaaaa,email@email.com,123,11122321232,preceptor
