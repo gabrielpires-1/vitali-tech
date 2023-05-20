@@ -11,6 +11,8 @@ typedef struct User{
   char * role; // residente, preceptor, gestor
 }User;
 
+void list(char * role);
+
 // função para realizar login - retorna 1 se login OK, retorna 0 se erro
 int login(char name[50], char password[50], User * usr);
 
@@ -57,7 +59,9 @@ int main() {
       printf("\n\n\t\t\tO que voce gostaria de fazer hoje?\n");
       printf("1 - Cadastrar um novo residente ou preceptor\n");
       printf("2 - Apagar um residente ou preceptor do sistema\n");
-      printf("3 - sair do programa\n");
+      printf("3 - Visualizar lista de residentes cadastrados no sistema\n");
+      printf("4 - Visualizar lista de preceptores cadastrados no sistema\n");
+      printf("5 - sair do programa\n");
       scanf("%d", &choice);
       User * newUser = malloc(sizeof(User));
       switch (choice) {
@@ -93,6 +97,14 @@ int main() {
           break;
         case 3:
           system("cls");
+		      list("residente");
+          break;
+        case 4:
+          system("cls");
+		      list("preceptor");
+          break;
+        case 5:
+          system("cls");
           freeProfile(usr); // libera a memória alocada para encontrar o usuário
 		      exit(1);
           break;
@@ -123,7 +135,6 @@ int login(char email[50], char password[50], User * usr){
     printf("Erro na alocação de memória.\n");
     return 1;
   }
-  FILE *last_name;
   FILE *users;
   // lê o txt e armazena em users
   users = fopen("Register.txt", "r");
@@ -196,6 +207,33 @@ void freeProfile(User* usr) {
 
     return usr;
   }
+
+void list(char * role){
+  FILE *users;
+  User * usr = malloc(sizeof(User));
+  usr->name = malloc(51 * sizeof(char));
+  usr->email = malloc(51 * sizeof(char));
+  usr->password = malloc(51 * sizeof(char));
+  usr->cpf = malloc(12 * sizeof(char));
+  usr->role = malloc(51 * sizeof(char));
+  // lê o txt e armazena em users
+  users = fopen("Register.txt", "r");
+  while (fscanf(users, "%[^,],%[^,],%[^,],%[^,],%s\n", usr->name, usr->email, usr->password, usr->cpf, usr->role) == 5) {
+    if(!strcmp(usr->role, role) && !strcmp(role, "residente")){
+      printf("\n\nNome do residente: %s\n", usr->name);
+      printf("Email do residente: %s\n", usr->email);
+      printf("CPF do residente: %s\n", usr->cpf);
+      printf("----------------------------------------------------------------------------------");
+    } else if(!strcmp(usr->role, role) && !strcmp(role, "preceptor")){
+      printf("\n\nNome do preceptor: %s\n", usr->name);
+      printf("Email do preceptor: %s\n", usr->email);
+      printf("CPF do preceptor: %s\n", usr->cpf);
+      printf("----------------------------------------------------------------------------------");
+    }
+  }
+  fclose(users);
+  return;
+}
 
 /*
 Arquivo txt:
