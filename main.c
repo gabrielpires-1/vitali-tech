@@ -3,105 +3,206 @@
 #include <stdlib.h>
 #include <windows.h>
 
-  typedef struct User{
-    char * name;
-    char * email;
-    char * password;
-    char * cpf;
-    int option; // 0- residente, 1- preceptor 2 - gestor
-  }User;
+typedef struct User{
+  char * name;
+  char * email;
+  char * password;
+  char * cpf;
+  char * role; // residente, preceptor, gestor
+}User;
 
-  //insere um novo "usuário"
-  User * createProfile(char *name, char *email, char *password, char *cpf, int option) {
-    User * ptr = malloc(sizeof(User));
-    if (ptr == NULL) {
-        printf("Erro ao tentar criar um novo perfil.\n");
-        return NULL;
+// função para realizar login - retorna 1 se login OK, retorna 0 se erro
+int login(char name[50], char password[50], User * usr);
+
+//insere um novo "usuário"
+User * createProfile(char *name, char *email, char *password, char *cpf, char *role);
+
+//libera a memoria do ponteiro e libera da senha pq strdup() duplica a string
+void freeProfile(User* usr);
+
+//salva o usuário no arquivo
+void storeRegister(User* usr);
+
+int main() {
+  char email[50];
+  char password[50];
+  system("color 0b");
+  system("cls");
+  User * usr = malloc(sizeof(User));;
+  usr->name = malloc(51 * sizeof(char));
+  usr->email = malloc(51 * sizeof(char));
+  usr->password = malloc(51 * sizeof(char));
+  usr->cpf = malloc(12 * sizeof(char));
+  usr->role = malloc(51 * sizeof(char));
+
+  // use o código abaixo para criar um diretor, caso o txt seja apagado.
+  // storeRegister(createProfile("diretor","diretor@hospital.com", "senha123", "99999999999", "gestor"));
+
+  int isLoggedIn = 0;
+  do {
+  printf("\t\t\tSeja bem-vindo ao VitaliJourney! Seu hospital virutal!\n\nLogin (email):");
+  scanf("%s", email);
+  printf("Senha: ");
+  scanf("%s", password);
+
+  if(isLoggedIn = login(email, password, usr)){
+    system("cls");
+		printf("\n\t\t\tBem vindo, %s!",usr->name);
+		printf("\n|Email:\t\t%s",usr->email);
+		printf("\n|CPF:\t\t%s",usr->cpf);
+		printf("\n|Cargo: \t%s", usr->role);
+    if(!strcmp(usr->role, "gestor")){
+      int choice;
+      menu:
+      printf("\n\n\t\t\tO que voce gostaria de fazer hoje?\n");
+      printf("1 - Cadastrar um novo residente ou preceptor\n");
+      printf("2 - Apagar um residente ou preceptor do sistema\n");
+      printf("3 - sair do programa\n");
+      scanf("%d", &choice);
+      User * newUser = malloc(sizeof(User));
+      switch (choice) {
+        case 1:
+          newUser->name = malloc(51 * sizeof(char));
+          newUser->email = malloc(51 * sizeof(char));
+          newUser->password = malloc(51 * sizeof(char));
+          newUser->cpf = malloc(12 * sizeof(char));
+          newUser->role = malloc(51 * sizeof(char));
+		      printf("\n\t\t\tVamos cadastrar um novo usuario!");
+          printf("Qual o nome do usuario?\n");
+          scanf("%s", newUser->name);
+          printf("Qual sera o email do usuario?\n");
+          scanf("%s", newUser->email);
+          printf("Qual sera a senha do usuario?\n");
+          scanf("%s", newUser->password);
+          printf("Qual eh o CPF do usuario?\n");
+          scanf("%s", newUser->cpf);
+          printf("Qual eh o cargo do usuario? (Digite \"preceptor\" ou \"residente)");
+          scanf("%s", newUser->role);
+          storeRegister(newUser);
+          system("cls");
+          printf("Usuário cadastrado com sucesso no sistema!\n");
+          goto menu;
+          break;
+        // DANILO E TOM VÃO IMPLEMENTAR ESSA FUNCIONALIDADE
+        case 2:
+          system("cls");
+		      printf("\n\t\t\tVamos apagar um usuario do sistema!",usr->name);
+          printf("Qual o nome do usuario?\n");
+          printf("Qual eh o email do usuario?\n");
+          printf("Qual eh o CPF do usuario?\n");
+          break;
+        case 3:
+          system("cls");
+          freeProfile(usr); // libera a memória alocada para encontrar o usuário
+		      exit(1);
+          break;
+      }
     }
+      // caso o usuário seja um preceptor, esse bloco de código será executado.
+         else if (!strcmp(usr->role,"preceptor")) {
+        printf("\n\n\t\t\tO que voce gostaria de fazer hoje?\n");
+        printf("1 - Aba de notas\n");
+        printf("2 - Aba de feedbacks\n");
+        printf("3 - Sair do programa\n");
+      }
+      // caso o usuário seja um residente, esse bloco de código será executado.
+      else if (!strcmp(usr->role,"residente")){
+        printf("\n\n\t\t\tO que voce gostaria de fazer hoje?\n");
+        printf("1 - Aba de notas\n");
+        printf("2 - Aba de feedbacks\n");
+        printf("3 - Sair do programa\n");
+      } 
+      }
+  } while (isLoggedIn == 0);
+  return 0;
+}
 
-    ptr->name = malloc(strlen(name) + 1);
-    strncpy(ptr->name, name, strlen(name) + 1);
-
-    ptr->email = malloc(strlen(email) + 1);
-    strncpy(ptr->email, email, strlen(email) + 1);
-
-    ptr->password = malloc(strlen(password) + 1);
-    strncpy(ptr->password, password, strlen(password) + 1);
-
-    ptr->cpf = malloc(strlen(cpf) + 1);
-    strncpy(ptr->cpf, cpf, strlen(cpf) + 1);
-
-    return ptr;
+int login(char email[50], char password[50], User * usr){
+  int usrFound = 0;
+  if (usr == NULL) {
+    printf("Erro na alocação de memória.\n");
+    return 1;
   }
-
-  //libera a memoria do ponteiro e libera da senha pq strdup() duplica a string
-  void freeProfile(User* ptr) {
-    free(ptr->name);
-    free(ptr->email);
-    free(ptr->password);
-    free(ptr->cpf);
-    free(ptr);
+  FILE *last_name;
+  FILE *users;
+  // lê o txt e armazena em users
+  users = fopen("Register.txt", "r");
+  //printf("\nRegister.txt aberto\n");
+  // lê users
+  while (fscanf(users, "%[^,],%[^,],%[^,],%[^,],%s\n", usr->name, usr->email, usr->password, usr->cpf, usr->role) == 5) {
+    // printf("\n\n%s e %s\n\n", usr -> name, usr -> password);
+    if (strcmp(email, usr->email) == 0) {
+      usrFound = 1;
+      if(strcmp(password, usr->password) == 0){
+        fclose(users);
+        return 1;
+      } else {
+        printf("Senha incorreta!");
+      }
+    }
   }
+  // caso o usuário não tenha sido encontrado
+  if(!usrFound) printf("\nUsuario nao encontrado!\n");
+  //printf("\nRegister.txt fechado\n");
+  fclose(users);
+  return 0;
+}
 
-  //salva o usuário no arquivo
-  void storeRegister(User* ptr) {
-    FILE* Register = fopen("Register.dat", "w");
+void storeRegister(User* usr) {
+    FILE* Register = fopen("Register.txt", "a");
     if (Register == NULL) {
         printf("Erro ao abrir o arquivo.\n");
         return;
     }
 
-    if (fwrite(ptr, sizeof(User), 1, Register) != 1) {
-        printf("Erro ao gravar o usuário no arquivo.\n");
-        fclose(Register);
-        return;
-    }
+    // escreve usuário no txt
+    fprintf(Register, "%s,%s,%s,%s,%s\n", usr->name, usr->email, usr->password, usr->cpf, usr->role);
 
     printf("Usuário cadastrado com sucesso!\n");
 
     fclose(Register);
 }
 
-int main() {
-  char email[21];
-  char password[9];
-  User usr;
-  FILE *fp;
+void freeProfile(User* usr) {
+    free(usr->name);
+    free(usr->email);
+    free(usr->password);
+    free(usr->cpf);
+    free(usr->role);
+    free(usr);
+  }
 
-  //ainda precisa criar a função que vai colocar os parametros em createProfile
-  storeRegister(createProfile("diretor","diretor@hospital.com", "senha123", "99999999999", 2));
-  storeRegister(createProfile("claudio","claudio@hospital.com", "senha123", "99999999999", 1));
-  storeRegister(createProfile("roberta","roberta@hospital.com", "senha123", "99999999999", 0));
+  User * createProfile(char *name, char *email, char *password, char *cpf, char *role) {
+    User * usr = malloc(sizeof(User));
+    if (usr == NULL) {
+        printf("Erro ao tentar criar um novo perfil.\n");
+        return NULL;
+    }
 
-  printf("Seja bem-vindo ao VitaliJourney!\n\nLogin (email):");
-  scanf("%s", email);
-  printf("Senha: ");
-  scanf("%s", password);
+    usr->name = malloc(strlen(name) + 1);
+    strncpy(usr->name, name, strlen(name) + 1);
 
-  fp = fopen("Register.dat","r");
-			while(fread(&usr,sizeof(User),1,fp)){
-				if(!strcmp(usr.email,email)){
-					if(!strcmp(usr.password,password)){
-						system("cls");
-						printf("\n\t\t\t\t\t\tBem vindo, %s!",usr.name);
-						printf("\n|Email:\t\t%s",usr.email);
-						printf("\n|CPF:\t%s",usr.cpf);
-						if(usr.option == 2) printf("\n|Função: Diretor do Hospital\t%s");
-                        if(usr.option == 1) printf("\n|Função: Preceptor\t%s");
-                        if(usr.option == 0) printf("\n|Função: Residente\t%s");
-					}
-					else {
-						printf("\n\nInvalid Password!");
-						Beep(800,300);
-					}
-			fclose(fp);
-      }
-  //storeRegister(createProfile("gabriel","email@email.com", "senha123", "11111111111", 1), 1);
+    usr->email = malloc(strlen(email) + 1);
+    strncpy(usr->email, email, strlen(email) + 1);
 
-  //freeProfile(ptr);
-      }
-  return 0;
-}
+    usr->password = malloc(strlen(password) + 1);
+    strncpy(usr->password, password, strlen(password) + 1);
+
+    usr->cpf = malloc(strlen(cpf) + 1);
+    strncpy(usr->cpf, cpf, strlen(cpf) + 1);
+
+    usr->role = malloc(strlen(role) + 1);
+    strncpy(usr->role, role, strlen(role) + 1);
+
+    return usr;
+  }
+
+/*
+Arquivo txt:
+Nome, Email, senha, cpf, função (gestor, residente, preceptor)
+
+
+*/
 
 /*Arquitetura do codigo:
 1 arquivo main
