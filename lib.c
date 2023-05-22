@@ -39,8 +39,8 @@ void removeProfile(const char *name, const char *email) {
 
   User *usr = malloc(sizeof(User));
 
-  while (fscanf(users, "%m[^,],%m[^,],%m[^,],%m[^,],%ms\n", &usr->name, &usr->email,
-                &usr->password, &usr->cpf, &usr->role) == 5) {
+  while (fscanf(users, "%m[^,],%m[^,],%m[^,],%m[^,],%ms\n", &usr->name,
+                &usr->email, &usr->password, &usr->cpf, &usr->role) == 5) {
     if (strcmp(email, usr->email) == 0 && strcmp(name, usr->name) == 0) {
       printf("Perfil encontrado e removido:\n");
       printf("Nome: %s\n", usr->name);
@@ -61,8 +61,6 @@ void removeProfile(const char *name, const char *email) {
 
   freeUser(usr);
 }
-
-
 
 int login(char email[50], char password[50], User *usr) {
 
@@ -150,8 +148,6 @@ void list(char *role) {
       printf("\n\nNome do residente: %s\n", usr->name);
       printf("Email do residente: %s\n", usr->email);
       printf("CPF do residente: %s\n", usr->cpf);
-      printf("-----------------------------------------------------------------"
-             "-----------------");
 
     } else if (!strcmp(usr->role, role) && !strcmp(role, "preceptor")) {
       printf("\n\nNome do preceptor: %s\n", usr->name);
