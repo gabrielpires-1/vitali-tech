@@ -77,9 +77,6 @@ int main() {
 
         // DANILO E TOM VÃO IMPLEMENTAR ESSA FUNCIONALIDADE
         case 2: {
-          char nameToDelete[50];
-          char emailToDelete[50];
-
           printf("\n\t\t\tVamos apagar um usuário do sistema!\n");
           printf("Digite o nome do perfil a ser removido:\n");
           scanf("%s", delName);
