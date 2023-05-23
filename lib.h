@@ -9,6 +9,9 @@ typedef struct User {
   char *role; // residente, preceptor, gestor
 } User;
 
+// função para solicitar que o usuário tecle alguma tecla para continuar
+void pause();
+
 void list(char *role);
 
 // função para realizar login - retorna 1 se login OK, retorna 0 se erro

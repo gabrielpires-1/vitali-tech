@@ -2,6 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <conio.h>
+#include <locale.h>
+
+// função para solicitar que o usuário tecle alguma tecla para continuar
+void pause(){
+  printf("\n\nPressione qualquer tecla para continuar...\n");
+  getch();
+}
 
 User *createUser(char *newName, char *newEmail, char *newPassword, char *newCpf,
                  char *newRole) {
@@ -63,18 +71,19 @@ void removeProfile(const char *name, const char *email) {
 }
 
 int login(char email[50], char password[50], User *usr) {
+  setlocale(LC_ALL, "Portuguese_Brazil");
 
   int usrFound = 0;
   if (usr == NULL) {
-    printf("Erro na alocaÃ§Ã£o de memÃ³ria.\n");
+    printf("Erro na alocação de memória.\n");
     return 1;
   }
   FILE *users;
-  // lÃª o txt e armazena em users
+  // lê o txt e armazena em users
   users = fopen("Register.txt", "r");
 
   // printf("\nRegister.txt aberto\n");
-  //  lÃª users e verifica se os 5 que foram lidos correspondem com os de entrada
+  //  lê users e verifica se os 5 que foram lidos correspondem com os de entrada
   while (fscanf(users, "%[^,],%[^,],%[^,],%[^,],%s\n", usr->name, usr->email,
                 usr->password, usr->cpf, usr->role) == 5) {
 
@@ -86,13 +95,13 @@ int login(char email[50], char password[50], User *usr) {
         fclose(users);
         return 1;
       } else {
-        printf("Senha incorreta!");
+        printf("\nSenha incorreta!\n");
       }
     }
   }
-  // caso o usuÃ¡rio nÃ£o tenha sido encontrado
+  // caso o usuário não tenha sido encontrado
   if (!usrFound)
-    printf("\nUsuario nao encontrado!\n");
+    printf("\nUsuário não encontrado!\n");
   // printf("\nRegister.txt fechado\n");
   fclose(users);
   return 0;
@@ -139,7 +148,7 @@ void list(char *role) {
   usr->cpf = malloc(12 * sizeof(char));
   usr->role = malloc(51 * sizeof(char));
 
-  // lÃª o txt e armazena em users
+  // lê o txt e armazena em users
   users = fopen("Register.txt", "r");
 
   while (fscanf(users, "%[^,],%[^,],%[^,],%[^,],%s\n", usr->name, usr->email,

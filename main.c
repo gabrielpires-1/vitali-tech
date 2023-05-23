@@ -2,8 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
 
 int main() {
+  setlocale(LC_ALL, "Portuguese_Brazil");
   char email[50];
   char password[50];
   char newName[50], newEmail[50], newPassword[50], newCpf[12], newRole[50];
@@ -22,9 +24,10 @@ int main() {
   // "99999999999", "gestor"));
 
   int isLoggedIn = 0, cpfAux = 0;
-  do {
-    printf("\t\t\tSeja bem-vindo ao VitaliJourney! Seu hospital "
-           "virtual!\n\nLogin (email):");
+
+  printf("\t\t\tSeja bem-vindo ao VitaliJourney! Seu hospital virtual!\n");
+  do {  
+    printf("\nLogin (email):");
     scanf("%s", email);
     printf("Senha: ");
     scanf("%s", password);
@@ -38,7 +41,8 @@ int main() {
       if (!strcmp(usr->role, "gestor")) {
         int choice;
       menu:
-        printf("\n\n\t\t\tO que voce gostaria de fazer hoje?\n");
+        system("cls");
+        printf("\t\t\tO que você gostaria de fazer %s?\n", usr->name);
         printf("1 - Cadastrar um novo residente ou preceptor\n");
         printf("2 - Apagar um residente ou preceptor do sistema\n");
         printf("3 - Visualizar lista de residentes cadastrados no sistema\n");
@@ -47,15 +51,15 @@ int main() {
         scanf("%d", &choice);
         switch (choice) {
         case 1:
-          printf("\n\t\t\tVamos cadastrar um novo usuÃ¡rio!\n");
-          printf("Qual o nome do usuÃ¡rio?\n");
+          printf("\n\t\t\tVamos cadastrar um novo usuário!\n");
+          printf("Qual o nome do usuário?\n");
           scanf("%s", newName);
-          printf("Qual serÃ¡ o email do usuÃ¡rio?\n");
+          printf("Qual será o email do usuário?\n");
           scanf("%s", newEmail);
-          printf("Qual serÃ¡ a senha do usuÃ¡rio?\n");
+          printf("Qual será a senha do usuário?\n");
           scanf("%s", newPassword);
           do {
-            printf("Qual Ã© o CPF do usuÃ¡rio?\n");
+            printf("Qual é o CPF do usuário?\n");
             scanf("%s", newCpf);
             if (strlen(newCpf) != 11) {
               printf("CPF invÃ¡lido\n");
@@ -64,8 +68,7 @@ int main() {
               cpfAux = 0;
             }
           } while (cpfAux);
-          printf("Qual Ã© o cargo do usuÃ¡rio? (Digite \"preceptor\" ou "
-                 "\"residente\")");
+          printf("Qual é o cargo do usuário? (Digite \"preceptor\" ou \"residente\")");
           scanf("%s", newRole);
 
           User *newUser =
@@ -77,7 +80,7 @@ int main() {
 
         // DANILO E TOM VÃƒO IMPLEMENTAR ESSA FUNCIONALIDADE
         case 2: {
-          printf("\n\t\t\tVamos apagar um usuÃ¡rio do sistema!\n");
+          printf("\n\t\t\tVamos apagar um usuário do sistema!\n");
           printf("Digite o nome do perfil a ser removido:\n");
           scanf("%s", delName);
           printf("Digite o e-mail do perfil a ser removido:\n");
@@ -90,28 +93,32 @@ int main() {
         case 3:
           system("cls");
           list("residente");
+          pause();
+          goto menu;
           break;
         case 4:
           system("cls");
           list("preceptor");
+          pause();
+          goto menu;
           break;
         case 5:
           system("cls");
-          freeUser(usr); // libera a memÃ³ria alocada para encontrar o usuÃ¡rio
+          freeUser(usr); // libera a memÃ³ria alocada para encontrar o usuário
           exit(1);
           break;
         }
       }
-      // caso o usuÃ¡rio seja um preceptor, esse bloco de cÃ³digo serÃ¡ executado.
+      // caso o usuário seja um preceptor, esse bloco de cÃ³digo será executado.
       else if (!strcmp(usr->role, "preceptor")) {
-        printf("\n\n\t\t\tO que voce gostaria de fazer hoje?\n");
+        printf("\n\n\t\t\tO que você gostaria de fazer hoje?\n");
         printf("1 - Aba de notas\n");
         printf("2 - Aba de feedbacks\n");
         printf("3 - Sair do programa\n");
       }
-      // caso o usuÃ¡rio seja um residente, esse bloco de cÃ³digo serÃ¡ executado.
+      // caso o usuário seja um residente, esse bloco de cÃ³digo será executado.
       else if (!strcmp(usr->role, "residente")) {
-        printf("\n\n\t\t\tO que voce gostaria de fazer hoje?\n");
+        printf("\n\n\t\t\tO que você gostaria de fazer hoje?\n");
         printf("1 - Aba de notas\n");
         printf("2 - Aba de feedbacks\n");
         printf("3 - Sair do programa\n");
@@ -186,7 +193,7 @@ faculdade
     2- aba de feedbacks
       -exibir feedbacks do usuario
       1- deseja enviar algum feedback?
-      -digite o nome da pessoa a quem voce deseja enviar
+      -digite o nome da pessoa a quem você deseja enviar
       -insira tag:
       Exemplo:
       -comunicativo
@@ -202,7 +209,7 @@ faculdade
   2- aba de feedbacks
    -exibir feedbacks do usuario
       1- deseja enviar algum feedback?
-      -digite o nome da pessoa a quem voce deseja enviar
+      -digite o nome da pessoa a quem você deseja enviar
       -insira tag:
       Exemplo:
       -comunicativo
