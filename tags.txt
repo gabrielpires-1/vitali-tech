@@ -1,0 +1,23 @@
+Preceptor informa nome da atividade
+Preceptor informa nome do residente
+
+1 pergunta
+informa nota
+seleciona tag
+2 pergunta
+informa nota 
+seleciona tag
+3 pergunta
+informa nota 
+seleciona tag
+4 pergunta 
+informa nota
+seleciona tag
+5 pergunta 
+informa nota
+seleciona tag
+
+Deseja enviar comentarios opcionais?
+insere comentario aqui
+
+
