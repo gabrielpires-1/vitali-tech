@@ -21,8 +21,7 @@ int main() {
   User *head = NULL;
   create_list(&head);
   // use o cÃ³digo abaixo para criar um gestor, caso o txt seja apagado.
-  // storeRegister(createUser("diretor","diretor@hospital.com", "senha123",
-  // "99999999999", "gestor"));
+  // storeRegister(createUser("diretor","diretor@hospital.com", "senha123", "99999999999", "gestor"));
 
   int isLoggedIn = 0, cpfAux = 0;
 
@@ -43,7 +42,7 @@ int main() {
         int choice;
       menu:
         system("cls");
-        printf("\t\t\tO que vocï¿½ gostaria de fazer %s?\n", usr->name);
+        printf("\t\t\tO que você gostaria de fazer %s?\n", usr->name);
         printf("1 - Cadastrar um novo residente ou preceptor\n");
         printf("2 - Apagar um residente ou preceptor do sistema\n");
         printf("3 - Visualizar lista de residentes cadastrados no sistema\n");
@@ -52,61 +51,62 @@ int main() {
         scanf("%d", &choice);
         switch (choice) {
         case 1:
-          printf("\n\t\t\tVamos cadastrar um novo usuï¿½rio!\n");
-          printf("Qual o nome do usuï¿½rio?\n");
+          printf("\n\t\t\tVamos cadastrar um novo usuário!\n");
+          printf("Qual o nome do usuário?\n");
           scanf("%s", newName);
-          printf("Qual serï¿½ o email do usuï¿½rio?\n");
+          printf("Qual serï¿½ o email do usuário?\n");
           scanf("%s", newEmail);
-          printf("Qual serï¿½ a senha do usuï¿½rio?\n");
+          printf("Qual serï¿½ a senha do usuário?\n");
           scanf("%s", newPassword);
           do {
-            printf("Qual ï¿½ o CPF do usuï¿½rio?\n");
+            printf("Qual é o CPF do usuário?\n");
             scanf("%s", newCpf);
             if (strlen(newCpf) != 11) {
-              printf("CPF invÃ¡lido\n");
+              printf("CPF inválido!\n");
               cpfAux = 1;
             } else {
               cpfAux = 0;
             }
           } while (cpfAux);
-          printf("Qual ï¿½ o cargo do usuï¿½rio? (Digite \"preceptor\" ou \"residente\")");
+          printf("Qual é o cargo do usuário? (Digite \"preceptor\" ou \"residente\")");
           scanf("%s", newRole);
 
-          User *newUser =
-              createUser(newName, newEmail, newPassword, newCpf, newRole);
+          User *newUser = createUser(newName, newEmail, newPassword, newCpf, newRole);
           append(&head, newUser->name,newUser->email, newUser->password, newUser->cpf, newUser->role);
-          storeRegister(newUser);
-          freeNewUser(newUser);
+          saveList(&head);
+          freeUser(newUser);
           goto menu;
           break;
 
         // DANILO E TOM VÃƒO IMPLEMENTAR ESSA FUNCIONALIDADE
         case 2: {
-          printf("\n\t\t\tVamos apagar um usuï¿½rio do sistema!\n");
+          printf("\n\t\t\tVamos apagar um usuário do sistema!\n");
           printf("Digite o nome do perfil a ser removido:\n");
           scanf("%s", delName);
           printf("Digite o e-mail do perfil a ser removido:\n");
           scanf("%s", delEmail);
 
           deleteByName(&head, delName);
+          saveList(&head);
+
           goto menu;
           break;
         }
         case 3:
           system("cls");
-          list("residente");
+          printList(head, "residente");
           pause();
           goto menu;
           break;
         case 4:
           system("cls");
-          list("preceptor");
+          printList(head, "preceptor");
           pause();
           goto menu;
           break;
         case 5:
           system("cls");
-          freeUser(usr); // libera a memÃ³ria alocada para encontrar o usuï¿½rio
+          freeUser(usr); // libera a memÃ³ria alocada para encontrar o usuário
           exit(1);
           break;
         }

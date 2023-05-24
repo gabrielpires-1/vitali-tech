@@ -11,8 +11,8 @@ void pause(){
   getch();
 }
 
-User *createUser(char *newName, char *newEmail, char *newPassword, char *newCpf,
-                 char *newRole) {
+// cria um novo usuário do tipo User, retorna um ponteiro User para esse usuário
+User *createUser(char *newName, char *newEmail, char *newPassword, char *newCpf, char *newRole) {
   User *newUser = malloc(sizeof(User));
   if (newUser == NULL) {
     printf("Erro ao tentar criar um novo perfil.\n");
@@ -37,42 +37,7 @@ User *createUser(char *newName, char *newEmail, char *newPassword, char *newCpf,
   return newUser;
 }
 
-void removeProfile(const char *name, const char *email) {
-  FILE *users = fopen("Register.txt", "r");
-  FILE *temp = fopen("temp.txt", "w");
-  User *head = NULL; 
-
-  if (users == NULL || temp == NULL) {
-    printf("Falha ao abrir arquivo.\n");
-    return;
-  }
-
-  User *usr = malloc(sizeof(User));
-
-  while (fscanf(users, "%m[^,],%m[^,],%m[^,],%m[^,],%ms\n", &usr->name,
-                &usr->email, &usr->password, &usr->cpf, &usr->role) == 5) {
-    
-    if (strcmp(email, usr->email) == 0 && strcmp(name, usr->name) == 0) {
-      printf("Perfil encontrado e removido:\n");
-      printf("Nome: %s\n", usr->name);
-      printf("Email: %s\n", usr->email);
-      printf("Senha: %s\n", usr->password);
-      printf("CPF: %s\n", usr->cpf);
-      printf("Role: %s\n", usr->role);
-    } else {
-      fprintf(temp, "%s,%s,%s,%s,%s\n", usr->name, usr->email, usr->password,
-              usr->cpf, usr->role);
-    }
-  }
-
-  fclose(users);
-  fclose(temp);
-  remove("Register.txt");
-  rename("temp.txt", "Register.txt");
-
-  freeUser(usr);
-}
-
+// retorna 1 se o login funcionou, 0 se não
 int login(char email[50], char password[50], User *usr) {
   setlocale(LC_ALL, "Portuguese_Brazil");
 
@@ -110,6 +75,7 @@ int login(char email[50], char password[50], User *usr) {
   return 0;
 }
 
+// salva o User no arquivo txt
 void storeRegister(User *newUser) {
   FILE *Register = fopen("Register.txt", "a");
   if (Register == NULL) {
@@ -117,12 +83,12 @@ void storeRegister(User *newUser) {
     return;
   }
 
-  fprintf(Register, "%s,%s,%s,%s,%s\n", newUser->name, newUser->email,
-          newUser->password, newUser->cpf, newUser->role);
+  fprintf(Register, "%s,%s,%s,%s,%s\n", newUser->name, newUser->email, newUser->password, newUser->cpf, newUser->role);
 
   fclose(Register);
 }
 
+// libera a memória de um tipo User
 void freeUser(User *usr) {
   free(usr->name);
   free(usr->email);
@@ -132,82 +98,75 @@ void freeUser(User *usr) {
   free(usr);
 }
 
-void freeNewUser(User *newUser) {
-  free(newUser->name);
-  free(newUser->email);
-  free(newUser->password);
-  free(newUser->cpf);
-  free(newUser->role);
-  free(newUser);
-}
-
-void list(char *role) {
-
-  FILE *users;
-  User *usr = malloc(sizeof(User));
-  usr->name = malloc(51 * sizeof(char));
-  usr->email = malloc(51 * sizeof(char));
-  usr->password = malloc(51 * sizeof(char));
-  usr->cpf = malloc(12 * sizeof(char));
-  usr->role = malloc(51 * sizeof(char));
-
-  // l� o txt e armazena em users
-  users = fopen("Register.txt", "r");
-
-  while (fscanf(users, "%[^,],%[^,],%[^,],%[^,],%s\n", usr->name, usr->email,
-                usr->password, usr->cpf, usr->role) == 5) {
-    if (!strcmp(usr->role, role) && !strcmp(role, "residente")) {
-      printf("\n\nNome do residente: %s\n", usr->name);
-      printf("Email do residente: %s\n", usr->email);
-      printf("CPF do residente: %s\n", usr->cpf);
-
-    } else if (!strcmp(usr->role, role) && !strcmp(role, "preceptor")) {
-      printf("\n\nNome do preceptor: %s\n", usr->name);
-      printf("Email do preceptor: %s\n", usr->email);
-      printf("CPF do preceptor: %s\n", usr->cpf);
-      printf("-----------------------------------------------------------------"
-             "-----------------");
-    }
-  }
-  fclose(users);
-  return;
-}
-
+// insere usuários no final da lista encadeada
 void append(User** head, char name[], char email[], char password[], char cpf[], char role[]) {
-  User* new_node = (User* )malloc(sizeof(User));
-  strcpy(new_node->name, name);
-  strcpy(new_node->email, email);
-  strcpy(new_node->password, password);
-  strcpy(new_node->cpf, cpf);
-  strcpy(new_node->role, role);
-  new_node->next = NULL;
 
-  if (head == NULL) {
+  // lista vazia
+  if (*head == NULL) {
 
-    *head = new_node;
-  } else {
+    *head = (User *) malloc(sizeof(User));
+    (*head)->next = NULL;
+    (*head) -> name = (char *) malloc(strlen(name)+1);
+    (*head) -> email = (char *) malloc(strlen(email)+1);
+    (*head) -> password = (char *) malloc(strlen(password)+1);
+    (*head) -> cpf = (char *) malloc(strlen(cpf)+1);
+    (*head) -> role = (char *) malloc(strlen(role)+1);
+    strcpy((*head)->name, name);
+    strcpy((*head)->email, email);
+    strcpy((*head)->password, password);
+    strcpy((*head)->cpf, cpf);
+    strcpy((*head)->role, role);
+  } else { // lista não vazia
     User *current = *head;
 
-    while (current->next != NULL) {
+    while (current->next != NULL) { // chega ao final da lista
       current = current->next;
     }
-    current->next = new_node;
+
+    current -> next = (User *) malloc(sizeof(User)); // novo
+    current -> next -> name = (char *) malloc(strlen(name)+1);
+    current -> next -> email = (char *) malloc(strlen(email)+1);
+    current -> next -> password = (char *) malloc(strlen(password)+1);
+    current -> next -> cpf = (char *) malloc(strlen(cpf)+1);
+    current -> next -> role = (char *) malloc(strlen(role)+1);
+    strcpy(current-> next -> name, name);
+    strcpy(current-> next -> email, email);
+    strcpy(current-> next -> password,   password);
+    strcpy(current-> next -> cpf, cpf);
+    strcpy(current-> next -> role, role);
+    current -> next -> next = NULL;
   }
 }
 
+// cria a lista a partir de um head, de acordo com o que tem no txt
 void create_list( User **head) {
-  FILE *fp; 
+  FILE *fp;
   fp = fopen("Register.txt", "r");
+
+  // Caso não seja possível abrir o arquivo de usuários
+  if (fp == NULL) {
+    printf("Falha ao abrir arquivo de usuários!\n");
+    return;
+  }
+
   char name[51], email[51], password[51], cpf[12], role[21];
-  while (fscanf(fp, "%[^,],%[^,],%[^,],%[^,],%[^\n]\n", name, email, password, cpf, role) != EOF) {
+  while (fscanf(fp, "%[^,],%[^,],%[^,],%[^,],%s\n", name, email, password, cpf, role) == 5) {
     append(head, name, email, password, cpf, role);
   }
+
+  fclose(fp);
 }
 
+// recene a head da lista e uma string que representa o nome do usuário
+// deleta o usuáiro da lista encadeada
+// deve-se lembrar de utilizar a função 'save_list()' para salvar a nova lista no txt
 void deleteByName(User** head, char name[]) {
-  User * current = *head;
-  User *temp = NULL;
-  User *temp2 = NULL;
+  User * current = (User* )malloc(sizeof(User));
+  current = *head;
+  User *temp = (User* )malloc(sizeof(User));
+  temp = NULL;
+  User *temp2 = (User* )malloc(sizeof(User));
+  temp2 = NULL;
   if (current != NULL && strcmp(current->name, name) == 0) { //se for o primeiro elemento
     *head = current->next;
     free(current);
@@ -228,8 +187,53 @@ void deleteByName(User** head, char name[]) {
   free(current);
   printf("O elemento com o nome '%s' foi removido.\n", name);
 
+  temp2 = *head;
   while(temp2 != NULL){
     storeRegister(temp2);
     temp2 = temp2->next;
+  }
+}
+
+// recebe a head da lista e uma string que representa o cargo 
+// imprime os elementos da lista filtrando pelo cargo
+void printList(User *head, char role[]){
+  User *usr = head;
+  while(usr!= NULL){
+    if (!strcmp(usr->role, role) && !strcmp(role, "residente")) {
+      printf("\n\nNome do residente: %s\n", usr->name);
+      printf("Email do residente: %s\n", usr->email);
+      printf("CPF do residente: %s\n", usr->cpf);
+
+    } else if (!strcmp(usr->role, role) && !strcmp(role, "preceptor")) {
+      printf("\n\nNome do preceptor: %s\n", usr->name);
+      printf("Email do preceptor: %s\n", usr->email);
+      printf("CPF do preceptor: %s\n", usr->cpf);
+      printf("-----------------------------------------------------------------"
+             "-----------------");
+    }
+    usr = usr -> next;
+  }
+  printf("\n");
+}
+
+// recebe a head da lista e salva a lista atual no arquivo txt
+void saveList(User **head){
+  if (*head == NULL) {
+    return;
+  } else {
+    User *temp = (User*) malloc(sizeof(User));
+    temp = *head;
+    FILE *Register = fopen("Register.txt", "w");
+    while(temp != NULL){
+      if (Register == NULL) {
+        printf("Falha ao abrir arquivo.\n");
+        return;
+      }
+
+      fprintf(Register, "%s,%s,%s,%s,%s\n", temp->name, temp->email, temp->password, temp->cpf, temp->role);
+
+      temp = temp->next;
+    }
+    fclose(Register);
   }
 }
