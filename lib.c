@@ -5,7 +5,7 @@
 #include <conio.h>
 #include <locale.h>
 
-// função para solicitar que o usuário tecle alguma tecla para continuar
+// funÃ§Ã£o para solicitar que o usuÃ¡rio tecle alguma tecla para continuar
 void pause(){
   printf("\n\nPressione qualquer tecla para continuar...\n");
   getch();
@@ -33,12 +33,14 @@ User *createUser(char *newName, char *newEmail, char *newPassword, char *newCpf,
 
   newUser->role = malloc(strlen(newRole) + 1);
   strcpy(newUser->role, newRole);
-
+  
   return newUser;
 }
+
 void removeProfile(const char *name, const char *email) {
   FILE *users = fopen("Register.txt", "r");
   FILE *temp = fopen("temp.txt", "w");
+  User *head = NULL; 
 
   if (users == NULL || temp == NULL) {
     printf("Falha ao abrir arquivo.\n");
@@ -49,6 +51,7 @@ void removeProfile(const char *name, const char *email) {
 
   while (fscanf(users, "%m[^,],%m[^,],%m[^,],%m[^,],%ms\n", &usr->name,
                 &usr->email, &usr->password, &usr->cpf, &usr->role) == 5) {
+    
     if (strcmp(email, usr->email) == 0 && strcmp(name, usr->name) == 0) {
       printf("Perfil encontrado e removido:\n");
       printf("Nome: %s\n", usr->name);
@@ -75,15 +78,15 @@ int login(char email[50], char password[50], User *usr) {
 
   int usrFound = 0;
   if (usr == NULL) {
-    printf("Erro na alocação de memória.\n");
+    printf("Erro na alocaÃ§Ã£o de memÃ³ria.\n");
     return 1;
   }
   FILE *users;
-  // lê o txt e armazena em users
+  // lï¿½ o txt e armazena em users
   users = fopen("Register.txt", "r");
 
   // printf("\nRegister.txt aberto\n");
-  //  lê users e verifica se os 5 que foram lidos correspondem com os de entrada
+  //  lï¿½ users e verifica se os 5 que foram lidos correspondem com os de entrada
   while (fscanf(users, "%[^,],%[^,],%[^,],%[^,],%s\n", usr->name, usr->email,
                 usr->password, usr->cpf, usr->role) == 5) {
 
@@ -99,9 +102,9 @@ int login(char email[50], char password[50], User *usr) {
       }
     }
   }
-  // caso o usuário não tenha sido encontrado
+  // caso o usuï¿½rio nï¿½o tenha sido encontrado
   if (!usrFound)
-    printf("\nUsuário não encontrado!\n");
+    printf("\nUsuï¿½rio nï¿½o encontrado!\n");
   // printf("\nRegister.txt fechado\n");
   fclose(users);
   return 0;
@@ -148,7 +151,7 @@ void list(char *role) {
   usr->cpf = malloc(12 * sizeof(char));
   usr->role = malloc(51 * sizeof(char));
 
-  // lê o txt e armazena em users
+  // lï¿½ o txt e armazena em users
   users = fopen("Register.txt", "r");
 
   while (fscanf(users, "%[^,],%[^,],%[^,],%[^,],%s\n", usr->name, usr->email,
@@ -168,4 +171,65 @@ void list(char *role) {
   }
   fclose(users);
   return;
+}
+
+void append(User** head, char name[], char email[], char password[], char cpf[], char role[]) {
+  User* new_node = (User* )malloc(sizeof(User));
+  strcpy(new_node->name, name);
+  strcpy(new_node->email, email);
+  strcpy(new_node->password, password);
+  strcpy(new_node->cpf, cpf);
+  strcpy(new_node->role, role);
+  new_node->next = NULL;
+
+  if (head == NULL) {
+
+    *head = new_node;
+  } else {
+    User *current = *head;
+
+    while (current->next != NULL) {
+      current = current->next;
+    }
+    current->next = new_node;
+  }
+}
+
+void create_list( User **head) {
+  FILE *fp; 
+  fp = fopen("Register.txt", "r");
+  char name[51], email[51], password[51], cpf[12], role[21];
+  while (fscanf(fp, "%[^,],%[^,],%[^,],%[^,],%[^\n]\n", name, email, password, cpf, role) != EOF) {
+    append(head, name, email, password, cpf, role);
+  }
+}
+
+void deleteByName(User** head, char name[]) {
+  User * current = *head;
+  User *temp = NULL;
+  User *temp2 = NULL;
+  if (current != NULL && strcmp(current->name, name) == 0) { //se for o primeiro elemento
+    *head = current->next;
+    free(current);
+    return;
+  }
+
+  while (current != NULL && strcmp(current->name, name) != 0) { //procurando o usuario pra deletar
+    temp = current;
+    current = current->next;
+  }
+
+  if (current == NULL) {
+    printf("O elemento com o nome '%s' nao foi encontrado.\n", name);
+    return;
+  }
+
+  temp->next = current->next;
+  free(current);
+  printf("O elemento com o nome '%s' foi removido.\n", name);
+
+  while(temp2 != NULL){
+    storeRegister(temp2);
+    temp2 = temp2->next;
+  }
 }

@@ -7,6 +7,7 @@ typedef struct User {
   char *password;
   char *cpf;
   char *role; // residente, preceptor, gestor
+  struct User *next;
 } User;
 
 // função para solicitar que o usuário tecle alguma tecla para continuar
@@ -18,8 +19,7 @@ void list(char *role);
 int login(char name[50], char password[50], User *usr);
 
 // insere um novo "usuário"
-User *createUser(char *newName, char *newEmail, char *newPassword, char *newCpf,
-                 char *newRole);
+User *createUser(char *newName, char *newEmail, char *newPassword, char *newCpf, char *newRole);
 
 void removeProfile(const char *name, const char *email);
 
@@ -30,5 +30,8 @@ void freeNewUser(User *newUser);
 
 // salva o usuário no arquivo
 void storeRegister(User *newUser);
+void append(User** head, char name[], char email[], char password[], char cpf[], char role[]);
 
+void create_list( User **head);
+void deleteByName(User** head, char name[]);
 #endif //__LIB.H__
