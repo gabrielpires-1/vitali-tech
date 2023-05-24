@@ -52,8 +52,7 @@ int login(char email[50], char password[50], User *usr) {
 
   // printf("\nRegister.txt aberto\n");
   //  l� users e verifica se os 5 que foram lidos correspondem com os de entrada
-  while (fscanf(users, "%[^,],%[^,],%[^,],%[^,],%s\n", usr->name, usr->email,
-                usr->password, usr->cpf, usr->role) == 5) {
+  while (fscanf(users, "%[^,],%[^,],%[^,],%[^,],%s\n", usr->name, usr->email, usr->password, usr->cpf, usr->role) == 5) {
 
     // printf("\n\n%s e %s\n\n", usr -> name, usr -> password);
     if (strcmp(email, usr->email) == 0) {
@@ -180,18 +179,14 @@ void deleteByName(User** head, char name[]) {
 
   if (current == NULL) {
     printf("O elemento com o nome '%s' nao foi encontrado.\n", name);
+    pause();
     return;
   }
 
   temp->next = current->next;
   free(current);
   printf("O elemento com o nome '%s' foi removido.\n", name);
-
-  temp2 = *head;
-  while(temp2 != NULL){
-    storeRegister(temp2);
-    temp2 = temp2->next;
-  }
+  pause();
 }
 
 // recebe a head da lista e uma string que representa o cargo 
