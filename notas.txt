@@ -1,0 +1,1 @@
+preceptor, residente, nome-atividade, nota1, resposta1 (tag), nota2, resposta2 (tag), nota3, resposta3 (tag), nota4, resposta4 (tag), nota5, resposta5 (tag), comentario-opcional
