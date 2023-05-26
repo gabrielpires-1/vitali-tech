@@ -5,3 +5,4 @@ carlos,carlos@hospital.com,senha123,11122211133,residente
 aline,aline@hospital.com,senha123,01010233344,residente
 Arturaaaaaaaa,email@email.com,123,11122321232,preceptor
 aa,aa,aa,11111111111,gestor
+davi,davi@hospital.com,senha123,11111111111,residente
