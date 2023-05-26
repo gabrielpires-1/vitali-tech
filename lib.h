@@ -44,4 +44,7 @@ void printList(User *head, char role[]);
 // recebe a head da lista e salva a lista atual no arquivo txt
 void saveList(User **head);
 
+//Confere o nome do residente no user
+void lookingResident(User **head,char name[50],char role[]);
+
 #endif

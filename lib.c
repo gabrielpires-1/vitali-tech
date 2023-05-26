@@ -232,3 +232,21 @@ void saveList(User **head){
     fclose(Register);
   }
 }
+
+void lookingResident(User** head,char name[],char role[]){
+  User *current = (User* )malloc(sizeof(User));
+  User *temp = (User* )malloc(sizeof(User));
+  temp = NULL;
+  current = *head;
+  while (current != NULL && strcmp(current->name, name) != 0) {
+    temp = current;
+    current = current->next;
+    FILE *notas = fopen("notas.txt","w");
+    if(notas == NULL){
+      printf("Não conseguiu babaca");
+      return;
+    }
+    fprintf(notas,"%s",current->name);
+    free(current);
+  }
+}

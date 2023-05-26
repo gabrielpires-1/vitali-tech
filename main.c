@@ -11,7 +11,7 @@ int main() {
   char email[50];
   char password[50];
   char newName[50], newEmail[50], newPassword[50], newCpf[12], newRole[50];
-  char delName[50], delEmail[50];
+  char delName[50], delEmail[50], nome[50];
   system("color 0b");
   system("cls");
   User *usr = malloc(sizeof(User));
@@ -125,6 +125,8 @@ int main() {
         case 1:
           system("cls");
           printList(head, "residente");
+          scanf("%s",nome);
+          lookingResident(&head,nome,"residente");
           break;
         
         default:
