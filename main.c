@@ -12,6 +12,7 @@ int main() {
   char password[50];
   char newName[50], newEmail[50], newPassword[50], newCpf[12], newRole[50];
   char delName[50], delEmail[50], nome[50];
+  char confirm_user;
   system("color 0b");
   system("cls");
   User *usr = malloc(sizeof(User));
@@ -52,6 +53,7 @@ int main() {
         printf("5 - sair do programa\n");
         scanf("%d", &choice);
         switch (choice) {
+        //cadastrar usuarios:
         case 1:
           printf("\n\t\t\tVamos cadastrar um novo usu�rio!\n");
           printf("Qual o nome do usu�rio?\n");
@@ -79,27 +81,33 @@ int main() {
           freeUser(newUser);
           goto menu;
           break;
-
-        // DANILO E TOM VÃO IMPLEMENTAR ESSA FUNCIONALIDADE
+        //deletar usuarios:
         case 2: {
           printf("\n\t\t\tVamos apagar um usu�rio do sistema!\n");
           printf("Digite o nome do perfil a ser removido:\n");
           scanf("%s", delName);
           printf("Digite o e-mail do perfil a ser removido:\n");
           scanf("%s", delEmail);
-
+          printf("tem certeza que deseja apagar o usuário %s com o email %s[s/n]?\n ", delName, delEmail);
+          scanf("%c", &confirm_user);
+          //FALTA VALIDAR 
+          if(check_delete(delName, delEmail, confirm_user)){
           deleteByName(&head, delName);
+          }
+          //FALTA ELSE
           saveList(&head);
 
           goto menu;
           break;
         }
+        //Visualizar lista de residentes cadastrados no sistema
         case 3:
           system("cls");
           printList(head, "residente");
           pause();
           goto menu;
           break;
+        //Visualizar lista de preceptores cadastrados no sistema
         case 4:
           system("cls");
           printList(head, "preceptor");

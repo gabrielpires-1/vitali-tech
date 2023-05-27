@@ -250,3 +250,54 @@ void lookingResident(User** head,char name[],char role[]){
     free(current);
   }
 }
+
+int check_delete(const char *name, const char *email, char check) {
+    FILE *fp;
+    char linha[100];
+    int check_user = 0;
+
+    fp = fopen("register.txt", "r");
+    if (fp == NULL) {
+      printf("Erro ao abrir o arquivo.\n");
+      exit(1);
+  }
+
+    while (fgets(linha, 100, fp) != NULL) {
+      char *nomeArquivo = strtok(linha, ",");
+      char *emailArquivo = strtok(NULL, ",");
+
+      if (nomeArquivo != NULL && emailArquivo != NULL) {
+        if (strcmp(nomeArquivo, name) == 0) {
+          if (strcmp(emailArquivo, email) == 0) {
+            check_user = 1;
+            break;
+          } else {
+            printf("O e-mail fornecido não corresponde ao usuário.\n");
+            fclose(fp);
+            return 0;
+          }
+        }
+      }
+    }
+    fclose(fp);
+    if (check_user) {
+      printf("Usuário encontrado no arquivo.\n");
+
+      if (check == 'y' || check == 'Y') {
+        //FALTA APAGAR USUARIO
+      } else if (check == 'n' || check == 'N') {
+        printf("Operação de exclusão cancelada.\n");
+        //FALTA CANCELAR OPERAÇÃO
+        return 0;
+      } else {
+        printf("Opção inválida. Operação de exclusão cancelada.\n");
+        //FALTA CANCELAR
+        return 0;
+      }
+    } else {
+      printf("Usuário não encontrado no arquivo.\n");
+      //CANCELAR OPERAÇÃO
+    }
+
+  return check_user;
+}

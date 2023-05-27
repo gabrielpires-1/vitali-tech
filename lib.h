@@ -47,4 +47,8 @@ void saveList(User **head);
 //Confere o nome do residente no user
 void lookingResident(User **head,char name[50],char role[]);
 
+//torna os caracteres de uma string em minusculos
+
+
+int check_delete(const char *name, const char *email, char check);
 #endif
