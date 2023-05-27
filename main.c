@@ -133,6 +133,7 @@ int main() {
         case 1:
           system("cls");
           printList(head, "residente");
+          printf("Escolha um preceptor para avaliar: \n");
           scanf("%s",nome);
           lookingResident(&head,nome,"residente");
           break;

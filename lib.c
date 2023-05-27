@@ -233,23 +233,31 @@ void saveList(User **head){
   }
 }
 
-void lookingResident(User** head,char name[],char role[]){
-  User *current = (User* )malloc(sizeof(User));
-  User *temp = (User* )malloc(sizeof(User));
-  temp = NULL;
-  current = *head;
-  while (current != NULL && strcmp(current->name, name) != 0) {
-    temp = current;
-    current = current->next;
-    FILE *notas = fopen("notas.txt","w");
-    if(notas == NULL){
-      printf("Não conseguiu babaca");
-      return;
-    }
-    fprintf(notas,"%s",current->name);
-    free(current);
+void lookingResident(User** head, char name[], char role[]) {
+  // preceptor, residente, nome-atividade, nota1, resposta1(tag),.......,comentario-opcional
+  //não precisa alocar memoria para a variavel current, sera atribuida ao ponteiro *head
+  User* current = *head;
+  FILE* notas;
+  notas = fopen("notas.txt", "w");
+  if (notas == NULL){
+    printf("Erro ao abrir o arquivo!");
+    return;
   }
+
+  // Printando o nome do preceptor
+  fprintf(notas, "Preceptor: %s, ", current->next->name);
+
+  while (current != NULL) {
+    if (strcmp(current->name, name) == 0 && strcmp(current->role,role) == 0){
+      //Se o nome for encontrado e role for "residente", ele entra e printa o nome
+      fprintf(notas, "Residente: %s", current->name);
+      break;
+    }
+    current = current->next;
+  }
+  fclose(notas);
 }
+
 
 int check_delete(const char *name, const char *email, char check) {
     FILE *fp;
