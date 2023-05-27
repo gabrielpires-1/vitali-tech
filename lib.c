@@ -5,6 +5,13 @@
 #include <conio.h>
 #include <locale.h>
 
+// limpa o buffer
+void clearInputBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {
+    }
+}
+
 // função para solicitar que o usuário tecle alguma tecla para continuar
 void pause(){
   printf("\n\nPressione qualquer tecla para continuar...\n");
@@ -308,4 +315,152 @@ int check_delete(const char *name, const char *email, char check) {
     }
 
   return check_user;
+}
+
+void changeUser(User **head, char *email){
+  User * current = (User* )malloc(sizeof(User));
+  current = *head;
+  char choice;
+  char newName[100]; // será usado como novo nome
+  char newEmail[50]; // será usado como novo email
+  char newCpf[12]; // será usado como novo CPF
+  char newPassword[50]; // será usado como nova senha
+  char newRole[50]; // será usado como novo cargo
+
+  if (current != NULL && strcmp(current->email, email) == 0) { //se for o primeiro elemento
+    *head = current->next;
+    printf("\n\nNome do residente: %s\n", current->name);
+    printf("Email do residente: %s\n", current->email);
+    printf("CPF do residente: %s\n", current->cpf);
+    printf("Você gostaria de alterar o nome desse usuário?(s/n)\n");
+    clearInputBuffer();
+    scanf("%c", &choice);
+    clearInputBuffer();
+    if (choice == 's'){
+      printf("Informe o novo nome desse usuário: ");
+      fgets(newName, sizeof(newName), stdin);
+      newName[strcspn(newName, "\n")] = '\0';
+      strcpy(current->name, newName);
+    } else printf("Ok! O nome permanecerá %s!\n", current->name);
+    printf("Você gostaria de alterar o email desse usuário?(s/n)\n");
+    scanf("%c", &choice);
+    clearInputBuffer();
+    if (choice == 's'){
+      printf("Informe o novo email desse usuário: ");
+      fgets(newEmail, sizeof(newEmail), stdin);
+      newEmail[strcspn(newEmail, "\n")] = '\0';
+      strcpy(current->email, newEmail);
+    } else printf("Ok! O email permanecerá %s!", current->email);
+    printf("Você gostaria de alterar o cpf desse usuário?(s/n)\n");
+    clearInputBuffer();
+    scanf("%c", &choice);
+    if (choice == 's'){
+      int cpfAux = 0;
+      do{
+      printf("Informe o novo cpf desse usuário: ");
+      scanf("%s", &newCpf);
+      if (strlen(newCpf) != 11) {
+        printf("CPF inválido!\n");
+        cpfAux = 1;
+      } else {
+        cpfAux = 0;
+      }
+      } while (cpfAux);
+      strcpy(current->cpf, newCpf);
+    } else printf ("Ok! O CPF permanecerá %s", current -> cpf);
+    printf("Você gostaria de alterar o cargo desse usuário?(s/n)\n");
+    clearInputBuffer();
+    scanf("%c", &choice);
+    if (choice == 's'){
+      do{
+      printf("Informe o novo cargo desse usuário:(residente/preceptor) ");
+      scanf("%s", newRole);
+      } while (strcmp(newRole, "residente") != 0 && strcmp(newRole, "preceptor") != 0);
+      strcpy(current->role, newRole);
+    } else printf("Ok! O cargo permanecerá %s!\n", current->role);
+    printf("Você gostaria de alterar a senha desse usuário?(s/n)\n");
+    clearInputBuffer();
+    scanf("%c", &choice);
+    clearInputBuffer();
+    if (choice == 's'){
+      printf("Informe a nova senha desse usuário: ");
+      scanf("%s", &newPassword);
+      strcpy(current->password, newPassword);
+    } else printf("Ok! A senha permanecerá %s!", current->password);
+    
+    return;
+  }
+
+  while (current != NULL && strcmp(current->email, email) != 0) { //procurando o usuario para alterar
+    current = current->next;
+  }
+
+  if (current == NULL) {
+    printf("O elemento com o email '%s' nao foi encontrado.\n", current->email);
+    pause();
+    return;
+  }
+
+printf("\n\nNome do residente: %s\n", current->name);
+printf("Email do residente: %s\n", current->email);
+printf("CPF do residente: %s\n", current->cpf);
+printf("Você gostaria de alterar o nome desse usuário?(s/n)\n");
+clearInputBuffer();
+scanf("%c", &choice);
+clearInputBuffer();
+if (choice == 's'){
+  printf("Informe o novo nome desse usuário: ");
+  fgets(newName, sizeof(newName), stdin);
+  newName[strcspn(newName, "\n")] = '\0';
+  strcpy(current->name, newName);
+} else printf("Ok! O nome permanecerá %s!\n", current->name);
+printf("Você gostaria de alterar o email desse usuário?(s/n)\n");
+scanf("%c", &choice);
+clearInputBuffer();
+if (choice == 's'){
+  printf("Informe o novo email desse usuário: ");
+  fgets(newEmail, sizeof(newEmail), stdin);
+  newEmail[strcspn(newEmail, "\n")] = '\0';
+  strcpy(current->email, newEmail);
+} else printf("Ok! O email permanecerá %s!", current->email);
+printf("Você gostaria de alterar o cpf desse usuário?(s/n)\n");
+scanf("%c", &choice);
+clearInputBuffer();
+if (choice == 's'){
+  int cpfAux = 0;
+  do{
+    printf("Informe o novo cpf desse usuário: ");
+    scanf("%s", &newCpf);
+    if (strlen(newCpf) != 11) {
+      printf("CPF inválido!\n");
+      cpfAux = 1;
+    } else {
+      cpfAux = 0;
+    }
+  } while (cpfAux);
+  strcpy(current->cpf, newCpf);
+} else printf ("Ok! O CPF permanecerá %s", current -> cpf);
+printf("Você gostaria de alterar o cargo desse usuário?(s/n)\n");
+clearInputBuffer();
+scanf("%c", &choice);
+clearInputBuffer();
+if (choice == 's'){
+  do{
+    printf("Informe o novo cargo desse usuário:(residente/preceptor) ");
+    scanf("%s", newRole);
+  } while (strcmp(newRole, "residente") != 0 && strcmp(newRole, "preceptor") != 0);
+  strcpy(current->role, newRole);
+} else printf("Ok! O cargo permanecerá %s!\n", current->role);
+printf("Você gostaria de alterar a senha desse usuário?(s/n)\n");
+clearInputBuffer();
+scanf("%c", &choice);
+clearInputBuffer();
+if (choice == 's'){
+    printf("Informe a nova senha desse usuário: ");
+    scanf("%s", &newPassword);
+    strcpy(current->password, newPassword);
+} else printf("Ok! A senha permanecerá %s!", current->password);
+
+  return;
+
 }

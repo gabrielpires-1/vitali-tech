@@ -48,9 +48,10 @@ int main() {
         printf("\t\t\tO que voc� gostaria de fazer %s?\n", usr->name);
         printf("1 - Cadastrar um novo residente ou preceptor\n");
         printf("2 - Apagar um residente ou preceptor do sistema\n");
-        printf("3 - Visualizar lista de residentes cadastrados no sistema\n");
-        printf("4 - Visualizar lista de preceptores cadastrados no sistema\n");
-        printf("5 - sair do programa\n");
+        printf("3 - Alterar um usuário existente\n");
+        printf("4 - Visualizar lista de residentes cadastrados no sistema\n");
+        printf("5 - Visualizar lista de preceptores cadastrados no sistema\n");
+        printf("6 - sair do programa\n");
         scanf("%d", &choice);
         switch (choice) {
         //cadastrar usuarios:
@@ -100,21 +101,31 @@ int main() {
           goto menu;
           break;
         }
-        //Visualizar lista de residentes cadastrados no sistema
+        // Alterar um usuário já existente
         case 3:
+          system("cls");
+          printf("Qual o email do usuário que você gostaria de alterar os dados?\n");
+          scanf("%s", email);
+          changeUser(&head, email);
+          saveList(&head);
+          pause();
+          goto menu;
+          break;
+        //Visualizar lista de residentes cadastrados no sistema
+        case 4:
           system("cls");
           printList(head, "residente");
           pause();
           goto menu;
           break;
         //Visualizar lista de preceptores cadastrados no sistema
-        case 4:
+        case 5:
           system("cls");
           printList(head, "preceptor");
           pause();
           goto menu;
           break;
-        case 5:
+        case 6:
           system("cls");
           freeUser(usr); // libera a memória alocada para encontrar o usu�rio
           exit(1);
@@ -133,7 +144,7 @@ int main() {
         case 1:
           system("cls");
           printList(head, "residente");
-          printf("Escolha um preceptor para avaliar: \n");
+          printf("Escolha um residente para avaliar: \n");
           scanf("%s",nome);
           lookingResident(&head,nome,"residente");
           break;

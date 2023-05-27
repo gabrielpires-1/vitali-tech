@@ -11,6 +11,9 @@ typedef struct User {
   struct User *next;
 } User;
 
+// limpa o buffer
+void clearInputBuffer();
+
 // função para solicitar que o usuário tecle alguma tecla para continuar
 void pause();
 
@@ -44,8 +47,11 @@ void printList(User *head, char role[]);
 // recebe a head da lista e salva a lista atual no arquivo txt
 void saveList(User **head);
 
-//Confere o nome do residente no user
+// Confere o nome do residente no user
 void lookingResident(User **head,char name[50],char role[]);
+
+// Altera um usuário pelo email
+void changeUser(User **head, char *email);
 
 //torna os caracteres de uma string em minusculos
 
