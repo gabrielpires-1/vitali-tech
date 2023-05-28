@@ -150,10 +150,9 @@ void append(User** head, char name[], char email[], char password[], char cpf[],
 void create_list( User **head) {
   FILE *fp;
   fp = fopen("Register.txt", "r");
-
   // Caso não seja possível abrir o arquivo de usuários
   if (fp == NULL) {
-    printf("Falha ao abrir arquivo de usuários!\n");
+    pause();
     return;
   }
 
@@ -161,7 +160,6 @@ void create_list( User **head) {
   while (fscanf(fp, "%[^,],%[^,],%[^,],%[^,],%s\n", name, email, password, cpf, role) == 5) {
     append(head, name, email, password, cpf, role);
   }
-
   fclose(fp);
 }
 
