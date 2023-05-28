@@ -6,11 +6,13 @@
 #include <locale.h>
 
 // limpa o buffer
+#if(0)
 void clearInputBuffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF) {
     }
 }
+#endif
 
 // função para solicitar que o usuário tecle alguma tecla para continuar
 void pause(){
@@ -317,6 +319,7 @@ int check_delete(const char *name, const char *email, char check) {
   return check_user;
 }
 
+#if(0)
 void changeUser(User **head, char *email){
   User * current = (User* )malloc(sizeof(User));
   current = *head;
@@ -478,3 +481,4 @@ if (choice == 's'){
   return;
 
 }
+#endif

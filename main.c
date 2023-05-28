@@ -106,8 +106,10 @@ int main() {
           system("cls");
           printf("Qual o email do usuário que você gostaria de alterar os dados?\n");
           scanf("%s", email);
+          if(0){
           changeUser(&head, email);
           saveList(&head);
+          }
           pause();
           goto menu;
           break;
