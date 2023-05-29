@@ -241,7 +241,7 @@ void saveList(User **head){
 }
 
 void lookingResident(User** head, char name[], char role[], char namePreceptor[]) {
-  // preceptor, residente, nome-atividade, nota1, resposta1(tag),.......,comentario-opcional
+  // nome do preceptor, nome do residente, nome da atividade, nota do critério 1, resposta1(tag),nota2, resposta2(tag), nota3,resposta3(tag).......,comentario-opcional
   //não precisa alocar memoria para a variavel current, sera atribuida ao ponteiro *head
   User* current = *head;
   FILE* notas;
@@ -480,3 +480,63 @@ if (choice == 's'){
 
 }
 #endif
+// nome do preceptor, email do residente, nome da atividade, nota do critério 1, resposta1(tag),nota2, resposta2(tag), nota3,resposta3(tag).......,comentario-opcional
+
+/*printf("Qual o email do residente que voce deseja avaliar?\n");
+scanf(emailDoResidente);
+Atividade * atvd;
+atvd -> preceptor_da_atvd = email do preceptor que está logado;
+atividade->emailResidente = userFound(&head, residente);
+lembra de alocar memória
+printf("Qual o nome da atividade?");
+scanf(atvd -> nome_da_atividade);
+printf("Qual a nota do critério 1?\nCritério 1: Vestimenta");
+scanf(atvd -> nota_criterio1)
+printf("Selecione a tag de comentário\n1-Bom, 2-Ruim,3-Muito ruim");
+scanf(atvd ->tag1)
+printf("Qual a nota do critério 1?\nCritério 1: Vestimenta");
+scanf(atvd -> nota_criterio2)
+printf("Selecione a tag de comentário\n1-Bom, 2-Ruim,3-Muito ruim");
+scanf(atvd ->tag2)
+printf("Qual a nota do critério 1?\nCritério 1: Vestimenta");
+scanf(atvd -> nota_criterio);
+printf("Selecione a tag de comentário\n1-Bom, 2-Ruim,3-Muito ruim");
+scanf(atvd ->tag3)
+printf("Qual a nota do critério 1?\nCritério 1: Vestimenta");
+scanf(atvd -> nota_criterio)
+printf("Selecione a tag de comentário\n1-Bom, 2-Ruim,3-Muito ruim");
+scanf(atvd ->tag4)
+printf("Qual a nota do critério 1?\nCritério 1: Vestimenta");
+scanf(atvd -> nota_criterio)
+printf("Selecione a tag de comentário\n1-Bom, 2-Ruim,3-Muito ruim");
+scanf(atvd ->tag5)
+printf("Qual a nota do critério 1?\nCritério 1: Vestimenta");
+scanf(atvd -> nota_criterio)
+printf("Selecione a tag de comentário\n1-Bom, 2-Ruim,3-Muito ruim");
+scanf(atvd ->tag6)
+printf("Qual a nota do critério 1?\nCritério 1: Vestimenta");
+scanf(atvd -> nota_criterio)
+printf("Selecione a tag de comentário\n1-Bom, 2-Ruim,3-Muito ruim");
+scanf(atvd ->tag7)
+printf("Qual a nota do critério 1?\nCritério 1: Vestimenta");
+scanf(atvd -> nota_criterio)
+printf("Selecione a tag de comentário\n1-Bom, 2-Ruim,3-Muito ruim");
+scanf(atvd ->tag8)
+printf("Qual a nota do critério 1?\nCritério 1: Vestimenta");
+scanf(atvd -> nota_criterio)
+printf("Selecione a tag de comentário\n1-Bom, 2-Ruim,3-Muito ruim");
+scanf(atvd ->tag9)
+printf("Qual a nota do critério 1?\nCritério 1: Vestimenta");
+scanf(atvd -> nota_criterio)
+printf("Selecione a tag de comentário\n1-Bom, 2-Ruim,3-Muito ruim");
+scanf(atvd ->tag10)
+printf("Qual a nota do critério 1?\nCritério 1: Vestimenta");
+scanf(atvd -> nota_criterio)
+printf("Selecione a tag de comentário\n1-Bom, 2-Ruim,3-Muito ruim");
+scanf(atvd ->tag11)
+printf("Qual a nota do critério 1?\nCritério 1: Vestimenta");
+scanf(atvd -> nota_criterio)
+printf("Selecione a tag de comentário\n1-Bom, 2-Ruim,3-Muito ruim");
+scanf(atvd ->tag12)
+printf("\nDeseja adicionar um comentário opcional?");
+fgets(atvd -> comentarioDaAtividade);*/
