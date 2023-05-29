@@ -301,7 +301,7 @@ void lookingResident(User** head, char email[], char role[], char namePreceptor[
     printf("Criterio %i: %s\n",i+1,criterios[i]);
     printf("%s\n",norteadoras[i]);
     //scanf("%s",Epointer->grade);
-    fprintf(notas,"\nCriterio %i: %s = notas",i+1,criterios[i]);
+    fprintf(notas,"Criterio %i: %s = notas, ",i+1,criterios[i]);
   }
   fclose(notas);
 }
