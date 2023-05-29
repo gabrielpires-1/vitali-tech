@@ -148,7 +148,7 @@ int main() {
           printList(head, "residente");
           printf("Escolha um residente para avaliar: \n");
           scanf("%s",nome);
-          lookingResident(&head,nome,"residente");
+          lookingResident(&head,nome, "residente", usr->name);
           break;
         
         default:
