@@ -240,7 +240,7 @@ void saveList(User **head){
   }
 }
 
-void lookingResident(User** head, char name[], char role[], char nome[]) {
+void lookingResident(User** head, char name[], char role[], char namePreceptor[]) {
   // preceptor, residente, nome-atividade, nota1, resposta1(tag),.......,comentario-opcional
   //não precisa alocar memoria para a variavel current, sera atribuida ao ponteiro *head
   User* current = *head;
@@ -252,7 +252,7 @@ void lookingResident(User** head, char name[], char role[], char nome[]) {
   }
 
   // Printando o nome do preceptor
-  fprintf(notas, "Preceptor: %s, ", nome);
+  fprintf(notas, "Preceptor: %s, ", namePreceptor);
 
   while (current != NULL) {
     if (strcmp(current->name, name) == 0 && strcmp(current->role,role) == 0){

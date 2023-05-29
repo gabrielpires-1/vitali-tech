@@ -48,7 +48,7 @@ void printList(User *head, char role[]);
 void saveList(User **head);
 
 // Confere o nome do residente no user
-void lookingResident(User **head,char name[50],char role[], char nome[]);
+void lookingResident(User **head,char name[50],char role[], char namePreceptor[]);
 
 // Altera um usuário pelo email
 void changeUser(User **head, char *email);
