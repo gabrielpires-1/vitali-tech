@@ -45,6 +45,13 @@ User *createUser(char *newName, char *newEmail, char *newPassword, char *newCpf,
   
   return newUser;
 }
+void CreateEvaluationsAttributes (Evaluations *Epointer){
+  
+  Epointer->activityName = malloc(strlen(Epointer->activityName)+1);
+  Epointer->grade = malloc(strlen(Epointer->grade)+1);
+  Epointer->tag = malloc(strlen(Epointer->tag)+1);
+
+  }
 
 // retorna 1 se o login funcionou, 0 se não
 int login(char email[50], char password[50], User *usr) {
@@ -240,9 +247,10 @@ void saveList(User **head){
   }
 }
 
-void lookingResident(User** head, char name[], char role[], char namePreceptor[]) {
+void lookingResident(User** head, char email[], char role[], char namePreceptor[]) {
   // nome do preceptor, nome do residente, nome da atividade, nota do critério 1, resposta1(tag),nota2, resposta2(tag), nota3,resposta3(tag).......,comentario-opcional
   //não precisa alocar memoria para a variavel current, sera atribuida ao ponteiro *head
+
   User* current = *head;
   FILE* notas;
   notas = fopen("notas.txt", "w");
@@ -255,9 +263,9 @@ void lookingResident(User** head, char name[], char role[], char namePreceptor[]
   fprintf(notas, "Preceptor: %s, ", namePreceptor);
 
   while (current != NULL) {
-    if (strcmp(current->name, name) == 0 && strcmp(current->role,role) == 0){
+    if (strcmp(current->email, email) == 0 && strcmp(current->role,role) == 0){
       //Se o nome for encontrado e role for "residente", ele entra e printa o nome
-      fprintf(notas, "Residente: %s", current->name);
+      fprintf(notas, "Residente: %s", current->email);
       break;
     }
     current = current->next;

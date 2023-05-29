@@ -146,9 +146,9 @@ int main() {
         case 1:
           system("cls");
           printList(head, "residente");
-          printf("Escolha um residente para avaliar: \n");
-          scanf("%s",nome);
-          lookingResident(&head,nome, "residente", usr->name);
+          printf("Insira o e-mail do residente que desejas avaliar: \n");
+          scanf("%s",email);
+          lookingResident(&head,email, "residente", usr->name);
           break;
         
         default:
