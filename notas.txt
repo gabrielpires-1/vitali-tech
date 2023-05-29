@@ -1,4 +1,4 @@
-Preceptor: Gabriel Pires, Residente: davi@hospital.com, Nome da atividade: legal, 
+Preceptor: carlos, Nome da atividade: cirurgia, 
 Criterio 1: Assisuidade = notas
 Criterio 2: Pontualidade = notas
 Criterio 3: Vestuario = notas

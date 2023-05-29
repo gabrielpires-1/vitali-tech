@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
+#include <ctype.h>
 
 int choice;
 
@@ -11,8 +12,7 @@ int main() {
   char email[50];
   char password[50];
   char newName[50], newEmail[50], newPassword[50], newCpf[12], newRole[50];
-  char delName[50], delEmail[50], nome[50],activityName[70],grade[10],tag[20];
-  char confirm_user;
+  char delName[50], delEmail[50], nome[50],activityName[70],grade[10],tag[20], confirm_user[4];
   system("color 0b");
   system("cls");
   User *usr = malloc(sizeof(User));
@@ -94,13 +94,25 @@ int main() {
           printf("Digite o e-mail do perfil a ser removido:\n");
           scanf("%s", delEmail);
           printf("tem certeza que deseja apagar o usuário %s com o email %s[s/n]?\n ", delName, delEmail);
-          scanf("%c", &confirm_user);
-          //FALTA VALIDAR 
-          if(check_delete(delName, delEmail, confirm_user)){
-          deleteByName(&head, delName);
+          scanf("%s", confirm_user);
+
+          if (strcmp(confirm_user, "s") == 0 || strcmp(confirm_user, "S") == 0 ) {
+
+            if (check_delete(delName, delEmail, head)) {
+              deleteByName(&head, delName);
+              saveList(&head);
+              printf("Usuário removido com sucesso.\n");
+
+            } else {
+              printf("Usuário não encontrado. Remoção cancelada.\n");
+            }
+          } else if (strcmp(confirm_user, "n") == 0 || strcmp(confirm_user, "N") == 0 ) {
+            printf("Operação de exclusão cancelada pelo usuário.\n");
+
+          } else {
+            printf("Opção inválida. Operação de exclusão cancelada.\n");
           }
-          //FALTA ELSE
-          saveList(&head);
+          pause();
 
           goto menu;
           break;
@@ -158,6 +170,7 @@ int main() {
           break;
         
         default:
+        
           break;
         }
       }

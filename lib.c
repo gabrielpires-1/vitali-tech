@@ -307,55 +307,33 @@ void lookingResident(User** head, char email[], char role[], char namePreceptor[
 }
 
 
-int check_delete(const char *name, const char *email, char check) {
-    FILE *fp;
-    char linha[100];
-    int check_user = 0;
+int check_delete(const char* name, const char* email, User* head) {
+  User* current = head;
+  int arroba = 0, ponto = 0;
 
-    fp = fopen("register.txt", "r");
-    if (fp == NULL) {
-      printf("Erro ao abrir o arquivo.\n");
-      exit(1);
+  //checando email e nome de usuario
+  for (int i = 0; email[i] != '\0'; i++) {
+    if (email[i] == '@') {
+      arroba++;
+    } else if (email[i] == '.') {
+      ponto++;
+    }
   }
-
-    while (fgets(linha, 100, fp) != NULL) {
-      char *nomeArquivo = strtok(linha, ",");
-      char *emailArquivo = strtok(NULL, ",");
-
-      if (nomeArquivo != NULL && emailArquivo != NULL) {
-        if (strcmp(nomeArquivo, name) == 0) {
-          if (strcmp(emailArquivo, email) == 0) {
-            check_user = 1;
-            break;
-          } else {
-            printf("O e-mail fornecido não corresponde ao usuário.\n");
-            fclose(fp);
-            return 0;
-          }
-        }
-      }
-    }
-    fclose(fp);
-    if (check_user) {
+  if (arroba != 1 || ponto != 1) {
+    printf("Email inválido. Insira um email válido.\n");
+    free(current);
+    return 0;
+  }
+  while (current != NULL) {
+    if (strcmp(current->name, name) == 0 && strcmp(current->email, email) == 0) {
       printf("Usuário encontrado no arquivo.\n");
-
-      if (check == 'y' || check == 'Y') {
-        //FALTA APAGAR USUARIO
-      } else if (check == 'n' || check == 'N') {
-        printf("Operação de exclusão cancelada.\n");
-        //FALTA CANCELAR OPERAÇÃO
-        return 0;
-      } else {
-        printf("Opção inválida. Operação de exclusão cancelada.\n");
-        //FALTA CANCELAR
-        return 0;
-      }
-    } else {
-      printf("Usuário não encontrado no arquivo.\n");
-      //CANCELAR OPERAÇÃO
+      return 1;
     }
-
-  return check_user;
+    current = current->next;
+  }
+  printf("Usuário não encontrado no sistema.\n");
+  free(current);
+  return 0;
 }
 
 #if(0)

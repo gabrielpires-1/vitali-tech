@@ -61,10 +61,11 @@ void lookingResident(User **head,char email[50],char role[], char namePreceptor[
 // Altera um usuário pelo email
 void changeUser(User **head, char *email);
 
-//torna os caracteres de uma string em minusculos
 
 //Alocar dos atributos da avaliação
-void CreateEvaluationsAttributes (Evaluations *Epointer);
+void CreateEvaluationsAttributes(Evaluations *Epointer);
 
-int check_delete(const char *name, const char *email, char check);
+//Valida e-mail e nome pra deletar um usuário 
+int check_delete(const char* name, const char* email, User* head);
+
 #endif
