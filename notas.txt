@@ -1,13 +1,13 @@
-Preceptor: danilooo, Residente: aline@hospital.com 
-AVALIAÇÃO GERAL: CRITERIO 1: 70, CRITERIO2=40 ,CRITERIO3=80, CRITERIO4=90
-NOME DA ATIVIDADE: ATIVIDADE 1
-NOTA CRITERIO 1 = 70
-TAG: DEIXOU À DESEJAR 
-NOTA CRITERIO 2 = 40
-TAG: FALTOU TÉCNICA 
-NOTA CRITERIO 3 = 80
-TAG: FOI LEIGO 
-NOTA CRITERIO 4 = 90
-TAG: IMBECIL FUNCIONAL
-COMENTARIO OPCIONAL:
-EXCELENTE DESEMPENHO!
+Preceptor: Gabriel Pires, Residente: davi@hospital.com, Nome da atividade: legal, 
+Criterio 1: Assisuidade = notas
+Criterio 2: Pontualidade = notas
+Criterio 3: Vestuario = notas
+Criterio 4: Iniciativa = notas
+Criterio 5: Postura Ético-Profissional = notas
+Criterio 6: Relacionamento em equipe = notas
+Criterio 7: Espirito Crítico = notas
+Criterio 8: Comunicação = notas
+Criterio 9: Planejamento das atividades de enfermagem = notas
+Criterio 10: Dominio dos procedimentos = notas
+Criterio 11: Evolução = notas
+Criterio 12: Liderança = notas

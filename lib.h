@@ -15,6 +15,7 @@ typedef struct Evaluations {
   char *activityName;
   char *grade;
   char *tag; 
+  struct Evaluations *next;
 
 } Evaluations;
 
@@ -62,6 +63,7 @@ void changeUser(User **head, char *email);
 
 //torna os caracteres de uma string em minusculos
 
+//Alocar dos atributos da avaliação
 void CreateEvaluationsAttributes (Evaluations *Epointer);
 
 int check_delete(const char *name, const char *email, char check);

@@ -51,7 +51,7 @@ void CreateEvaluationsAttributes (Evaluations *Epointer){
   Epointer->grade = malloc(strlen(Epointer->grade)+1);
   Epointer->tag = malloc(strlen(Epointer->tag)+1);
 
-  }
+}
 
 // retorna 1 se o login funcionou, 0 se não
 int login(char email[50], char password[50], User *usr) {
@@ -251,6 +251,16 @@ void lookingResident(User** head, char email[], char role[], char namePreceptor[
   // nome do preceptor, nome do residente, nome da atividade, nota do critério 1, resposta1(tag),nota2, resposta2(tag), nota3,resposta3(tag).......,comentario-opcional
   //não precisa alocar memoria para a variavel current, sera atribuida ao ponteiro *head
 
+  //Criterios e perguntas norteadoras
+  char criterios[12][50] = {"Assisuidade","Pontualidade","Vestuario","Iniciativa","Postura Ético-Profissional","Relacionamento em equipe","Espirito Crítico",
+  "Comunicação","Planejamento das atividades de enfermagem","Dominio dos procedimentos","Evolução","Liderança"};
+  char norteadoras[12][200] = {"O residente cumpre suas ações e obrigações com frequencia e esforço? Avalie de 1 a 100","O residente frequentemente cumpre seus horários e é presente nas horas exigidas? Avalie de 1 a 100",
+  "O residente demonstra cuidado com as normas de prevenção á infecções equipando-se adequadamente? Avalie de 1 a 100","O residente lida bem com situações imprevistas propondo situações viaveis? Avalie de 1 a 100",
+  "O residente trabalha respeitando os valores do paciente e seu sigilo profissional? Avalie de 1 a 100","O residente trabalha com exelencia com seus pacientes, superiores e profissionais de saúde? Avalie de 1 a 100",
+  "O residente lida bem com críticas e possui um bom senso crítico? Avalie de 1 a 100","O residente comunica bem seus pensamentos? Avalie de 1 a 100",
+  "O residente estabelece prioridades e estrutura suas atividades bem? Avalie de 1 a 100","O residente demonstra habilidade e segurança nos procedimentos realizados? Avalie de 1 a 100",
+  "O residente registra de maneira clara e concisa as sua observações? Avalie de 1 a 100","O residente partilha bem seu conhecimento e lidera bem sua equipe? Avalie de 1 a 100"};
+
   User* current = *head;
   FILE* notas;
   notas = fopen("notas.txt", "w");
@@ -270,15 +280,29 @@ void lookingResident(User** head, char email[], char role[], char namePreceptor[
     }
     current = current->next;
   }
+  //Chamando a função
   CreateEvaluationsAttributes(Epointer);
-  if (Epointer ==NULL){
-    printf("\nErro nos ponteiros");
+  if (Epointer == NULL){
+    //Erro ao iniciar o ponteiro
+    printf("\nErro ao ler as notas");
     return;
   }
   printf("\t\tVamos iniciar a avaliação, preceptor!\n Insira o nome da atividade:\n");
+  
+  //Lendo o nome da avaliação
   scanf("%s",Epointer->activityName);
-  printf("\t\tExcelente! Agora, baseado no critério ");
+  printf("\t\tExcelente! Agora, baseado no critério \n");
+  //Printando o nome da avaliação no arquivo notas.txt
   fprintf(notas,"Nome da atividade: %s, ",Epointer->activityName);
+
+
+  //codigo incompleto
+  for (int i=0;i<12;i++){
+    printf("Criterio %i: %s\n",i+1,criterios[i]);
+    printf("%s\n",norteadoras[i]);
+    //scanf("%s",Epointer->grade);
+    fprintf(notas,"\nCriterio %i: %s = notas",i+1,criterios[i]);
+  }
   fclose(notas);
 }
 
