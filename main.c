@@ -11,7 +11,7 @@ int main() {
   char email[50];
   char password[50];
   char newName[50], newEmail[50], newPassword[50], newCpf[12], newRole[50];
-  char delName[50], delEmail[50], nome[50];
+  char delName[50], delEmail[50], nome[50],activityName[70],grade[10],tag[20];
   char confirm_user;
   system("color 0b");
   system("cls");
@@ -22,6 +22,10 @@ int main() {
   usr->cpf = malloc(12 * sizeof(char));
   usr->role = malloc(51 * sizeof(char));
   User *head = NULL;
+  Evaluations *Epointer = malloc(sizeof(Evaluations));
+  Epointer->activityName =malloc(strlen(activityName));
+  Epointer->grade =malloc(strlen(grade));
+  Epointer->tag =malloc(strlen(tag));
   create_list(&head);
   // use o código abaixo para criar um gestor, caso o txt seja apagado.
   // storeRegister(createUser("diretor","diretor@hospital.com", "senha123", "99999999999", "gestor"));
@@ -148,7 +152,9 @@ int main() {
           printList(head, "residente");
           printf("Insira o e-mail do residente que desejas avaliar: \n");
           scanf("%s",email);
-          lookingResident(&head,email, "residente", usr->name);
+          lookingResident(&head,email, "residente", usr->name, Epointer);
+          
+          
           break;
         
         default:

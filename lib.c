@@ -247,7 +247,7 @@ void saveList(User **head){
   }
 }
 
-void lookingResident(User** head, char email[], char role[], char namePreceptor[]) {
+void lookingResident(User** head, char email[], char role[], char namePreceptor[], Evaluations *Epointer) {
   // nome do preceptor, nome do residente, nome da atividade, nota do critério 1, resposta1(tag),nota2, resposta2(tag), nota3,resposta3(tag).......,comentario-opcional
   //não precisa alocar memoria para a variavel current, sera atribuida ao ponteiro *head
 
@@ -265,11 +265,20 @@ void lookingResident(User** head, char email[], char role[], char namePreceptor[
   while (current != NULL) {
     if (strcmp(current->email, email) == 0 && strcmp(current->role,role) == 0){
       //Se o nome for encontrado e role for "residente", ele entra e printa o nome
-      fprintf(notas, "Residente: %s", current->email);
+      fprintf(notas, "Residente: %s, ", current->email);
       break;
     }
     current = current->next;
   }
+  CreateEvaluationsAttributes(Epointer);
+  if (Epointer ==NULL){
+    printf("\nErro nos ponteiros");
+    return;
+  }
+  printf("\t\tVamos iniciar a avaliação, preceptor!\n Insira o nome da atividade:\n");
+  scanf("%s",Epointer->activityName);
+  printf("\t\tExcelente! Agora, baseado no critério ");
+  fprintf(notas,"Nome da atividade: %s, ",Epointer->activityName);
   fclose(notas);
 }
 

@@ -55,13 +55,14 @@ void printList(User *head, char role[]);
 void saveList(User **head);
 
 // Confere o nome do residente no user
-void lookingResident(User **head,char email[50],char role[], char namePreceptor[]);
+void lookingResident(User **head,char email[50],char role[], char namePreceptor[], Evaluations *Epointer);
 
 // Altera um usuário pelo email
 void changeUser(User **head, char *email);
 
 //torna os caracteres de uma string em minusculos
 
+void CreateEvaluationsAttributes (Evaluations *Epointer);
 
 int check_delete(const char *name, const char *email, char check);
 #endif
