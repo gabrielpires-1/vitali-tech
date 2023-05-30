@@ -16,8 +16,13 @@ typedef struct Evaluations {
   char *grade;
   char *tag; 
   struct Evaluations *next;
-
 } Evaluations;
+
+typedef struct Feedbacks {
+  char *tag;
+  struct Feedbacks *next; //nao sei se precisa fazer uma lista por enquanto
+} Feedbacks;
+
 
 // limpa o buffer
 void clearInputBuffer();
@@ -60,7 +65,6 @@ void lookingResident(User **head,char email[50],char role[], char namePreceptor[
 
 // Altera um usuário pelo email
 void changeUser(User **head, char *email);
-
 
 //Alocar dos atributos da avaliação
 void CreateEvaluationsAttributes(Evaluations *Epointer);

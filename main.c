@@ -45,6 +45,8 @@ int main() {
       printf("\n|Email:\t\t%s", usr->email);
       printf("\n|CPF:\t\t%s", usr->cpf);
       printf("\n|Cargo: \t%s", usr->role);
+
+      //Interface do gestor
       if (!strcmp(usr->role, "gestor")) {
         //Coloquei o choise como varivel global
       menu:
@@ -87,7 +89,7 @@ int main() {
           goto menu;
           break;
         //deletar usuarios:
-        case 2: {
+        case 2: 
           printf("\n\t\t\tVamos apagar um usu�rio do sistema!\n");
           printf("Digite o nome do perfil a ser removido:\n");
           scanf("%s", delName);
@@ -116,7 +118,7 @@ int main() {
 
           goto menu;
           break;
-        }
+        
         // Alterar um usuário já existente
         case 3:
           system("cls");
@@ -150,23 +152,29 @@ int main() {
           break;
         }
       }
-      // caso o usuário seja um preceptor, esse bloco de código ser� executado.
+      // caso o usuário seja um Preceptor, esse bloco de código será executado.
       else if (!strcmp(usr->role, "preceptor")) {
         printf("\n\n\t\t\tO que voc� gostaria de fazer hoje?\n");
         printf("1 - Aba de notas\n");
-        printf("2 - Aba de feedbacks\n");
+        printf("2 - Aba de feedbacks\n"); //enviar feedbacks apenas a residentes, 
         printf("3 - Sair do programa\n");
         scanf("%i",&choice);
-        switch (choice)
-        {
+        switch (choice) {
         case 1:
           system("cls");
           printList(head, "residente");
           printf("Insira o e-mail do residente que desejas avaliar: \n");
           scanf("%s",email);
           lookingResident(&head,email, "residente", usr->name, Epointer);
+          break;
+
+        case 2:
+
+        /*feed backs AQUI*/
           
-          
+          break;
+
+        case 3:
           break;
         
         default:
@@ -177,8 +185,8 @@ int main() {
       // caso o usuário seja um residente, esse bloco de código ser� executado.
       else if (!strcmp(usr->role, "residente")) {
         printf("\n\n\t\t\tO que você gostaria de fazer hoje?\n");
-        printf("1 - Aba de notas\n");
-        printf("2 - Aba de feedbacks\n");
+        printf("1 - Aba de notas\n"); //visualizar
+        printf("2 - Aba de feedbacks\n"); //igual preceptor, mas so pode enviar feedbacks a precetores
         printf("3 - Sair do programa\n");
       }
     }
@@ -249,11 +257,11 @@ colegas -o residente nao passou confiança dos conhecimentos aprendidos na
 faculdade
 
     2- aba de feedbacks
-      -exibir feedbacks do usuario
+      -exibir feedbacks do usuario 
       1- deseja enviar algum feedback?
-      -digite o nome da pessoa a quem voc� deseja enviar
-      -insira tag:
-      Exemplo:
+      -digite o nome da pessoa a quem voc� deseja enviar -> procura no arquivo a pessoa
+      -insira ou selecione tag (nao sei qual fica melhor)
+      Exemplos:
       -comunicativo
       -dedicado
       -atencioso
