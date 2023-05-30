@@ -1,15 +1,1 @@
- - Preceptor: carlos, Nome da atividade: cirurgia, 
-
- 
- - Criterio 1: Assisuidade = notas
- - Criterio 2: Pontualidade = notas
- - Criterio 3: Vestuario = notas
- - Criterio 4: Iniciativa = notas
- - Criterio 5: Postura Ético-Profissional = notas
- - Criterio 6: Relacionamento em equipe = notas
- - Criterio 7: Espirito Crítico = notas
- - Criterio 8: Comunicação = notas
- - Criterio 9: Planejamento das atividades de enfermagem = notas
- - Criterio 10: Dominio dos procedimentos = notas
- - Criterio 11: Evolução = notas
- - Criterio 12: Liderança = notas
+Preceptor: rossiter, Residente: davi@hospital.com, Nome da atividade: Caimbra, Criterio 1: Assisuidade = 88, Criterio 2: Pontualidade = 7, Criterio 3: Vestuario = 95, Criterio 4: Iniciativa = 64, Criterio 5: Postura Ético-Profissional = 24, Criterio 6: Relacionamento em equipe = 36, Criterio 7: Espirito Crítico = 86, Criterio 8: Comunicação = 59, Criterio 9: Planejamento das atividades de enfermagem = 97, Criterio 10: Dominio dos procedimentos = 99, Criterio 11: Evolução = 100, Criterio 12: Liderança = 15

@@ -270,12 +270,12 @@ void lookingResident(User** head, char email[], char role[], char namePreceptor[
   }
 
   // Printando o nome do preceptor
-  fprintf(notas, "Preceptor: %s, ", namePreceptor);
+  fprintf(notas, "Preceptor: %s", namePreceptor);
 
   while (current != NULL) {
     if (strcmp(current->email, email) == 0 && strcmp(current->role,role) == 0){
       //Se o nome for encontrado e role for "residente", ele entra e printa o nome
-      fprintf(notas, "Residente: %s, ", current->email);
+      fprintf(notas, ", Residente: %s", current->email);
       break;
     }
     current = current->next;
@@ -293,15 +293,16 @@ void lookingResident(User** head, char email[], char role[], char namePreceptor[
   scanf("%s",Epointer->activityName);
   printf("\t\tExcelente! Agora, baseado no critério \n");
   //Printando o nome da avaliação no arquivo notas.txt
-  fprintf(notas,"Nome da atividade: %s, ",Epointer->activityName);
+  fprintf(notas,", Nome da atividade: %s",Epointer->activityName);
 
 
   //codigo incompleto
   for (int i=0;i<12;i++){
     printf("Criterio %i: %s\n",i+1,criterios[i]);
     printf("%s\n",norteadoras[i]);
-    //scanf("%s",Epointer->grade);
-    fprintf(notas,"\nCriterio %i: %s = notas",i+1,criterios[i]);
+    scanf("%s",Epointer->grade);
+    fprintf(notas,", Criterio %i: %s = %s",i+1, criterios[i], Epointer->grade);
+    Epointer->next;
   }
   fclose(notas);
 }

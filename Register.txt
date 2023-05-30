@@ -4,3 +4,4 @@ carlos,carlos@hospital.com,senha123,12313131211,preceptor
 aline,aline@hospital.com,senha123,01010233344,residente
 Usuariodeteste,usuario@teste.com,senha123345,12345678910,residente
 davi,davi@hospital.com,senha123,11111111111,residente
+rossiter,rossiter@hospital.com,senha123,11111111111,preceptor
