@@ -169,6 +169,8 @@ int main() {
           break;
 
         case 2:
+        printf("Digite o nome do usuario que deseja enviar um feedback:\n");
+        //scanf("%s", nome do usuario);
 
         /*feed backs AQUI*/
           
