@@ -263,15 +263,15 @@ void lookingResident(User** head, char email[], char role[], char namePreceptor[
   "O residente registra de maneira clara e concisa as sua observações? Avalie de 1 a 100","O residente partilha bem seu conhecimento e lidera bem sua equipe? Avalie de 1 a 100"};
   char taglist[48][200] = {"0 :O residente cumpre seus ações consistentemente e com excelência","1 :O residente poderia se empenhar mais nas tarefas de seu dia-a-dia, mas não falta com as entregas","2: O residente desempenha bem suas tarefas, porém falta consistência", "3: O residente deixa a desejar no compromisso com a instituição",
   "4: O residente falta mais dias que o aceito, porém não falta as atividade","5: O residente falta muito às suas atividades, porém comparece frequentemente no hospital","6: O residente cumpre seus horários e dias.","7: O residente não cumpre seus dias ou hoários",
-  "8: O residente veste-se apropriadamente, cumprindo as regras de prevenção à infecções","9: O residente quase sempre veste-se apropriadamente." "10: O residente as vezes se esquece do vestimento adequado.","11: O residente frequentemente ignora às regras de prevenção de infecções, comprometendo o bem-estar de todos",
+  "8: O residente veste-se apropriadamente, cumprindo as regras de prevenção à infecções","9: O residente quase sempre veste-se apropriadamente.", "10: O residente as vezes se esquece do vestimento adequado.","11: O residente frequentemente ignora às regras de prevenção de infecções, comprometendo o bem-estar de todos",
   "12: O residente é nato em lidar com situações do hospital no dia-a-dia.","13: O residente poderia lidar melhor com situações habituais", "14: O residente desempenha normalmente suas funções, porém lida com mal com imprevistos","15: O residente gerencia mal as complexidades de sua rotina",
   "16: O residente respeita os valores de seus pacientes e trata informações com cuidado e sigilo", "17: O residente possui dificuldades em empatizar com os valores dos pacientes", "18:O residente não respeita o sigilo profissional","19: O residente demonstra descaso com as informações dos pacientes e da instituição e falta profissionalismo",
   "20: O residente trabalha excelentemente com seus superiores e pacientes","21: O residente tem dificuldade em trabalhar com seus superiores","22: O residente possui dificuldade em trabalhar com pacientes","23: O residente não trabalha bem com pacientes e superiores",
   "24: O residente lida tranquilamente com críticas e possui também um bom senso crítico", "25: O residente possui a habilidade de criticar mas não lida bem com críticas",  "26: O residente aceita críticas de forma construtiva, mas não possui bom senso crítico","27: O residente lida mal com críticas de forma geral, faltando senso crítico e a habilidade de receber críticas ",
   "28: O residente transmite suas ideias perfeitamente e escuta as ideias de seus colegas de trabalho", "29: O residente transmite bem suas ideias, mas não escuta outras bem","30: O residente compreende ideias transmitidas pelos colegas, mas possui dificuldade em se comunicar", "31: O residente transmite mal suas ideias e não compreende o que seus colegas propõem",
-  "32: O residente planeja sua rotina muito bem","33: O residente planeja sua rotina bem","34: O residente planeja sua rotina mal","35: O residente planeja sua rotina muito mal"
+  "32: O residente planeja sua rotina muito bem","33: O residente planeja sua rotina bem","34: O residente planeja sua rotina mal","35: O residente planeja sua rotina muito mal",
   "36: O residente demonstra segurança e habilidade nas suas atividades","37: O residente tem bom domínio das práticas, mas falta a segurança de um bom profissional", "38: O residente é confiante e seguro, porém falta domíno das atividades","39: O residente demonstra problemas graves no entendimento e segurança com os procedimentos.",
-  "40: O residente realiza boas e curtas observações", "41: o residente realiza boas observações, mas podiam ser mais concisas", "42: O residente realiza observações concisas, porém pouco claras", "43: O residente escreve observações longas e confusas"
+  "40: O residente realiza boas e curtas observações", "41: o residente realiza boas observações, mas podiam ser mais concisas", "42: O residente realiza observações concisas, porém pouco claras", "43: O residente escreve observações longas e confusas",
   "44: O residente lidera seu grupo com eficiência e respeito", "45: O residente lidera seu grupo com respeito, mas de forma pouco eficiente", "46: O residente lidera seu grupo com eficiência, mas não respeita seus integrantes", "47: O residente não lidera bem os integrantes do seu grupo e falta respeito com eles."};
   User* current = *head;
   FILE* notas;
@@ -309,11 +309,15 @@ void lookingResident(User** head, char email[], char role[], char namePreceptor[
 
 
   //codigo incompleto
+  int j =0;
   for (int i=0;i<12;i++){
     printf("Criterio %i: %s\n",i+1,criterios[i]);
     printf("%s\n",norteadoras[i]);
     scanf("%s",Epointer->grade);
     fprintf(notas,", Criterio %i: %s = %s",i+1, criterios[i], Epointer->grade);
+    printf("Agora vamos inserir tags, preceptor! escolha baseado no índicie à esquerda!\n");
+    printf("%s\n %s\n %s\n %s\n",taglist[j],taglist[j+1],taglist[j+2],taglist[j+3]);
+    j=j+4;
     Epointer->next;
   }
   fclose(notas);
