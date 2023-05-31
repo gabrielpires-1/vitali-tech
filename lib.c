@@ -4,7 +4,8 @@
 #include <string.h>
 #include <conio.h>
 #include <locale.h>
-
+#define MAX_COMMENTS 10
+#define MAX_TAGS 10
 // limpa o buffer
 #if(0)
 void clearInputBuffer() {
@@ -205,20 +206,20 @@ void deleteByName(User** head, char name[]) {
 
 // recebe a head da lista e uma string que representa o cargo 
 // imprime os elementos da lista filtrando pelo cargo
-void printList(User *head, char role[]){
+
+void printList(User *head, char role[], int bool_cpf){
   User *usr = head;
   while(usr!= NULL){
     if (!strcmp(usr->role, role) && !strcmp(role, "residente")) {
       printf("\n\nNome do residente: %s\n", usr->name);
       printf("Email do residente: %s\n", usr->email);
-      printf("CPF do residente: %s\n", usr->cpf);
+      if(bool_cpf) printf("CPF do residente: %s\n", usr->cpf);
 
     } else if (!strcmp(usr->role, role) && !strcmp(role, "preceptor")) {
       printf("\n\nNome do preceptor: %s\n", usr->name);
       printf("Email do preceptor: %s\n", usr->email);
-      printf("CPF do preceptor: %s\n", usr->cpf);
-      printf("-----------------------------------------------------------------"
-             "-----------------");
+      if(bool_cpf) printf("CPF do preceptor: %s\n", usr->cpf);
+      printf("-----------------------------------------------------------------" "-----------------");
     }
     usr = usr -> next;
   }
@@ -226,13 +227,13 @@ void printList(User *head, char role[]){
 }
 
 // recebe a head da lista e salva a lista atual no arquivo txt
-void saveList(User **head){
+void saveList(User **head, char * filename){
   if (*head == NULL) {
     return;
   } else {
     User *temp = (User*) malloc(sizeof(User));
     temp = *head;
-    FILE *Register = fopen("Register.txt", "w");
+    FILE *Register = fopen(filename, "w");
     while(temp != NULL){
       if (Register == NULL) {
         printf("Falha ao abrir arquivo.\n");
@@ -335,6 +336,31 @@ int check_delete(const char* name, const char* email, User* head) {
   printf("Usuário não encontrado no sistema.\n");
   free(current);
   return 0;
+}
+
+void feedback(Feedbacks * feedback, int * cont){
+  char tags[MAX_TAGS][20] ={"Comunicativo", "Dedicado", "Atencioso", "Disperso"}; 
+  User * feed_user;
+    if (*cont < MAX_COMMENTS) {
+        Feedbacks novo_feedback;
+        
+        printf("Digite o nome do residente que gostaria de enviar um feedback:\n");
+        printf("Gostaria de adicionar uma tag?\n");
+        for(int i=0; i<MAX_TAGS; i++){
+          printf("%s\n", tags[i]);
+        }
+        
+        printf("Deseja inserir um comentário extra?\n");
+        if(0/*sim*/){
+
+        }else{
+
+        }
+    
+        printf("\nComment added successfully.\n");
+    } else {
+        printf("\nComment limit exceeded. Cannot add more comments.\n");
+    }
 }
 
 #if(0)

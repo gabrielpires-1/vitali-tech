@@ -11,6 +11,7 @@ typedef struct User {
   struct User *next;
 } User;
 
+//estrutura das avaliações
 typedef struct Evaluations {  
   char *activityName;
   char *grade;
@@ -18,9 +19,13 @@ typedef struct Evaluations {
   struct Evaluations *next;
 } Evaluations;
 
+//estrutura dos feedbacks
 typedef struct Feedbacks {
-  char *tag;
-  struct Feedbacks *next; //nao sei se precisa fazer uma lista por enquanto
+  struct User * sender;
+  struct User * receiver;
+  char * comment;    
+  char * tag;
+  struct Feedbacks * next; 
 } Feedbacks;
 
 
@@ -50,15 +55,16 @@ void create_list( User **head);
 
 // recene a head da lista e uma string que representa o nome do usuário
 // deleta o usuáiro da lista encadeada
-// deve-se lembrar de utilizar a função 'save_list()' para salvar a nova lista no txt
+// deve-se lembrar de utilizar a função 'savelist()' para salvar a nova lista no txt
 void deleteByName(User** head, char name[]);
 
 // recebe a head da lista e uma string que representa o cargo 
 // imprime os elementos da lista filtrando pelo cargo
-void printList(User *head, char role[]);
+//bool_cpf: se for 1, imprime os cpfs dos usuarios, se for 0 nao imprime
+void printList(User *head, char role[], int bool_cpf);
 
 // recebe a head da lista e salva a lista atual no arquivo txt
-void saveList(User **head);
+void saveList(User **head, char * filename);
 
 // Confere o nome do residente no user
 void lookingResident(User **head,char email[50],char role[], char namePreceptor[], Evaluations *Epointer);

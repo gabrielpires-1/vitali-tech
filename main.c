@@ -12,7 +12,7 @@ int main() {
   char email[50];
   char password[50];
   char newName[50], newEmail[50], newPassword[50], newCpf[12], newRole[50];
-  char delName[50], delEmail[50], nome[50],activityName[70],grade[10],tag[20], confirm_user[4];
+  char delName[50], delEmail[50], nome[50],activityName[70],grade[10],tag[20], confirm_user[4], confirm_feedback[4];
   system("color 0b");
   system("cls");
   User *usr = malloc(sizeof(User));
@@ -84,7 +84,7 @@ int main() {
 
           User *newUser = createUser(newName, newEmail, newPassword, newCpf, newRole);
           append(&head, newUser->name,newUser->email, newUser->password, newUser->cpf, newUser->role);
-          saveList(&head);
+          saveList(&head, "Register.txt");
           freeUser(newUser);
           goto menu;
           break;
@@ -102,7 +102,7 @@ int main() {
 
             if (check_delete(delName, delEmail, head)) {
               deleteByName(&head, delName);
-              saveList(&head);
+              saveList(&head, "Register.txt");
               printf("Usuário removido com sucesso.\n");
 
             } else {
@@ -126,7 +126,7 @@ int main() {
           scanf("%s", email);
           if(0){
           changeUser(&head, email);
-          saveList(&head);
+          saveList(&head, "Register.txt");
           }
           pause();
           goto menu;
@@ -134,14 +134,14 @@ int main() {
         //Visualizar lista de residentes cadastrados no sistema
         case 4:
           system("cls");
-          printList(head, "residente");
+          printList(head, "residente", 1);
           pause();
           goto menu;
           break;
         //Visualizar lista de preceptores cadastrados no sistema
         case 5:
           system("cls");
-          printList(head, "preceptor");
+          printList(head, "preceptor", 1);
           pause();
           goto menu;
           break;
@@ -156,23 +156,43 @@ int main() {
       else if (!strcmp(usr->role, "preceptor")) {
         printf("\n\n\t\t\tO que voc� gostaria de fazer hoje?\n");
         printf("1 - Aba de notas\n");
-        printf("2 - Aba de feedbacks\n"); //enviar feedbacks apenas a residentes, 
+        printf("2 - Aba de feedbacks\n");
         printf("3 - Sair do programa\n");
-        scanf("%i",&choice);
+        scanf("%d",&choice);
         switch (choice) {
         case 1:
           system("cls");
-          printList(head, "residente");
+          printList(head, "residente", 1);
           printf("Insira o e-mail do residente que desejas avaliar: \n");
           scanf("%s",email);
           lookingResident(&head,email, "residente", usr->name, Epointer);
           break;
 
         case 2:
-        printf("Digite o nome do usuario que deseja enviar um feedback:\n");
-        //scanf("%s", nome do usuario);
+          //imprimir lista de feedback
+          printf("Seus residentes:\n\n");
+          printList(head, "residente", 0);
 
-        /*feed backs AQUI*/
+          printf("Gostaria de enviar algum feedback?\n");
+          scanf("%s", confirm_feedback);
+          if(strcmp(confirm_feedback, "s") == 0 || strcmp(confirm_feedback, "S") == 0){
+            printf("Digite o nome do residente que gostaria de enviar um feedback:\n");
+
+          }else if (strcmp(confirm_feedback, "n") == 0 || strcmp(confirm_feedback, "N") == 0){
+            pause();
+            goto menu;
+            break;
+            /*SENDER É USUARIO LOGADO*/            
+            //struct feedback vai ser uma lista com todos os feedbacks do programa com as informações de quem enviou e quem recebeu
+            /*pedir pra inserir email do receiver
+            procurar na lista o user
+            armazena o user sender e o receiver na struct feedback
+            insere tags + comentarios
+            dps inserir data do cometario
+            armazena esses dados na struct feedback
+            escrever no arquivo as infos da struct estilo oq pires botou
+            */
+          }
           
           break;
 
@@ -239,7 +259,7 @@ estilo menu
       -apaga no txt
     4- sair
 
-  -Menu preceptor
+--Menu preceptor
     1- aba de avaliação(notas)
       Criterios:
       Exemplo:
@@ -248,8 +268,7 @@ estilo menu
       -perguntas norteadoras(responder de 0 a 5):
       Exemplo:
       -(0-5)o residente se mostrou capaz de se comunicar bem com seus colegas?
-      -(0-5)o residente conseguiu passar confiança dos conteudos aprendidos na
-faculdade?
+      -(0-5)o residente conseguiu passar confiança dos conteudos aprendidos na faculdade?
       -(0-5) outras perguntas (vamo ver ainda as perguntas)
       Tags:
       -deseja inserir alguma tag pra complementar a avaliação?
@@ -258,7 +277,7 @@ faculdade?
 colegas -o residente nao passou confiança dos conhecimentos aprendidos na
 faculdade
 
-    2- aba de feedbacks
+    2- ABA de feedbacks
       -exibir feedbacks do usuario 
       1- deseja enviar algum feedback?
       -digite o nome da pessoa a quem voc� deseja enviar -> procura no arquivo a pessoa

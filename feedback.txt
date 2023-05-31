@@ -1,0 +1,1 @@
+nome do user sender, nome do user receiver, comentário, tag, data
