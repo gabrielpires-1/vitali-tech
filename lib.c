@@ -320,7 +320,7 @@ void lookingResident(User** head, char email[], char role[], char namePreceptor[
     scanf("%d",&index);
     Epointer->tag = malloc(strlen(taglist[index])+1);
     strcpy(Epointer->tag,taglist[index]);
-    fprintf(notas, ", Criterio %i: %s = %s", i+1, criterios[i], Epointer->grade);
+    fprintf(notas, ", CRITÉRIO %i: %s NOTA: %s", i+1, criterios[i], Epointer->grade);
     fprintf(notas,"TAG AVALIATIVA: %s",Epointer->tag);
     j=j+4;
     Epointer->next;
