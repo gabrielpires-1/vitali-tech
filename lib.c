@@ -50,7 +50,7 @@ void CreateEvaluationsAttributes (Evaluations *Epointer){
   
   Epointer->activityName = malloc(strlen(Epointer->activityName)+1);
   Epointer->grade = malloc(strlen(Epointer->grade)+1);
-  Epointer->tag = malloc(strlen(Epointer->tag)+1);
+  
 
 }
 
@@ -309,14 +309,19 @@ void lookingResident(User** head, char email[], char role[], char namePreceptor[
 
 
   //codigo incompleto
-  int j =0;
+  int j = 0;
+  int index;
   for (int i=0;i<12;i++){
     printf("Criterio %i: %s\n",i+1,criterios[i]);
     printf("%s\n",norteadoras[i]);
     scanf("%s",Epointer->grade);
-    fprintf(notas,", Criterio %i: %s = %s",i+1, criterios[i], Epointer->grade);
     printf("Agora vamos inserir tags, preceptor! escolha baseado no índicie à esquerda!\n");
     printf("%s\n %s\n %s\n %s\n",taglist[j],taglist[j+1],taglist[j+2],taglist[j+3]);
+    scanf("%d",&index);
+    Epointer->tag = malloc(strlen(taglist[index])+1);
+    strcpy(Epointer->tag,taglist[index]);
+    fprintf(notas, ", Criterio %i: %s = %s", i+1, criterios[i], Epointer->grade);
+    fprintf(notas,"TAG AVALIATIVA: %s",Epointer->tag);
     j=j+4;
     Epointer->next;
   }
