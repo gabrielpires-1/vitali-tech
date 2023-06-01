@@ -11,12 +11,15 @@ typedef struct User {
   struct User *next;
 } User;
 
+// nome do preceptor, email do residente, nome da atividade, nota do critério 1, resposta1(tag),nota2, resposta2(tag), nota3,resposta3(tag).......,comentario-opcional
 //estrutura das avaliações
 typedef struct Evaluations {  
-  char *activityName;
-  char *grade;
+  struct User * preceptor; // preceptor que vai dar a nota
+  struct User * residente; // residente que vai receber a nota
+  char *activityName; // nome da atividade
+  char *grade; 
   char *tag; 
-  struct Evaluations *next;
+  struct Evaluations *next; // ponteiro para a próxima struct atividade
 } Evaluations;
 
 //estrutura dos feedbacks
