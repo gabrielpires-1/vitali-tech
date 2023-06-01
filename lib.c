@@ -346,7 +346,7 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
   printf("\t\tVamos iniciar a avaliação, preceptor!\n Insira o nome da atividade:\n");
 
   // Lendo o nome da avaliação
-  scanf("%s", Epointer->activityName);
+  scanf(" %[^\n]", Epointer->activityName);
 
   system("cls");
   // Printando o nome da avaliação no arquivo notas.txt
