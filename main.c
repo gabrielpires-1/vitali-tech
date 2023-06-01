@@ -4,6 +4,7 @@
 #include <string.h>
 #include <locale.h>
 #include <ctype.h>
+#include <conio.h>
 
 int choice;
 
@@ -12,7 +13,8 @@ int main() {
   char email[50];
   char password[50];
   char newName[50], newEmail[50], newPassword[50], newCpf[12], newRole[50];
-  char delName[50], delEmail[50], nome[50],activityName[70],grade[10],tag[20], confirm_user[4], confirm_feedback[4];
+  char delName[50], delEmail[50], nome[50],activityName[70],grade[10],tag[20], confirm_user[4], confirm_feedback[4], ch;
+  int i = 0;
   system("color 0b");
   system("cls");
   User *usr = malloc(sizeof(User));
@@ -37,7 +39,28 @@ int main() {
     printf("\nLogin (email):");
     scanf("%s", email);
     printf("Senha: ");
-    scanf("%s", password);
+    
+    // Aparecer * na senha
+    while (1) {
+      ch = getch();
+
+      if (ch == 13) {  // Verifica se Enter foi pressionada, em relação a tabela ascii
+        password[i] = '\0';  // Termina a string
+        i = 0; // Zera os caracters da strings
+        break;
+      }
+
+      if (ch == 8) {  // Verifica se a tecla de voltar caracter foi pressionada, em relação a tabela ascii
+        if (i > 0) {
+          printf("\b \b");  // Apaga o último caractere
+          i--;
+        }
+      } else {
+        password[i] = ch;
+        printf("*");  // Mostra o * ao inves do caracter
+        i++;
+      }
+    } 
 
     if (isLoggedIn = login(email, password, usr)) {
       system("cls");
