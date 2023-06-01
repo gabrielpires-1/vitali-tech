@@ -11,7 +11,7 @@ typedef struct User {
   struct User *next;
 } User;
 
-// nome do preceptor, email do residente, nome da atividade, nota do critério 1, resposta1(tag),nota2, resposta2(tag), nota3,resposta3(tag).......,comentario-opcional
+// nome do preceptor, email do residente, nome da atividade, nota do critério 1, resposta1(tag),nota2, resposta2(tag), nota3,resposta3(tag)...,comentario-opcional
 //estrutura das avaliações
 typedef struct Evaluations {  
   struct User * preceptor; // preceptor que vai dar a nota
@@ -22,7 +22,7 @@ typedef struct Evaluations {
   struct Evaluations *next; // ponteiro para a próxima struct atividade
 } Evaluations;
 
-//estrutura dos feedbacks
+//Estrutura dos feedbacks
 typedef struct Feedbacks {
   struct User * sender;
   struct User * receiver;
@@ -61,6 +61,9 @@ void create_list( User **head);
 // deve-se lembrar de utilizar a função 'savelist()' para salvar a nova lista no txt
 void deleteByName(User** head, char name[]);
 
+//encontra o nome do user na lista pelo nome e retorna o user
+User * findUserByName(User* head, const char* name);
+
 // recebe a head da lista e uma string que representa o cargo 
 // imprime os elementos da lista filtrando pelo cargo
 //bool_cpf: se for 1, imprime os cpfs dos usuarios, se for 0 nao imprime
@@ -80,5 +83,8 @@ void CreateEvaluationsAttributes(Evaluations *Epointer);
 
 //Valida e-mail e nome pra deletar um usuário 
 int check_delete(const char* name, const char* email, User* head);
+
+void send_feedback(Feedbacks **feedback, int *cont, User * sender, User * receiver);
+
 
 #endif

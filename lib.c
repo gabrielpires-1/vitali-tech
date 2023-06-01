@@ -4,6 +4,7 @@
 #include <string.h>
 #include <conio.h>
 #include <locale.h>
+#include <time.h>
 #define MAX_COMMENTS 10
 #define MAX_TAGS 10
 // limpa o buffer
@@ -230,6 +231,18 @@ void deleteByName(User **head, char name[])
   pause();
 }
 
+User * findUserByName(User* head, const char* name) {
+  User* current = head;
+  while (current != NULL) {
+    if (strcmp(current->name, name) == 0) {
+      return current; // Retorna o usuário quando o nome corresponde
+    }
+    current = current->next;
+  }
+  return NULL; // Retorna NULL se o usuário não for encontrado
+}
+
+
 // recebe a head da lista e uma string que representa o cargo
 // imprime os elementos da lista filtrando pelo cargo
 
@@ -424,34 +437,79 @@ int check_delete(const char *name, const char *email, User *head)
   return 0;
 }
 
-void feedback(Feedbacks *feedback, int *cont)
+void send_feedback(Feedbacks **feedback, int *cont, User * sender, User * receiver)
 {
-  char tags[MAX_TAGS][20] = {"Comunicativo", "Dedicado", "Atencioso", "Disperso"};
-  User *feed_user;
-  if (*cont < MAX_COMMENTS)
+  char tags[4][20] = {"Comunicativo", "Dedicado", "Atencioso", "Disperso"};
+  char add_comment, add_tag;
+  //limite de comentarios
+  if (*cont < 10)
   {
-    Feedbacks novo_feedback;
-
+    // Solicitar o nome do residente
     printf("Digite o nome do residente que gostaria de enviar um feedback:\n");
-    printf("Gostaria de adicionar uma tag?\n");
-    for (int i = 0; i < MAX_TAGS; i++)
-    {
-      printf("%s\n", tags[i]);
-    }
 
-    printf("Deseja inserir um comentário extra?\n");
-    if (0 /*sim*/)
+    printf("Gostaria de adicionar uma tag?[s/n]\n");
+    for (int i = 0; i < 4; i++)
     {
+      printf("%d - %s\n", i, tags[i]);
+    }
+    scanf(" %c", &add_tag);
+    if(add_tag == 's'){
+      //inserir tag
+    }
+    //else if (add_tag == 'n')
+    
+    
+    // Verificar se deseja inserir um comentário extra
+    printf("Deseja inserir um comentário extra?[s/n]\n");
+    scanf(" %c", &add_comment);
+
+    char comment[100];
+    if (add_comment == 's')
+    {
+      // Solicitar o comentário extra
+      printf("Digite o comentário extra:\n");
+      scanf(" %[^\n]", comment);
     }
     else
     {
+      // Comentário vazio
+      strcpy(comment,"");
+    }
+
+    // Adicionar o feedback à estrutura Feedbacks
+    Feedbacks *new_feedback = (Feedbacks *)malloc(sizeof(Feedbacks));
+    new_feedback->sender = sender;
+    new_feedback->receiver = receiver;
+    strcpy(new_feedback->comment, comment);
+    new_feedback->tag = ""; // Definir a tag corretamente
+    new_feedback->next = NULL;
+
+    // Escrever no arquivo feedback.txt
+    FILE *fp = fopen("feedback.txt", "a");
+    if (fp != NULL)
+    {
+      // Obtendo a data atual do feedback
+      time_t t = time(NULL);
+      struct tm tm = *localtime(&t);
+      char date[20];
+      sprintf(date, "%02d-%02d-%04d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+
+      // Escrever no arquivo no formato: nome_sender, nome_receiver, comentário, tag, data
+      fprintf(fp, "%s, %s, %s, %s, %s\n", sender->name, receiver->name, comment, new_feedback->tag, date);
+
+      // Fechar o arquivo
+      fclose(fp);
+    }
+    else
+    {
+      printf("Erro ao abrir o arquivo feedback.txt\n");
     }
 
     printf("\nComment added successfully.\n");
   }
   else
   {
-    printf("\nComment limit exceeded. Cannot add more comments.\n");
+    printf("\nNúmero de comentários máximo atingido! Caso deseje enviar mais comentários espere até amanhã!\n");
   }
 }
 

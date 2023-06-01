@@ -13,22 +13,24 @@ int main() {
   char email[50];
   char password[50];
   char newName[50], newEmail[50], newPassword[50], newCpf[12], newRole[50];
-  char delName[50], delEmail[50], nome[50],activityName[70],grade[10],tag[20], confirm_user[4], confirm_feedback[4], ch;
-  int i = 0;
+  char delName[50], delEmail[50], nome[50],activityName[70],grade[10],tag[20], confirm_user[4], confirm_feedback[4], ch, receiver_name[100];;
+  int i = 0, cont_comments = 0;
   system("color 0b");
   system("cls");
-  User *usr = malloc(sizeof(User));
+  User *usr = (User *)malloc(sizeof(User));
   usr->name = malloc(51 * sizeof(char));
   usr->email = malloc(51 * sizeof(char));
   usr->password = malloc(51 * sizeof(char));
-  usr->cpf = malloc(12 * sizeof(char));
+  usr->cpf =  malloc(12 * sizeof(char));
   usr->role = malloc(51 * sizeof(char));
   User *head = NULL;
-  Evaluations *Epointer = malloc(sizeof(Evaluations));
+  Evaluations *Epointer = (Evaluations *) malloc(sizeof(Evaluations));
   Epointer->activityName =malloc(strlen(activityName));
-  Epointer->grade =malloc(strlen(grade));
-  Epointer->tag =malloc(strlen(tag));
+  Epointer->grade = malloc(strlen(grade));
+  Epointer->tag = malloc(strlen(tag));
+  Feedbacks * feedback = NULL;
   create_list(&head);
+
   // use o código abaixo para criar um gestor, caso o txt seja apagado.
   // storeRegister(createUser("diretor","diretor@hospital.com", "senha123", "99999999999", "gestor"));
 
@@ -193,13 +195,21 @@ int main() {
 
         case 2:
           //imprimir lista de feedback
+
           printf("Seus residentes:\n\n");
           printList(head, "residente", 0);
 
           printf("Gostaria de enviar algum feedback?\n");
           scanf("%s", confirm_feedback);
+
           if(strcmp(confirm_feedback, "s") == 0 || strcmp(confirm_feedback, "S") == 0){
             printf("Digite o nome do residente que gostaria de enviar um feedback:\n");
+            scanf("% [^\n]", receiver_name);
+            User * receiver = findUserByName(head, receiver_name);
+
+            if(receiver != NULL){
+              send_feedback(&feedback, &cont_comments, usr, receiver);
+            }
 
           }else if (strcmp(confirm_feedback, "n") == 0 || strcmp(confirm_feedback, "N") == 0){
             pause();
