@@ -347,28 +347,43 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
 
   // Lendo o nome da avaliação
   scanf("%s", Epointer->activityName);
-  printf("\t\tExcelente! Agora, baseado no critério \n");
+
+  system("cls");
   // Printando o nome da avaliação no arquivo notas.txt
   fprintf(notas, ", Nome da atividade: %s", Epointer->activityName);
 
   // codigo incompleto
   int j = 0;
-  int index;
-  for (int i = 0; i < 12; i++)
-  {
-    printf("Criterio %i: %s\n", i + 1, criterios[i]);
-    printf("%s\n", norteadoras[i]);
-    scanf("%s", Epointer->grade);
+  int index, ToInt,acumulador;
+  acumulador =0;
+  ToInt =0;
+  for (int i=0;i<12;i++){
+    system("cls");
+    printf("Criterio %i: %s\n",i+1,criterios[i]);
+    printf("%s\n",norteadoras[i]);
+    scanf("%s",Epointer->grade);
+    ToInt = atoi(Epointer->grade);
     printf("Agora vamos inserir tags, preceptor! escolha baseado no índicie à esquerda!\n");
-    printf("%s\n %s\n %s\n %s\n", taglist[j], taglist[j + 1], taglist[j + 2], taglist[j + 3]);
-    scanf("%d", &index);
-    Epointer->tag = malloc(strlen(taglist[index]) + 1);
-    strcpy(Epointer->tag, taglist[index]);
-    fprintf(notas, ", CRITÉRIO %i: %s NOTA: %s", i + 1, criterios[i], Epointer->grade);
-    fprintf(notas, "TAG AVALIATIVA: %s", Epointer->tag);
-    j = j + 4;
-    Epointer->next;
+    printf("%s\n %s\n %s\n %s\n",taglist[j],taglist[j+1],taglist[j+2],taglist[j+3]);
+    scanf("%d",&index);
+    acumulador = acumulador+ToInt;
+    if(index != j && index!=j+1 && index!= j+2 && index!=j+3){
+      while(index != j && index!=j+1 && index!= j+2 &&index!=j+3){
+      printf("Tag inválida! selecione uma tag conforme os critérios.\n");
+      printf("%s\n %s\n %s\n %s\n",taglist[j],taglist[j+1],taglist[j+2],taglist[j+3]);
+      scanf("%d",&index);
+      }
+    }
+      Epointer->tag = malloc(strlen(taglist[index])+1);
+      strcpy(Epointer->tag,taglist[index]);
+      fprintf(notas, ", CRITÉRIO %i: %s NOTA: %s", i+1, criterios[i], Epointer->grade);
+      fprintf(notas,", TAG AVALIATIVA: %s",Epointer->tag);
+      Epointer->next;
+      j=j+4;
+  
+      
   }
+  fprintf(notas,", NOTA FINAL: %d",acumulador/12);
   fclose(notas);
 }
 
