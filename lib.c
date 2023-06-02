@@ -399,7 +399,31 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
   fprintf(notas,", NOTA FINAL: %d",acumulador/12);
   fclose(notas);
 }
+int check_email( const char *email, User *head)
+{
+  User *current = head;
+  int arroba = 0, ponto = 0;
 
+  // checando email e nome de usuario
+  for (int i = 0; email[i] != '\0'; i++)
+  {
+    if (email[i] == '@')
+    {
+      arroba++;
+    }
+    else if (email[i] == '.')
+    {
+      ponto++;
+    }
+  }
+
+  if (arroba != 1 || ponto != 1)
+  {
+    return 0;
+  }else{
+    return 1;
+  }
+}
 int check_delete(const char *name, const char *email, User *head)
 {
   User *current = head;
@@ -428,7 +452,7 @@ int check_delete(const char *name, const char *email, User *head)
     if (strcmp(current->name, name) == 0 && strcmp(current->email, email) == 0)
     {
       printf("Usuário encontrado no arquivo.\n");
-      return 1;
+      return 0;
     }
     current = current->next;
   }

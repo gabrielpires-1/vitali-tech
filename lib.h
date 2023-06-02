@@ -86,5 +86,7 @@ int check_delete(const char* name, const char* email, User* head);
 
 void send_feedback(Feedbacks **feedback, int *cont, User * sender, User * receiver);
 
+int check_email( const char *email, User *head);
+
 
 #endif
