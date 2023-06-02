@@ -16,7 +16,7 @@ int main() {
   char delName[50], delEmail[50], nome[50],activityName[70],grade[10],tag[20], confirm_user[4], confirm_feedback[4], ch, receiver_name[100];;
   int i = 0, cont_comments = 0;
   system("color 0b");
-  system("cls");
+  clearScreen();
   User *usr = (User *)malloc(sizeof(User));
   allocMemoryForUser(usr);
   User *head = NULL;
@@ -61,7 +61,7 @@ int main() {
     }
 
     if (isLoggedIn = login(email, password, usr)) {
-      system("cls");
+      clearScreen();
       printf("\n\t\t\tBem vindo, %s!", usr->name);
       printf("\n|Email:\t\t%s", usr->email);
       printf("\n|CPF:\t\t%s", usr->cpf);
@@ -71,7 +71,7 @@ int main() {
       if (!strcmp(usr->role, "gestor")) {
         //Coloquei o choise como varivel global
       menu:
-        system("cls");
+        clearScreen();
         printf("\t\t\tO que voc� gostaria de fazer %s?\n", usr->name);
         printf("1 - Cadastrar um novo residente ou preceptor\n");
         printf("2 - Apagar um residente ou preceptor do sistema\n");
@@ -83,6 +83,7 @@ int main() {
         switch (choice) {
         //cadastrar usuarios:
         case 1:
+          clearScreen();
           printf("\n\t\t\tVamos cadastrar um novo usu�rio!\n");
           printf("Qual o nome do usu�rio?\n");
           scanf("%s", newName);
@@ -111,6 +112,7 @@ int main() {
           break;
         //deletar usuarios:
         case 2: 
+          clearScreen();
           printf("\n\t\t\tVamos apagar um usu�rio do sistema!\n");
           printf("Digite o nome do perfil a ser removido:\n");
           scanf("%s", delName);
@@ -142,7 +144,7 @@ int main() {
         
         // Alterar um usuário já existente
         case 3:
-          system("cls");
+          clearScreen();
           printf("Qual o email do usuário que você gostaria de alterar os dados?\n");
           scanf("%s", email);
           if(1){
@@ -154,22 +156,27 @@ int main() {
           break;
         //Visualizar lista de residentes cadastrados no sistema
         case 4:
-          system("cls");
+          clearScreen();
           printList(head, "residente", 1);
           pause();
           goto menu;
           break;
         //Visualizar lista de preceptores cadastrados no sistema
         case 5:
-          system("cls");
+          clearScreen();
           printList(head, "preceptor", 1);
           pause();
           goto menu;
           break;
         case 6:
-          system("cls");
+          clearScreen();
           freeUser(usr); // libera a memória alocada para encontrar o usu�rio
           exit(1);
+          break;
+        default:
+          printf("\nInforme um comando válido! ");
+          pause();
+          goto menu;
           break;
         }
       }
@@ -182,7 +189,7 @@ int main() {
         scanf("%d",&choice);
         switch (choice) {
         case 1:
-          system("cls");
+          clearScreen();
           printList(head, "residente", 1);
           printf("Insira o e-mail do residente que desejas avaliar: \n");
           scanf("%s",email);

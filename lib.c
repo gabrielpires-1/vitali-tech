@@ -5,6 +5,7 @@
 #include <conio.h>
 #include <locale.h>
 #include <time.h>
+
 #define MAX_COMMENTS 10
 #define MAX_TAGS 10
 
@@ -18,6 +19,17 @@ void clearInputBuffer()
   }
 }
 #endif
+
+// limpa a tela
+void clearScreen() {
+  #ifdef __linux__
+    system("clear");
+  #elif _WIN32
+    system("CLS");
+  #else
+    system("clear");
+  #endif  
+}
 
 // aloca memória para os tipos de dado da estrutura User
 void allocMemoryForUser(User * usr){

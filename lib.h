@@ -35,6 +35,9 @@ typedef struct Feedbacks {
 // limpa o buffer
 void clearInputBuffer();
 
+// limpa a tela
+void clearScreen();
+
 // aloca memória para os tipos de dado da estrutura User
 void allocMemoryForUser(User * usr);
 
