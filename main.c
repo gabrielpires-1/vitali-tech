@@ -18,11 +18,7 @@ int main() {
   system("color 0b");
   system("cls");
   User *usr = (User *)malloc(sizeof(User));
-  usr->name = malloc(51 * sizeof(char));
-  usr->email = malloc(51 * sizeof(char));
-  usr->password = malloc(51 * sizeof(char));
-  usr->cpf =  malloc(12 * sizeof(char));
-  usr->role = malloc(51 * sizeof(char));
+  allocMemoryForUser(usr);
   User *head = NULL;
   Evaluations *Epointer = (Evaluations *) malloc(sizeof(Evaluations));
   Epointer->activityName =malloc(strlen(activityName));
@@ -62,7 +58,7 @@ int main() {
         printf("*");  // Mostra o * ao inves do caracter
         i++;
       }
-    } 
+    }
 
     if (isLoggedIn = login(email, password, usr)) {
       system("cls");

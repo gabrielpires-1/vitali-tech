@@ -7,6 +7,7 @@
 #include <time.h>
 #define MAX_COMMENTS 10
 #define MAX_TAGS 10
+
 // limpa o buffer
 #if (1)
 void clearInputBuffer()
@@ -17,6 +18,15 @@ void clearInputBuffer()
   }
 }
 #endif
+
+// aloca memória para os tipos de dado da estrutura User
+void allocMemoryForUser(User * usr){
+  usr->name = malloc(51 * sizeof(char));
+  usr->email = malloc(51 * sizeof(char));
+  usr->password = malloc(51 * sizeof(char));
+  usr->cpf =  malloc(12 * sizeof(char));
+  usr->role = malloc(51 * sizeof(char));
+}
 
 // função para solicitar que o usuário tecle alguma tecla para continuar
 void pause()
@@ -52,6 +62,7 @@ User *createUser(char *newName, char *newEmail, char *newPassword, char *newCpf,
 
   return newUser;
 }
+
 void CreateEvaluationsAttributes(Evaluations *Epointer)
 {
 
