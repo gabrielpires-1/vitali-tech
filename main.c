@@ -13,7 +13,7 @@ int main() {
   char email[50];
   char password[50];
   char newName[50], newEmail[50], newPassword[50], newCpf[12], newRole[50];
-  char delName[50], delEmail[50], nome[50],activityName[70],grade[10],tag[20], confirm_user[4], confirm_feedback[4], ch, receiver_name[100];;
+  char delName[50], delEmail[50], nome[50],activityName[70],grade[10],tag[20], confirm_user, confirm_feedback[4], ch, receiver_name[100];;
   int i = 0, cont_comments = 0;
   system("color 0b");
   clearScreen();
@@ -119,9 +119,9 @@ int main() {
           printf("Digite o e-mail do perfil a ser removido:\n");
           scanf("%s", delEmail);
           printf("tem certeza que deseja apagar o usuário %s com o email %s[s/n]?\n ", delName, delEmail);
-          scanf("%s", confirm_user);
+          scanf(" %c", &confirm_user);
 
-          if (strcmp(confirm_user, "s") == 0 || strcmp(confirm_user, "S") == 0 ) {
+          if (confirm_user == 's'   || confirm_user == 'S' ) {
 
             if (check_delete(delName, delEmail, head)) {
               deleteByName(&head, delName);
@@ -131,7 +131,7 @@ int main() {
             } else {
               printf("Usuário não encontrado. Remoção cancelada.\n");
             }
-          } else if (strcmp(confirm_user, "n") == 0 || strcmp(confirm_user, "N") == 0 ) {
+          } else if (confirm_user == 'n'   || confirm_user == 'N' ) {
             printf("Operação de exclusão cancelada pelo usuário.\n");
 
           } else {

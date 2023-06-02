@@ -447,6 +447,7 @@ int check_email( const char *email, User *head)
     return 1;
   }
 }
+
 int check_delete(const char *name, const char *email, User *head)
 {
   User *current = head;
@@ -475,7 +476,7 @@ int check_delete(const char *name, const char *email, User *head)
     if (strcmp(current->name, name) == 0 && strcmp(current->email, email) == 0)
     {
       printf("Usuário encontrado no arquivo.\n");
-      return 0;
+      return 1;
     }
     current = current->next;
   }
