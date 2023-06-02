@@ -14,8 +14,8 @@ typedef struct User {
 // nome do preceptor, email do residente, nome da atividade, nota do critério 1, resposta1(tag),nota2, resposta2(tag), nota3,resposta3(tag)...,comentario-opcional
 //estrutura das avaliações
 typedef struct Evaluations {  
-  struct User * preceptor; // preceptor que vai dar a nota
-  struct User * residente; // residente que vai receber a nota
+  char *preceptor; // preceptor que vai dar a nota
+  char *residente; // residente que vai receber a nota
   char *activityName; // nome da atividade
   char *grade; 
   char *tag; 

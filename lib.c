@@ -351,7 +351,7 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
                            "44: O residente lidera seu grupo com eficiência e respeito", "45: O residente lidera seu grupo com respeito, mas de forma pouco eficiente", "46: O residente lidera seu grupo com eficiência, mas não respeita seus integrantes", "47: O residente não lidera bem os integrantes do seu grupo e falta respeito com eles."};
   User *current = *head;
   FILE *notas;
-  notas = fopen("notas.txt", "w");
+  notas = fopen("notas.txt", "a");
   if (notas == NULL)
   {
     printf("Erro ao abrir o arquivo!");
@@ -359,6 +359,8 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
   }
 
   // Printando o nome do preceptor
+  Epointer->preceptor = malloc(strlen(namePreceptor)+1);//armazendo o nome do preceptor na Struct
+  strcpy(Epointer->preceptor,namePreceptor);
   fprintf(notas, "Preceptor: %s", namePreceptor);
 
   while (current != NULL)
@@ -366,6 +368,8 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
     if (strcmp(current->email, email) == 0 && strcmp(current->role, role) == 0)
     {
       // Se o nome for encontrado e role for "residente", ele entra e printa o nome
+      Epointer->residente = malloc(strlen(current->email)+1);//Armazenando o nome do residente na Struct
+      strcpy(Epointer->residente,current->email);
       fprintf(notas, ", Residente: %s", current->email);
       break;
     }
@@ -419,7 +423,7 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
   
       
   }
-  fprintf(notas,", NOTA FINAL: %d",acumulador/12);
+  fprintf(notas,", NOTA FINAL: %d\n",acumulador/12);
   fclose(notas);
 }
 int check_email( const char *email, User *head)

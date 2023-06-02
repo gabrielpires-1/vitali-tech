@@ -4,3 +4,4 @@ car@,car@@,123,12345678910,preceptor
 alina,aline@hospital.com,senha123,12345678910,preceptor
 Usuariodeteste,usuario@teste.com,senha123345,12345678910,residente
 rossiter,rossiter@hospital.com,senha123,11111111111,preceptor
+gabi,gabi@hospital.com,senha123,11111111111,residente
