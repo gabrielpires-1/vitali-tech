@@ -764,7 +764,7 @@ void changeUser(User **head, char *email)
 
 
 void printEvaluations(char *residenteEmail){
-  char criterios[12][50] = {"Assisuidade", "Pontualidade", "Vestuario", "Iniciativa", "Postura Ético-Profissional", "Relacionamento em equipe", "Espirito Crítico",
+  char criterios_nomes[12][50] = {"Assisuidade", "Pontualidade", "Vestuario", "Iniciativa", "Postura Ético-Profissional", "Relacionamento em equipe", "Espirito Crítico",
                             "Comunicação", "Planejamento das atividades de enfermagem", "Dominio dos procedimentos", "Evolução", "Liderança"};
   FILE *fileActivities;
   fileActivities = fopen("notas.txt", "r");
@@ -783,9 +783,11 @@ void printEvaluations(char *residenteEmail){
         char preceptor[100];
         char residente[100];
         char atividade[100];
-        char criterios[12][100];
-        char notas[12][100];
-        char notaFinal[20];
+        char tags[12][100];
+        int notas[12];
+        int notaFinal;
+        int posNotas = 0;
+        int posTag = 0;
 
         while (token != NULL) {
             switch (i) {
@@ -799,12 +801,14 @@ void printEvaluations(char *residenteEmail){
                     strcpy(atividade, token);
                     break;
                 default:
-                    if (i % 4 == 3) { 
-                        strcpy(notas[i/4 - 1], token);
-                    } else if (i % 4 == 0) {
-                        strcpy(criterios[i/4 - 1], token);
-                    } else if (i == 46) {
-                        strcpy(notaFinal, token);
+                    if (i % 2 == 1 && i != 27) { 
+                        notas[posNotas] = atoi(token);
+                        posNotas++;
+                    } else if (i % 2 == 0) {
+                        strcpy(tags[posTag], token);
+                        posTag++;
+                    } else if (i == 27) {
+                        notaFinal = atoi(token);
                     }
                     break;
             }
@@ -817,9 +821,9 @@ void printEvaluations(char *residenteEmail){
           activiesNumber++;
           printf("\nPreceptor: %s, Residente: %s, Nome da atividade: %s\n\n", preceptor, residente, atividade);
           for (int j = 0; j < 12; j++) {
-            printf("%s, Nota: %s\n", criterios[j], notas[j]);
+            printf("%s: %s, Nota: %d\n", criterios_nomes[j], tags[j], notas[j]);
           }
-          printf("Nota Final: %s\n", notaFinal);
+          printf("Nota Final: %d\n", notaFinal);
         }
 
   }
