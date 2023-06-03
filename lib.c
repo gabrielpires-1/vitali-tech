@@ -337,7 +337,7 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
                                "O residente lida bem com críticas e possui um bom senso crítico? Avalie de 1 a 100", "O residente comunica bem seus pensamentos? Avalie de 1 a 100",
                                "O residente estabelece prioridades e estrutura suas atividades bem? Avalie de 1 a 100", "O residente demonstra habilidade e segurança nos procedimentos realizados? Avalie de 1 a 100",
                                "O residente registra de maneira clara e concisa as sua observações? Avalie de 1 a 100", "O residente partilha bem seu conhecimento e lidera bem sua equipe? Avalie de 1 a 100"};
-  char taglist[48][200] = {"0 :O residente cumpre seus ações consistentemente e com excelência", "1 :O residente poderia se empenhar mais nas tarefas de seu dia-a-dia", "2: O residente desempenha bem suas tarefas", "3: O residente deixa a desejar no compromisso com a instituição",
+  char taglist[48][200] = {"0: O residente cumpre seus ações consistentemente e com excelência", "1 :O residente poderia se empenhar mais nas tarefas de seu dia-a-dia", "2: O residente desempenha bem suas tarefas", "3: O residente deixa a desejar no compromisso com a instituição",
                            "4: O residente falta mais dias que o aceito", "5: O residente falta muito às suas atividades", "6: O residente cumpre seus horários e dias.", "7: O residente não cumpre seus dias ou hoários",
                            "8: O residente veste-se apropriadamente.", "9: O residente quase sempre veste-se apropriadamente.", "10: O residente as vezes se esquece do vestimento adequado.", "11: O residente frequentemente ignora às regras de prevenção de infecções.",
                            "12: O residente é nato em lidar com situações do hospital no dia-a-dia.", "13: O residente poderia lidar melhor com situações habituais", "14: O residente desempenha normalmente suas funções.", "15: O residente gerencia mal as complexidades de sua rotina",
@@ -361,7 +361,7 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
   // Printando o nome do preceptor
   Epointer->preceptor = malloc(strlen(namePreceptor)+1);//armazendo o nome do preceptor na Struct
   strcpy(Epointer->preceptor,namePreceptor);
-  fprintf(notas, "Preceptor: %s", namePreceptor);
+  fprintf(notas, "%s", namePreceptor);
 
   while (current != NULL)
   {
@@ -370,7 +370,7 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
       // Se o nome for encontrado e role for "residente", ele entra e printa o nome
       Epointer->residente = malloc(strlen(current->email)+1);//Armazenando o nome do residente na Struct
       strcpy(Epointer->residente,current->email);
-      fprintf(notas, ", Residente: %s", current->email);
+      fprintf(notas, ",%s", current->email);
       break;
     }
     current = current->next;
@@ -390,7 +390,7 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
 
   system("cls");
   // Printando o nome da avaliação no arquivo notas.txt
-  fprintf(notas, ", Nome da atividade: %s", Epointer->activityName);
+  fprintf(notas, ",%s", Epointer->activityName);
 
   // codigo incompleto
   int j = 0;
@@ -416,14 +416,14 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
     }
       Epointer->tag = malloc(strlen(taglist[index])+1);
       strcpy(Epointer->tag,taglist[index]);
-      fprintf(notas, ", CRITÉRIO %i: %s NOTA: %s", i+1, criterios[i], Epointer->grade);
-      fprintf(notas,", TAG AVALIATIVA: %s",Epointer->tag);
+      fprintf(notas, ",%s",Epointer->grade);
+      fprintf(notas,",%s",Epointer->tag);
       Epointer->next;
       j=j+4;
   
       
   }
-  fprintf(notas,", NOTA FINAL: %d\n",acumulador/12);
+  fprintf(notas,",%d\n",acumulador/12);
   fclose(notas);
 }
 int check_email( const char *email, User *head)
