@@ -70,7 +70,7 @@ int main() {
       //Interface do gestor
       if (!strcmp(usr->role, "gestor")) {
         //Coloquei o choise como varivel global
-      menu:
+      managementMenu:
         clearScreen();
         printf("\t\t\tO que voc� gostaria de fazer %s?\n", usr->name);
         printf("1 - Cadastrar um novo residente ou preceptor\n");
@@ -108,7 +108,7 @@ int main() {
           append(&head, newUser->name,newUser->email, newUser->password, newUser->cpf, newUser->role);
           saveList(&head, "Register.txt");
           freeUser(newUser);
-          goto menu;
+          goto managementMenu;
           break;
         //deletar usuarios:
         case 2: 
@@ -139,7 +139,7 @@ int main() {
           }
           pause();
 
-          goto menu;
+          goto managementMenu;
           break;
         
         // Alterar um usuário já existente
@@ -152,21 +152,21 @@ int main() {
           saveList(&head, "Register.txt");
           }
           pause();
-          goto menu;
+          goto managementMenu;
           break;
         //Visualizar lista de residentes cadastrados no sistema
         case 4:
           clearScreen();
           printList(head, "residente", 1);
           pause();
-          goto menu;
+          goto managementMenu;
           break;
         //Visualizar lista de preceptores cadastrados no sistema
         case 5:
           clearScreen();
           printList(head, "preceptor", 1);
           pause();
-          goto menu;
+          goto managementMenu;
           break;
         case 6:
           clearScreen();
@@ -176,12 +176,13 @@ int main() {
         default:
           printf("\nInforme um comando válido! ");
           pause();
-          goto menu;
+          goto managementMenu;
           break;
         }
       }
       // caso o usuário seja um Preceptor, esse bloco de código será executado.
       else if (!strcmp(usr->role, "preceptor")) {
+        preceptorMenu:
         printf("\n\n\t\t\tO que voc� gostaria de fazer hoje?\n");
         printf("1 - Aba de notas\n");
         printf("2 - Aba de feedbacks\n");
@@ -226,7 +227,7 @@ int main() {
 
           }else if (strcmp(confirm_feedback, "n") == 0 || strcmp(confirm_feedback, "N") == 0){
             pause();
-            goto menu;
+            goto preceptorMenu;
             break;
             /*SENDER É USUARIO LOGADO*/            
             //struct feedback vai ser uma lista com todos os feedbacks do programa com as informações de quem enviou e quem recebeu
@@ -246,16 +247,34 @@ int main() {
           break;
         
         default:
-        
+          printf("\nInforme um comando válido! ");
+          pause();
+          goto preceptorMenu;
           break;
         }
       }
       // caso o usuário seja um residente, esse bloco de código ser� executado.
       else if (!strcmp(usr->role, "residente")) {
+        residenteMenu:
         printf("\n\n\t\t\tO que você gostaria de fazer hoje?\n");
         printf("1 - Aba de notas\n"); //visualizar
         printf("2 - Aba de feedbacks\n"); //igual preceptor, mas so pode enviar feedbacks a precetores
         printf("3 - Sair do programa\n");
+        scanf("%d",&choice);
+        switch (choice)
+        {
+        case 1:
+          printEvaluations(usr->email);
+          pause();
+          goto residenteMenu;
+          break;
+        
+        default:
+          printf("\nInforme um comando válido! ");
+          pause();
+          goto residenteMenu;
+          break;
+        }
       }
     }
   } while (isLoggedIn == 0);

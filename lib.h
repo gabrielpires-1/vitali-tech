@@ -94,5 +94,7 @@ void send_feedback(Feedbacks **feedback, int *cont, User * sender, User * receiv
 
 int check_email( const char *email, User *head);
 
+// printa as atividades do residente com email "residenteEmail"
+void printEvaluations(char *residenteEmail);
 
 #endif
