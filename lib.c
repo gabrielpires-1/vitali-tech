@@ -764,6 +764,8 @@ void changeUser(User **head, char *email)
 
 
 void printEvaluations(char *residenteEmail){
+  char criterios[12][50] = {"Assisuidade", "Pontualidade", "Vestuario", "Iniciativa", "Postura Ético-Profissional", "Relacionamento em equipe", "Espirito Crítico",
+                            "Comunicação", "Planejamento das atividades de enfermagem", "Dominio dos procedimentos", "Evolução", "Liderança"};
   FILE *fileActivities;
   fileActivities = fopen("notas.txt", "r");
   char line[2000];
@@ -775,7 +777,7 @@ void printEvaluations(char *residenteEmail){
   }
 
   while (fgets(line, sizeof(line), fileActivities)) {
-    char *token = strtok(line, ";");
+        char *token = strtok(line, ",");
         int i = 0;
 
         char preceptor[100];
@@ -797,8 +799,7 @@ void printEvaluations(char *residenteEmail){
                     strcpy(atividade, token);
                     break;
                 default:
-                    if (i % 4 == 3) {
-                        
+                    if (i % 4 == 3) { 
                         strcpy(notas[i/4 - 1], token);
                     } else if (i % 4 == 0) {
                         strcpy(criterios[i/4 - 1], token);
@@ -808,7 +809,7 @@ void printEvaluations(char *residenteEmail){
                     break;
             }
 
-            token = strtok(NULL, ";");
+            token = strtok(NULL, ",");
             i++;
         }
 
