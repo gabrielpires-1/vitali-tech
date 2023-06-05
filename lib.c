@@ -424,6 +424,7 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
       
   }
   fprintf(notas,",%d\n",acumulador/12);
+  free(Epointer);
   fclose(notas);
 }
 int check_email( const char *email, User *head)

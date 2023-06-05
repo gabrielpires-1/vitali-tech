@@ -205,6 +205,9 @@ int main() {
             }
             lookingResident(&head,email, "residente", usr->name, Epointer);
           }
+          printf("Avaliação realizada!\n");
+          pause();
+          goto preceptorMenu;
           break;
 
         case 2:
@@ -244,6 +247,7 @@ int main() {
           break;
 
         case 3:
+          exit(1);
           break;
         
         default:
