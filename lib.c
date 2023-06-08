@@ -330,12 +330,12 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
   // Criterios e perguntas norteadoras
   char criterios[12][50] = {"Assisuidade", "Pontualidade", "Vestuario", "Iniciativa", "Postura Ético-Profissional", "Relacionamento em equipe", "Espirito Crítico",
                             "Comunicação", "Planejamento das atividades de enfermagem", "Dominio dos procedimentos", "Evolução", "Liderança"};
-  char norteadoras[12][200] = {"O residente cumpre suas ações e obrigações com frequencia e esforço? Avalie de 1 a 100", "O residente frequentemente cumpre seus horários e é presente nas horas exigidas? Avalie de 1 a 100",
-                               "O residente demonstra cuidado com as normas de prevenção á infecções equipando-se adequadamente? Avalie de 1 a 100", "O residente lida bem com situações imprevistas propondo situações viaveis? Avalie de 1 a 100",
-                               "O residente trabalha respeitando os valores do paciente e seu sigilo profissional? Avalie de 1 a 100", "O residente trabalha com exelencia com seus pacientes, superiores e profissionais de saúde? Avalie de 1 a 100",
-                               "O residente lida bem com críticas e possui um bom senso crítico? Avalie de 1 a 100", "O residente comunica bem seus pensamentos? Avalie de 1 a 100",
-                               "O residente estabelece prioridades e estrutura suas atividades bem? Avalie de 1 a 100", "O residente demonstra habilidade e segurança nos procedimentos realizados? Avalie de 1 a 100",
-                               "O residente registra de maneira clara e concisa as sua observações? Avalie de 1 a 100", "O residente partilha bem seu conhecimento e lidera bem sua equipe? Avalie de 1 a 100"};
+  char norteadoras[12][200] = {"O residente cumpre suas ações e obrigações com frequencia e esforço? Avalie de 1 a 10", "O residente frequentemente cumpre seus horários e é presente nas horas exigidas? Avalie de 1 a 10",
+                               "O residente demonstra cuidado com as normas de prevenção á infecções equipando-se adequadamente? Avalie de 1 a 10", "O residente lida bem com situações imprevistas propondo situações viaveis? Avalie de 1 a 10",
+                               "O residente trabalha respeitando os valores do paciente e seu sigilo profissional? Avalie de 1 a 10", "O residente trabalha com exelencia com seus pacientes, superiores e profissionais de saúde? Avalie de 1 a 10",
+                               "O residente lida bem com críticas e possui um bom senso crítico? Avalie de 1 a 10", "O residente comunica bem seus pensamentos? Avalie de 1 a 10",
+                               "O residente estabelece prioridades e estrutura suas atividades bem? Avalie de 1 a 10", "O residente demonstra habilidade e segurança nos procedimentos realizados? Avalie de 1 a 10",
+                               "O residente registra de maneira clara e concisa as sua observações? Avalie de 1 a 10", "O residente partilha bem seu conhecimento e lidera bem sua equipe? Avalie de 1 a 10"};
   char taglistGood[24][200] = {"0: O residente cumpre seus ações consistentemente e com excelência", "1: O residente desempenha bem suas tarefas", 
                            "O residente cumpre seus horários e dias.", "O residente falta ocasionalmente às suas atividades porém continua acima da média", 
                            "O residente veste-se apropriadamente.", "O residente quase sempre veste-se apropriadamente.", 
@@ -360,6 +360,7 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
                            "O residente possui alguns problemas no domínio das tarefas.", "O residente demonstra problemas graves no entendimento e segurança com os procedimentos.",
                            "O residente deixa a desejar nas observações sendo elas muito longas ou muito confusas", "O residente escreve observações longas e confusas",
                            "O residente não respeita seus integrantes comprometendo o dsempenho da equipe", "O residente não lidera bem os integrantes do seu grupo e falta respeito com eles."};
+  float PesoArray[12] = {0.03,0.03,0.04,0.05,0.1,0.05,0.1,0.05,0.15,0.15,0.15,0.1};
   User *current = *head;
   FILE *notas;
   notas = fopen("notas.txt", "a");
@@ -406,29 +407,29 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
   // codigo incompleto
   int j = 0;
   int cont_tag=0;
-  int index, ToInt,acumulador;
-  acumulador =0;
-  ToInt =0;
+  int index, ToInt;
+  float acumulador = 0;
   
   for (int i=0;i<12;i++){
+    float notafinal;
     system("cls");
     printf("Criterio %i: %s\n",i+1,criterios[i]);
     printf("%s\n",norteadoras[i]);
     scanf("%s",Epointer->grade);
     ToInt = atoi(Epointer->grade);
     printf("Agora vamos inserir tags, preceptor! escolha baseado no índicie à esquerda!\n");
-    if(ToInt>50){
+    if(ToInt>5){
       printf("0: %s\n 1: %s\n",taglistGood[j],taglistGood[j+1]);
     }else{
        printf("0: %s\n 1: %s\n",taglistBad[j],taglistBad[j+1]);
     }
     scanf("%d",&index);
     index = index + cont_tag;
-    acumulador = acumulador+ToInt;
+    acumulador = acumulador+(atoi(Epointer->grade)*PesoArray[i]);
     if(index != j && index!=j+1){
       while(index != j && index!=j+1){
       printf("Tag inválida! selecione uma tag conforme os critérios.\n");
-      if(ToInt>50){
+      if(ToInt>5){
         printf("0: %s\n 1: %s\n",taglistGood[j],taglistGood[j+1]);
       }else{
          printf("0: %s\n 1: %s\n",taglistBad[j],taglistBad[j+1]);
@@ -436,7 +437,7 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
       scanf("%d",&index);
       index = index + cont_tag;
       }
-    }if(ToInt>50){
+    }if(ToInt>5){
         Epointer->tag = malloc(strlen(taglistGood[index])+1);
         strcpy(Epointer->tag,taglistGood[index]);
     }else{
@@ -451,7 +452,7 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
       cont_tag += 2;
   }
   
-  fprintf(notas,",%d\n",acumulador/12);
+  fprintf(notas,",%.2f\n",acumulador);
   free(Epointer);
   fclose(notas);
 }
