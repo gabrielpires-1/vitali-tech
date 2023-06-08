@@ -498,20 +498,18 @@ void create_feedback(Feedbacks **feedback, User * sender, User * receiver)
   for (i = 0; i < 4; i++) printf("%d - %s\n", i, tag_list[i]);
   //lendo as tags
   fgets(input, sizeof(input), stdin);
-
+  //armazenando tags em um array de strings
   char *token = strtok(input, " ");
   while (token != NULL) {
-
     strcpy(tag_list[num_tags], token);
-    num_tags++; // Increase the count of selected tags
-
+    num_tags++; 
     if (num_tags >= 10) {
       printf("Limite máximo de tags atingido.\n");
       break;
     }
-
     token = strtok(NULL, " ");
   }
+  
   printf("Tags selecionadas:\n");
   for (i = 0; i < num_tags; i++) {
     printf("%d - %s\n", i + 1, selected_tags[i]);

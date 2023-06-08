@@ -27,7 +27,7 @@ typedef struct Feedbacks {
   struct User * sender;
   struct User * receiver;
   char * comment;    
-  char * tags;
+  char ** tags;
   struct Feedbacks * next; 
 } Feedbacks;
 
