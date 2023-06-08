@@ -487,81 +487,66 @@ int check_delete(const char *name, const char *email, User *head)
   free(current);
   return 0;
 }
-
-void send_feedback(Feedbacks **feedback, int *cont, User * sender, User * receiver)
+void create_feedback(Feedbacks **feedback, User * sender, User * receiver)
 {
-  char tags[4][20] = {"Comunicativo", "Dedicado", "Atencioso", "Disperso"};
+  char tag_list[4][20] = {"Comunicativo", "Dedicado", "Atencioso", "Disperso"};
   char add_comment, add_tag;
-  //limite de comentarios
-  if (*cont < 10)
+  char selected_tags[10][20];
+  char input[200]; 
+  int i, num_tags = 0;
+
+  for (i = 0; i < 4; i++) printf("%d - %s\n", i, tag_list[i]);
+  //lendo as tags
+  fgets(input, sizeof(input), stdin);
+
+  char *token = strtok(input, " ");
+  while (token != NULL) {
+
+    strcpy(tag_list[num_tags], token);
+    num_tags++; // Increase the count of selected tags
+
+    if (num_tags >= 10) {
+      printf("Limite máximo de tags atingido.\n");
+      break;
+    }
+
+    token = strtok(NULL, " ");
+  }
+  printf("Tags selecionadas:\n");
+  for (i = 0; i < num_tags; i++) {
+    printf("%d - %s\n", i + 1, selected_tags[i]);
+  }
+
+  printf("Deseja inserir um comentário extra?[s/n]\n");
+  scanf(" %c", &add_comment);
+
+  char comment[100];
+  if (add_comment == 's' || add_comment == 'S')
   {
-    // Solicitar o nome do residente
-    printf("Digite o nome do residente que gostaria de enviar um feedback:\n");
-
-    printf("Gostaria de adicionar uma tag?[s/n]\n");
-    for (int i = 0; i < 4; i++)
-    {
-      printf("%d - %s\n", i, tags[i]);
-    }
-    scanf(" %c", &add_tag);
-    if(add_tag == 's'){
-      //inserir tag
-    }
-    //else if (add_tag == 'n')
-    
-    
-    // Verificar se deseja inserir um comentário extra
-    printf("Deseja inserir um comentário extra?[s/n]\n");
-    scanf(" %c", &add_comment);
-
-    char comment[100];
-    if (add_comment == 's')
-    {
-      // Solicitar o comentário extra
-      printf("Digite o comentário extra:\n");
-      scanf(" %[^\n]", comment);
-    }
-    else
-    {
-      // Comentário vazio
-      strcpy(comment,"");
-    }
-
-    // Adicionar o feedback à estrutura Feedbacks
-    Feedbacks *new_feedback = (Feedbacks *)malloc(sizeof(Feedbacks));
-    new_feedback->sender = sender;
-    new_feedback->receiver = receiver;
-    strcpy(new_feedback->comment, comment);
-    new_feedback->tag = ""; // Definir a tag corretamente
-    new_feedback->next = NULL;
-
-    // Escrever no arquivo feedback.txt
-    FILE *fp = fopen("feedback.txt", "a");
-    if (fp != NULL)
-    {
-      // Obtendo a data atual do feedback
-      time_t t = time(NULL);
-      struct tm tm = *localtime(&t);
-      char date[20];
-      sprintf(date, "%02d-%02d-%04d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
-
-      // Escrever no arquivo no formato: nome_sender, nome_receiver, comentário, tag, data
-      fprintf(fp, "%s, %s, %s, %s, %s\n", sender->name, receiver->name, comment, new_feedback->tag, date);
-
-      // Fechar o arquivo
-      fclose(fp);
-    }
-    else
-    {
-      printf("Erro ao abrir o arquivo feedback.txt\n");
-    }
-
-    printf("\nComment added successfully.\n");
+    printf("Digite o comentário extra:\n");
+    scanf(" %[^\n]", comment);
   }
   else
   {
-    printf("\nNúmero de comentários máximo atingido! Caso deseje enviar mais comentários espere até amanhã!\n");
+    // Comentário vazio
+    strcpy(comment,"");
   }
+
+  // Adicionar o feedback à estrutura Feedbacks
+  Feedbacks *new_feedback = (Feedbacks *)malloc(sizeof(Feedbacks));
+  new_feedback->sender = sender;
+  new_feedback->receiver = receiver;
+  strcpy(new_feedback->comment, comment);
+
+  for (i = 0; i < num_tags; i++) {
+    strcpy(new_feedback->tags[i], tag_list[i]);
+  }
+  
+  new_feedback->next = NULL;
+  //fazer funçao pra colocar na lista encadeada de feedback
+  //CRIAR FUNÇÃO PRA ESCREVER NO ARQUIVO
+
+  printf("\nFeedback enviado com sucesso!\n");
 }
 
 #if (1)

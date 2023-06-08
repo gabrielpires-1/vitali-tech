@@ -27,7 +27,7 @@ typedef struct Feedbacks {
   struct User * sender;
   struct User * receiver;
   char * comment;    
-  char * tag;
+  char * tags;
   struct Feedbacks * next; 
 } Feedbacks;
 
@@ -90,7 +90,7 @@ void CreateEvaluationsAttributes(Evaluations *Epointer);
 //Valida e-mail e nome pra deletar um usuário 
 int check_delete(const char* name, const char* email, User* head);
 
-void send_feedback(Feedbacks **feedback, int *cont, User * sender, User * receiver);
+void create_feedback(Feedbacks **feedback, User * sender, User * receiver);
 
 int check_email( const char *email, User *head);
 

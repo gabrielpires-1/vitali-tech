@@ -214,24 +214,40 @@ int main() {
           break;
 
         case 2:
+          clearScreen();
           //imprimir lista de feedback
 
-          printf("Seus residentes:\n\n");
+          printf("Seus residentes:\n");
           printList(head, "residente", 0);
 
-          printf("Gostaria de enviar algum feedback?\n");
-          scanf("%s", confirm_feedback);
+          printf("Gostaria de enviar algum feedback?[s/n]\n");
+          scanf(" %c", &confirm_feedback);
 
-          if(strcmp(confirm_feedback, "s") == 0 || strcmp(confirm_feedback, "S") == 0){
+          if(confirm_feedback == 's' || confirm_feedback == 'S')
+          {
             printf("Digite o nome do residente que gostaria de enviar um feedback:\n");
-            scanf("% [^\n]", receiver_name);
+            scanf(" %[^\n]s", receiver_name);
             User * receiver = findUserByName(head, receiver_name);
 
-            if(receiver != NULL){
-              send_feedback(&feedback, &cont_comments, usr, receiver);
+            if(receiver != NULL)
+            {
+              create_feedback(&feedback, usr, receiver);
+            }
+            else
+            {
+              printf("Usuario não encontrado\n");
             }
 
-          }else if (strcmp(confirm_feedback, "n") == 0 || strcmp(confirm_feedback, "N") == 0){
+          }else if (confirm_feedback == 'n' || confirm_feedback == 'N'){
+            //cancelar operação
+
+            
+          }
+          else 
+          {
+            printf("Opção inválida!\n");
+          }
+          
             pause();
             goto preceptorMenu;
             break;
@@ -245,7 +261,6 @@ int main() {
             armazena esses dados na struct feedback
             escrever no arquivo as infos da struct estilo oq pires botou
             */
-          }
           
           break;
 
