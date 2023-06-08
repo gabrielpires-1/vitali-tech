@@ -306,7 +306,7 @@ void saveList(User **head, char *filename)
   {
     User *temp = *head;
     FILE *Register = fopen(filename, "w");
-    
+
     if (Register == NULL)
     {
       printf("Falha ao abrir arquivo.\n");
@@ -452,9 +452,9 @@ int check_email( const char *email, User *head)
   }
 }
 
-int check_delete(const char *name, const char *email, User **head)
+int check_delete(const char *name, const char *email, User *head)
 {
-  User *current = *head;
+  User *current = head;
   int arroba = 0, ponto = 0;
 
   // checando email e nome de usuario
@@ -472,7 +472,6 @@ int check_delete(const char *name, const char *email, User **head)
   if (arroba != 1 || ponto != 1)
   {
     printf("Email inválido. Insira um email válido.\n");
-    free(current);
     return 0;
   }
   while (current != NULL)

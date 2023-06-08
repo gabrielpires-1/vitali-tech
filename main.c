@@ -116,10 +116,13 @@ int main() {
           printf("\n\t\t\tVamos apagar um usu�rio do sistema!\n");
           printf("Digite o nome do perfil a ser removido:\n");
           scanf("%s", delName);
+          fflush(stdin);
           printf("Digite o e-mail do perfil a ser removido:\n");
           scanf("%s", delEmail);
-          printf("tem certeza que deseja apagar o usuário %s com o email %s[s/n]?\n ", delName, delEmail);
-          scanf(" %c", &confirm_user);
+          fflush(stdin);
+          printf("tem certeza que deseja apagar o usuário %s com o email %s[s/n]?\n", delName, delEmail);
+          scanf("%c", &confirm_user);
+          fflush(stdin);
 
           if (confirm_user == 's'   || confirm_user == 'S' ) {
 
