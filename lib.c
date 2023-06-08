@@ -336,18 +336,30 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
                                "O residente lida bem com críticas e possui um bom senso crítico? Avalie de 1 a 100", "O residente comunica bem seus pensamentos? Avalie de 1 a 100",
                                "O residente estabelece prioridades e estrutura suas atividades bem? Avalie de 1 a 100", "O residente demonstra habilidade e segurança nos procedimentos realizados? Avalie de 1 a 100",
                                "O residente registra de maneira clara e concisa as sua observações? Avalie de 1 a 100", "O residente partilha bem seu conhecimento e lidera bem sua equipe? Avalie de 1 a 100"};
-  char taglist[48][200] = {"0: O residente cumpre seus ações consistentemente e com excelência", "1 :O residente desempenha bem suas tarefas", "2: O residente poderia se empenhar mais nas tarefas de seu dia-a-dia", "3: O residente deixa a desejar no compromisso com a instituição",
-                           "4: O residente cumpre seus horários e dias.", "5: O residente falta ocasionalmente às suas atividades", "6: O residente falta mais dias que o aceito", "7: O residente não cumpre seus dias ou horários",
-                           "8: O residente veste-se apropriadamente.", "9: O residente quase sempre veste-se apropriadamente.", "10: O residente as vezes se esquece do vestimento adequado.", "11: O residente frequentemente ignora às regras de prevenção de infecções.",
-                           "12: O residente é nato em lidar com situações do hospital no dia-a-dia.", "13: O residente desempenha normalmente suas funções.", "14: O residente poderia lidar melhor com situações habituais", "15: O residente gerencia mal as complexidades de sua rotina",
-                           "16: O residente respeita os valores de seus pacientes e trata informações com cuidado e sigilo", "17: O residente poderia demonstrar mais atenção ao sigilo profissional e com os valores do paciente", "18: O residente não respeita o sigilo profissional", "19: O residente demonstra descaso com as informações dos pacientes e da instituição e falta profissionalismo",
-                           "20: O residente trabalha excelentemente com seus superiores e pacientes", "21: O residente tem dificuldade em trabalhar com seus superiores. Apesar disso, trabalha bem de forma geral", "22: O residente possui dificuldade em trabalhar com pacientes, trabalhando abaixo do esperado", "23: O residente não trabalha bem com pacientes e superiores",
-                           "24: O residente lida tranquilamente com críticas e possui também um bom senso crítico", "25: O residente aceita críticas de forma construtiva.", "26: O residente possui a habilidade de criticar mas não lida bem com críticas", "27: O residente lida mal com críticas de forma geral.",
-                           "28: O residente transmite suas ideias perfeitamente e escuta as ideias de seus colegas de trabalho", "29: O residente transmite bem suas ideias.", "30: O residente compreende ideias transmitidas pelos colegas mas possui dificuldade em se comunicar", "31: O residente transmite mal suas ideias.",
-                           "32: O residente planeja sua rotina muito bem", "33: O residente planeja sua rotina bem", "34: O residente planeja sua rotina mal", "35: O residente planeja sua rotina muito mal",
-                           "36: O residente demonstra segurança e habilidade nas suas atividades", "37: O residente tem bom domínio das práticas.", "38: O residente possui alguns problemas no domínio das tarefas.", "39: O residente demonstra problemas graves no entendimento e segurança com os procedimentos.",
-                           "40: O residente realiza boas e curtas observações", "41: o residente realiza boas observações.", "42: O residente deixa a desejar nas observações sendo elas muito longas ou muito confusas", "43: O residente escreve observações longas e confusas",
-                           "44: O residente lidera seu grupo com eficiência e respeito", "45: O residente lidera seu grupo com respeito mas de forma pouco eficiente", "46: O residente não respeita seus integrantes comprometendo o dsempenho da equipe", "47: O residente não lidera bem os integrantes do seu grupo e falta respeito com eles."};
+  char taglistGood[24][200] = {"O residente cumpre seus ações consistentemente e com excelência", "O residente desempenha bem suas tarefas", 
+                           "O residente cumpre seus horários e dias.", "O residente falta ocasionalmente às suas atividades porém continua acima da média", 
+                           "O residente veste-se apropriadamente.", "O residente quase sempre veste-se apropriadamente.", 
+                           "O residente é nato em lidar com situações do hospital no dia-a-dia.", "O residente desempenha normalmente suas funções.", 
+                           "O residente respeita os valores de seus pacientes e trata informações com cuidado e sigilo", "O residente poderia demonstrar mais atenção ao sigilo profissional e com os valores do paciente", 
+                           "O residente trabalha excelentemente com seus superiores e pacientes", "O residente tem dificuldade em trabalhar com seus superiores. Apesar disso, trabalha bem de forma geral",
+                           "O residente lida tranquilamente com críticas e possui também um bom senso crítico", "O residente aceita críticas de forma construtiva.",
+                           "O residente transmite suas ideias perfeitamente e escuta as ideias de seus colegas de trabalho", "O residente transmite bem suas ideias.",
+                           "O residente planeja sua rotina muito bem", "O residente planeja sua rotina bem",
+                           "O residente demonstra segurança e habilidade nas suas atividades", "O residente tem bom domínio das práticas.", 
+                           "O residente realiza detalhadas e curtas observações", "O residente realiza boas observações.", 
+                           "O residente lidera seu grupo com eficiência e respeito", "O residente lidera seu grupo com respeito mas de forma pouco eficiente"};
+   char taglistBad[24][200] = {"O residente poderia se empenhar mais nas tarefas de seu dia-a-dia", "O residente deixa a desejar no compromisso com a instituição",
+                           "O residente falta mais dias que o aceito", "O residente não cumpre seus dias ou horários",
+                           "O residente as vezes se esquece do vestimento adequado.", "O residente frequentemente ignora às regras de prevenção de infecções.",
+                           "O residente poderia lidar melhor com situações habituais", "O residente gerencia mal as complexidades de sua rotina",
+                           "O residente não respeita o sigilo profissional", "O residente demonstra descaso com as informações dos pacientes e da instituição e falta profissionalismo",
+                           "O residente possui dificuldade em trabalhar com pacientes trabalhando abaixo do esperado", "O residente não trabalha bem com pacientes e superiores",
+                           "O residente possui a habilidade de criticar mas não lida bem com críticas", "O residente lida mal com críticas de forma geral.",
+                           "O residente compreende ideias transmitidas pelos colegas mas possui dificuldade em se comunicar", "O residente transmite mal suas ideias.",
+                           "O residente planeja sua rotina mal", "O residente planeja sua rotina muito mal",
+                           "O residente possui alguns problemas no domínio das tarefas.", "O residente demonstra problemas graves no entendimento e segurança com os procedimentos.",
+                           "O residente deixa a desejar nas observações sendo elas muito longas ou muito confusas", "O residente escreve observações longas e confusas",
+                           "O residente não respeita seus integrantes comprometendo o dsempenho da equipe", "O residente não lidera bem os integrantes do seu grupo e falta respeito com eles."};
   User *current = *head;
   FILE *notas;
   notas = fopen("notas.txt", "a");
@@ -396,6 +408,7 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
   int index, ToInt,acumulador;
   acumulador =0;
   ToInt =0;
+  
   for (int i=0;i<12;i++){
     system("cls");
     printf("Criterio %i: %s\n",i+1,criterios[i]);
@@ -403,18 +416,30 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
     scanf("%s",Epointer->grade);
     ToInt = atoi(Epointer->grade);
     printf("Agora vamos inserir tags, preceptor! escolha baseado no índicie à esquerda!\n");
-    printf("%s\n %s\n %s\n %s\n",taglist[j],taglist[j+1],taglist[j+2],taglist[j+3]);
+    if(ToInt>50){
+      printf("%s\n %s\n",taglistGood[j],taglistGood[j+1]);
+    }else{
+       printf("%s\n %s\n",taglistBad[j],taglistBad[j+1]);
+    }
     scanf("%d",&index);
     acumulador = acumulador+ToInt;
     if(index != j && index!=j+1 && index!= j+2 && index!=j+3){
       while(index != j && index!=j+1 && index!= j+2 &&index!=j+3){
       printf("Tag inválida! selecione uma tag conforme os critérios.\n");
-      printf("%s\n %s\n %s\n %s\n",taglist[j],taglist[j+1],taglist[j+2],taglist[j+3]);
+      if(ToInt>50){
+        printf("%s\n %s\n",taglistGood[j],taglistGood[j+1]);
+      }else{
+         printf("%s\n %s\n",taglistBad[j],taglistBad[j+1]);
+      }
       scanf("%d",&index);
       }
+    }if(ToInt>50){
+        Epointer->tag = malloc(strlen(taglistGood[index])+1);
+        strcpy(Epointer->tag,taglistGood[index]);
+    }else{
+        Epointer->tag = malloc(strlen(taglistBad[index])+1);
+        strcpy(Epointer->tag,taglistBad[index]);
     }
-      Epointer->tag = malloc(strlen(taglist[index])+1);
-      strcpy(Epointer->tag,taglist[index]);
       fprintf(notas, ",%s",Epointer->grade);
       fprintf(notas,",%s",Epointer->tag);
       Epointer->next;
@@ -422,6 +447,7 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
   
       
   }
+  
   fprintf(notas,",%d\n",acumulador/12);
   free(Epointer);
   fclose(notas);
@@ -487,6 +513,7 @@ int check_delete(const char *name, const char *email, User *head)
   free(current);
   return 0;
 }
+
 void create_feedback(Feedbacks **feedback, User * sender, User * receiver)
 {
   char tag_list[4][20] = {"Comunicativo", "Dedicado", "Atencioso", "Disperso"};
