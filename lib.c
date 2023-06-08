@@ -336,7 +336,7 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
                                "O residente lida bem com críticas e possui um bom senso crítico? Avalie de 1 a 100", "O residente comunica bem seus pensamentos? Avalie de 1 a 100",
                                "O residente estabelece prioridades e estrutura suas atividades bem? Avalie de 1 a 100", "O residente demonstra habilidade e segurança nos procedimentos realizados? Avalie de 1 a 100",
                                "O residente registra de maneira clara e concisa as sua observações? Avalie de 1 a 100", "O residente partilha bem seu conhecimento e lidera bem sua equipe? Avalie de 1 a 100"};
-  char taglistGood[24][200] = {"O residente cumpre seus ações consistentemente e com excelência", "O residente desempenha bem suas tarefas", 
+  char taglistGood[24][200] = {"0: O residente cumpre seus ações consistentemente e com excelência", "1: O residente desempenha bem suas tarefas", 
                            "O residente cumpre seus horários e dias.", "O residente falta ocasionalmente às suas atividades porém continua acima da média", 
                            "O residente veste-se apropriadamente.", "O residente quase sempre veste-se apropriadamente.", 
                            "O residente é nato em lidar com situações do hospital no dia-a-dia.", "O residente desempenha normalmente suas funções.", 
@@ -405,6 +405,7 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
 
   // codigo incompleto
   int j = 0;
+  int cont_tag=0;
   int index, ToInt,acumulador;
   acumulador =0;
   ToInt =0;
@@ -417,21 +418,23 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
     ToInt = atoi(Epointer->grade);
     printf("Agora vamos inserir tags, preceptor! escolha baseado no índicie à esquerda!\n");
     if(ToInt>50){
-      printf("%s\n %s\n",taglistGood[j],taglistGood[j+1]);
+      printf("0: %s\n 1: %s\n",taglistGood[j],taglistGood[j+1]);
     }else{
-       printf("%s\n %s\n",taglistBad[j],taglistBad[j+1]);
+       printf("0: %s\n 1: %s\n",taglistBad[j],taglistBad[j+1]);
     }
     scanf("%d",&index);
+    index = index + cont_tag;
     acumulador = acumulador+ToInt;
-    if(index != j && index!=j+1 && index!= j+2 && index!=j+3){
-      while(index != j && index!=j+1 && index!= j+2 &&index!=j+3){
+    if(index != j && index!=j+1){
+      while(index != j && index!=j+1){
       printf("Tag inválida! selecione uma tag conforme os critérios.\n");
       if(ToInt>50){
-        printf("%s\n %s\n",taglistGood[j],taglistGood[j+1]);
+        printf("0: %s\n 1: %s\n",taglistGood[j],taglistGood[j+1]);
       }else{
-         printf("%s\n %s\n",taglistBad[j],taglistBad[j+1]);
+         printf("0: %s\n 1: %s\n",taglistBad[j],taglistBad[j+1]);
       }
       scanf("%d",&index);
+      index = index + cont_tag;
       }
     }if(ToInt>50){
         Epointer->tag = malloc(strlen(taglistGood[index])+1);
@@ -443,9 +446,9 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
       fprintf(notas, ",%s",Epointer->grade);
       fprintf(notas,",%s",Epointer->tag);
       Epointer->next;
-      j=j+4;
+      j=j+2;
   
-      
+      cont_tag += 2;
   }
   
   fprintf(notas,",%d\n",acumulador/12);
