@@ -44,7 +44,7 @@ void allocMemoryForUser(User * usr){
 void pause()
 {
   printf("\n\nPressione qualquer tecla para continuar...\n");
-  getch();
+  getch(); // curses.h no linux multipass 
 }
 
 // cria um novo usuário do tipo User, retorna um ponteiro User para esse usuário
@@ -222,11 +222,11 @@ void create_list(User **head)
 // deve-se lembrar de utilizar a função 'save_list()' para salvar a nova lista no txt
 void deleteByName(User **head, char name[])
 {
-  User *current = (User *)malloc(sizeof(User));
+  User *current = (User *) malloc(sizeof(User));
   current = *head;
-  User *temp = (User *)malloc(sizeof(User));
+  User *temp = (User *) malloc(sizeof(User));
   temp = NULL;
-  User *temp2 = (User *)malloc(sizeof(User));
+  User *temp2 = (User *) malloc(sizeof(User));
   temp2 = NULL;
   if (current != NULL && strcmp(current->name, name) == 0)
   { // se for o primeiro elemento
@@ -304,19 +304,18 @@ void saveList(User **head, char *filename)
   }
   else
   {
-    User *temp = (User *)malloc(sizeof(User));
-    temp = *head;
+    User *temp = *head;
     FILE *Register = fopen(filename, "w");
+    
+    if (Register == NULL)
+    {
+      printf("Falha ao abrir arquivo.\n");
+      return;
+    }
+
     while (temp != NULL)
     {
-      if (Register == NULL)
-      {
-        printf("Falha ao abrir arquivo.\n");
-        return;
-      }
-
       fprintf(Register, "%s,%s,%s,%s,%s\n", temp->name, temp->email, temp->password, temp->cpf, temp->role);
-
       temp = temp->next;
     }
     fclose(Register);
@@ -453,9 +452,9 @@ int check_email( const char *email, User *head)
   }
 }
 
-int check_delete(const char *name, const char *email, User *head)
+int check_delete(const char *name, const char *email, User **head)
 {
-  User *current = head;
+  User *current = *head;
   int arroba = 0, ponto = 0;
 
   // checando email e nome de usuario
