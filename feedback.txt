@@ -1,2 +1,0 @@
-nome do user sender, nome do user receiver, tag(s), comentário, data
-rossiter, gabi, comunicativo, focado, fala muito com pacientes, data

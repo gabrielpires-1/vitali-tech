@@ -92,6 +92,8 @@ int check_delete(const char* name, const char* email, User* head);
 
 void create_feedback(Feedbacks **feedback, User * sender, User * receiver);
 
+void saveFeedbackInFile(Feedbacks * feedback, int num_tags);
+
 int check_email( const char *email, User *head);
 
 // printa as atividades do residente com email "residenteEmail"

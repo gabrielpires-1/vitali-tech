@@ -540,36 +540,72 @@ void create_feedback(Feedbacks **feedback, User * sender, User * receiver)
   }
 
   printf("Tags selecionadas:\n");
-  for (i = 0; i < num_tags; i++) printf("%d - %d\n", i + 1, selected_tags[i]);
+  for (i = 0; i < num_tags; i++) printf("%d - %s\n", i + 1, tag_list[selected_tags[i]]);
   
-
   printf("Deseja inserir um comentário extra?[s/n]\n");
   scanf(" %c", &add_comment);
 
-  char comment[100];
+  char comment[500];
   if (add_comment == 's' || add_comment == 'S')
   {
-    printf("Digite o comentário extra:\n");
+    printf("Digite o comentário com até 500 caracteres:\n");
     scanf(" %[^\n]", comment);
   }
-  else strcpy(comment,""); // Comentário vazio
+  else strcpy(comment, ""); // Comentário vazio
   
+  clearScreen();
+  printf("\t\t\tSeu feedback para o usuário %s", receiver->name);
+  printf("\n\nTags: ");
+  for(int i = 0; i < num_tags; i++) printf("%s\n", tag_list[selected_tags[i]]);
+  printf("\nSeu comentário: %s", comment);
 
-  // criando o feedback 
+  pause();
+
+  // criando a struct feedback 
+
+  printf("\nCriando estrutura 1");
   Feedbacks *new_feedback = (Feedbacks *)malloc(sizeof(Feedbacks));
+  printf("\nCriando estrutura 2");
   new_feedback->sender = sender;
+  printf("\nCriando estrutura 3");
   new_feedback->receiver = receiver;
+  printf("\nCriando estrutura 4");
+  new_feedback -> comment = (char *) malloc(sizeof(char)*500);
   strcpy(new_feedback->comment, comment);
 
+  printf("\nCriando estrutura 5");
+  new_feedback->tags = (char**) malloc(sizeof(char*)*1000);
   for (i = 0; i < num_tags; i++) {
     strcpy(new_feedback->tags[i], tag_list[i]);
   }
   
+  printf("Cheguei ate aqui");
+
+  saveFeedbackInFile(new_feedback, num_tags);
+
   new_feedback->next = NULL;
   //fazer funçao pra colocar na lista encadeada de feedback
   //CRIAR FUNÇÃO PRA ESCREVER NO ARQUIVO
 
   printf("\nFeedback enviado com sucesso!\n");
+}
+
+void saveFeedbackInFile(Feedbacks * feedback, int num_tags){
+// printando no arquivo feedback.txt
+  FILE *feedbackFile = fopen("feedback.txt", "a");
+
+  if(feedbackFile == NULL){
+    printf("Erro ao abrir o arquivo feedback.txt!\n");
+    return;
+  }
+  
+  fprintf(feedbackFile, "%s;%s;%s;", feedback->sender, feedback->receiver, feedback->comment);
+  for(int i = 0; i < num_tags; i++) fprintf(feedbackFile, "%s;", feedback->tags[i]);
+  fprintf(feedbackFile, "\n");
+  
+  fclose(feedbackFile);
+
+  return;
 }
 
 #if (1)
