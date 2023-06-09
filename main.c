@@ -72,7 +72,7 @@ int main() {
         //Coloquei o choise como varivel global
       managementMenu:
         clearScreen();
-        printf("\t\t\tO que voc� gostaria de fazer %s?\n", usr->name);
+        printf("\t\t\tO que voce gostaria de fazer %s?\n", usr->name);
         printf("1 - Cadastrar um novo residente ou preceptor\n");
         printf("2 - Apagar um residente ou preceptor do sistema\n");
         printf("3 - Alterar um usuário existente\n");
@@ -84,24 +84,24 @@ int main() {
         //cadastrar usuarios:
         case 1:
           clearScreen();
-          printf("\n\t\t\tVamos cadastrar um novo usu�rio!\n");
-          printf("Qual o nome do usu�rio?\n");
+          printf("\n\t\t\tVamos cadastrar um novo usuario!\n");
+          printf("Qual o nome do usuario?\n");
           scanf("%s", newName);
-          printf("Qual ser� o email do usu�rio?\n");
+          printf("Qual o email do usuario?\n");
           scanf("%s", newEmail);
-          printf("Qual ser� a senha do usu�rio?\n");
+          printf("Qual a senha do usuario?\n");
           scanf("%s", newPassword);
           do {
-            printf("Qual � o CPF do usu�rio?\n");
+            printf("Qual o CPF do usuario?\n");
             scanf("%s", newCpf);
             if (strlen(newCpf) != 11) {
-              printf("CPF inv�lido!\n");
+              printf("CPF invalido!\n");
               cpfAux = 1;
             } else {
               cpfAux = 0;
             }
           } while (cpfAux);
-          printf("Qual � o cargo do usu�rio? (Digite \"preceptor\" ou \"residente\")");
+          printf("Qual o cargo do usuario? (Digite \"preceptor\" ou \"residente\")");
           scanf("%s", newRole);
 
           User *newUser = createUser(newName, newEmail, newPassword, newCpf, newRole);
@@ -113,14 +113,14 @@ int main() {
         //deletar usuarios:
         case 2: 
           clearScreen();
-          printf("\n\t\t\tVamos apagar um usu�rio do sistema!\n");
+          printf("\n\t\t\tVamos apagar um usuario do sistema!\n");
           printf("Digite o nome do perfil a ser removido:\n");
           scanf("%s", delName);
           fflush(stdin);
           printf("Digite o e-mail do perfil a ser removido:\n");
           scanf("%s", delEmail);
           fflush(stdin);
-          printf("tem certeza que deseja apagar o usuário %s com o email %s[s/n]?\n", delName, delEmail);
+          printf("Tem certeza que deseja apagar o usuário %s com o email %s[s/n]?\n", delName, delEmail);
           scanf("%c", &confirm_user);
           fflush(stdin);
 
@@ -129,16 +129,16 @@ int main() {
             if (check_delete(delName, delEmail, head)) {
               deleteByName(&head, delName);
               saveList(&head, "Register.txt");
-              printf("Usuário removido com sucesso.\n");
+              printf("Usuario removido com sucesso.\n");
 
             } else {
-              printf("Usuário não encontrado. Remoção cancelada.\n");
+              printf("Usuario nao encontrado. Remoçao cancelada.\n");
             }
           } else if (confirm_user == 'n'   || confirm_user == 'N' ) {
-            printf("Operação de exclusão cancelada pelo usuário.\n");
+            printf("Operaçao de exclusão cancelada pelo usuario.\n");
 
           } else {
-            printf("Opção inválida. Operação de exclusão cancelada.\n");
+            printf("Opçao invalida. Operaçao de exclusao cancelada.\n");
           }
           pause();
 
@@ -148,7 +148,7 @@ int main() {
         // Alterar um usuário já existente
         case 3:
           clearScreen();
-          printf("Qual o email do usuário que você gostaria de alterar os dados?\n");
+          printf("Qual o email do usuario que voce gostaria de alterar os dados?\n");
           scanf("%s", email);
           if(1){
           changeUser(&head, email);
@@ -177,7 +177,7 @@ int main() {
           exit(1);
           break;
         default:
-          printf("\nInforme um comando válido! ");
+          printf("\nInforme um comando valido! ");
           pause();
           goto managementMenu;
           break;
@@ -186,7 +186,7 @@ int main() {
       // caso o usuário seja um Preceptor, esse bloco de código será executado.
       else if (!strcmp(usr->role, "preceptor")) {
         preceptorMenu:
-        printf("\n\n\t\t\tO que voc� gostaria de fazer hoje?\n");
+        printf("\n\n\t\t\tO que voce gostaria de fazer hoje?\n");
         printf("1 - Aba de notas\n");
         printf("2 - Aba de feedbacks\n");
         printf("3 - Sair do programa\n");
@@ -201,14 +201,14 @@ int main() {
             residentEvaluation(&head,email, "residente", usr->name, Epointer);
           }else{
             while(check_email(email,head)==0){
-                printf("E-mail inválido!\n");
-                printf("Insira um e-mail válido do residente que desejas avaliar: \n");
+                printf("E-mail invalido!\n");
+                printf("Insira um e-mail valido do residente que desejas avaliar: \n");
                 scanf("%s",email);
                 
             }
             residentEvaluation(&head,email, "residente", usr->name, Epointer);
           }
-          printf("Avaliação realizada!\n");
+          printf("Avaliaçao realizada!\n");
           pause();
           goto preceptorMenu;
           break;
@@ -235,7 +235,7 @@ int main() {
             }
             else
             {
-              printf("Usuario não encontrado\n");
+              printf("Usuario nao encontrado\n");
             }
 
           }else if (confirm_feedback == 'n' || confirm_feedback == 'N'){
@@ -245,7 +245,7 @@ int main() {
           }
           else 
           {
-            printf("Opção inválida!\n");
+            printf("Opçao invalida!\n");
           }
           
             pause();
@@ -269,7 +269,7 @@ int main() {
           break;
         
         default:
-          printf("\nInforme um comando válido! ");
+          printf("\nInforme um comando valido! ");
           pause();
           goto preceptorMenu;
           break;
@@ -278,7 +278,7 @@ int main() {
       // caso o usuário seja um residente, esse bloco de código ser� executado.
       else if (!strcmp(usr->role, "residente")) {
         residenteMenu:
-        printf("\n\n\t\t\tO que você gostaria de fazer hoje?\n");
+        printf("\n\n\t\t\tO que voce gostaria de fazer hoje?\n");
         printf("1 - Aba de notas\n"); //visualizar
         printf("2 - Aba de feedbacks\n"); //igual preceptor, mas so pode enviar feedbacks a precetores
         printf("3 - Sair do programa\n");
@@ -295,7 +295,7 @@ int main() {
           exit(0);
 
         default:
-          printf("\nInforme um comando válido! ");
+          printf("\nInforme um comando valido! ");
           pause();
           goto residenteMenu;
           break;
