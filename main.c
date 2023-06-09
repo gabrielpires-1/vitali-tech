@@ -198,7 +198,7 @@ int main() {
           printf("Insira o e-mail do residente que desejas avaliar: \n");
           scanf("%s",email);
           if (check_email(email, head)!=0){
-            lookingResident(&head,email, "residente", usr->name, Epointer);
+            residentEvaluation(&head,email, "residente", usr->name, Epointer);
           }else{
             while(check_email(email,head)==0){
                 printf("E-mail inválido!\n");
@@ -206,7 +206,7 @@ int main() {
                 scanf("%s",email);
                 
             }
-            lookingResident(&head,email, "residente", usr->name, Epointer);
+            residentEvaluation(&head,email, "residente", usr->name, Epointer);
           }
           printf("Avaliação realizada!\n");
           pause();

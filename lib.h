@@ -79,7 +79,7 @@ void printList(User *head, char role[], int bool_cpf);
 void saveList(User **head, char * filename);
 
 // Confere o nome do residente no user
-void lookingResident(User **head,char email[50],char role[], char namePreceptor[], Evaluations *Epointer);
+void residentEvaluation(User **head,char email[50],char role[], char namePreceptor[], Evaluations *Epointer);
 
 // Altera um usuário pelo email
 void changeUser(User **head, char *email);

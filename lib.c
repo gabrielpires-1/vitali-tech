@@ -322,7 +322,7 @@ void saveList(User **head, char *filename)
   }
 }
 
-void lookingResident(User **head, char email[], char role[], char namePreceptor[], Evaluations *Epointer)
+void residentEvaluation(User **head, char email[], char role[], char namePreceptor[], Evaluations *Epointer)
 {
   // nome do preceptor, nome do residente, nome da atividade, nota do critério 1, resposta1(tag),nota2, resposta2(tag), nota3,resposta3(tag).......,comentario-opcional
   // não precisa alocar memoria para a variavel current, sera atribuida ao ponteiro *head
@@ -382,7 +382,7 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
       // Se o nome for encontrado e role for "residente", ele entra e printa o nome
       Epointer->residente = malloc(strlen(current->email)+1);//Armazenando o nome do residente na Struct
       strcpy(Epointer->residente,current->email);
-      fprintf(notas, ",%s", current->email);
+      fprintf(notas, ";%s", current->email);
       break;
     }
     current = current->next;
@@ -402,7 +402,7 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
 
   system("cls");
   // Printando o nome da avaliação no arquivo notas.txt
-  fprintf(notas, ",%s", Epointer->activityName);
+  fprintf(notas, ";%s", Epointer->activityName);
 
   // codigo incompleto
   int j = 0;
@@ -444,15 +444,19 @@ void lookingResident(User **head, char email[], char role[], char namePreceptor[
         Epointer->tag = malloc(strlen(taglistBad[index])+1);
         strcpy(Epointer->tag,taglistBad[index]);
     }
-      fprintf(notas, ",%s",Epointer->grade);
-      fprintf(notas,",%s",Epointer->tag);
+      fprintf(notas, ";%s",Epointer->grade);
+      fprintf(notas,";%s",Epointer->tag);
       Epointer->next;
       j=j+2;
   
       cont_tag += 2;
   }
   
-  fprintf(notas,",%.2f\n",acumulador);
+  fprintf(notas,";%.2f\n",acumulador);
+  free(Epointer->preceptor);
+  free(Epointer->residente);
+  free(Epointer->tag);
+  free(Epointer->grade);
   free(Epointer);
   fclose(notas);
 }
