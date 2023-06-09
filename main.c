@@ -186,6 +186,7 @@ int main() {
       // caso o usuário seja um Preceptor, esse bloco de código será executado.
       else if (!strcmp(usr->role, "preceptor")) {
         preceptorMenu:
+        clearScreen();
         printf("\n\n\t\t\tO que voce gostaria de fazer hoje?\n");
         printf("1 - Aba de notas\n");
         printf("2 - Aba de feedbacks\n");
@@ -197,14 +198,17 @@ int main() {
           printList(head, "residente", 1);
           printf("Insira o e-mail do residente que desejas avaliar: \n");
           scanf("%s",email);
-          if (check_email(email, head)!=0){
+          if (check_email(email, head)!=0)
+          {
             residentEvaluation(&head,email, "residente", usr->name, Epointer);
-          }else{
-            while(check_email(email,head)==0){
-                printf("E-mail invalido!\n");
-                printf("Insira um e-mail valido do residente que desejas avaliar: \n");
-                scanf("%s",email);
-                
+          }else
+          {
+            while(check_email(email,head)==0)
+            {
+              printf("E-mail invalido!\n");
+              printf("Insira um e-mail valido do residente que desejas avaliar: \n");
+              scanf("%s",email);
+              
             }
             residentEvaluation(&head,email, "residente", usr->name, Epointer);
           }
@@ -216,50 +220,39 @@ int main() {
         case 2:
           clearScreen();
           //imprimir lista de feedback
+          printf("seus feedbacks:\n\n");
+          printFeedbacksByName(usr->name);
 
-          printf("Seus residentes:\n");
-          printList(head, "residente", 0);
 
           printf("Gostaria de enviar algum feedback?[s/n]\n");
           scanf(" %c", &confirm_feedback);
 
           if(confirm_feedback == 's' || confirm_feedback == 'S')
           {
+            clearScreen();
+            printf("Seus residentes:\n");
+            printList(head, "residente", 0);
+
             printf("Digite o nome do residente que gostaria de enviar um feedback:\n");
             scanf(" %[^\n]s", receiver_name);
             User * receiver = findUserByName(head, receiver_name);
 
-            if(receiver != NULL)
-            {
-              create_feedback(&feedback, usr, receiver);
-            }
-            else
-            {
-              printf("Usuario nao encontrado\n");
-            }
-
-          }else if (confirm_feedback == 'n' || confirm_feedback == 'N'){
-            //cancelar operação
-
+            if(receiver != NULL) create_feedback(&feedback, usr, receiver);
             
-          }
-          else 
+            else printf("Usuario nao encontrado\n");
+            
+
+          }else if (confirm_feedback == 'n' || confirm_feedback == 'N')
           {
-            printf("Opçao invalida!\n");
-          }
-          
             pause();
             goto preceptorMenu;
             break;
-            /*SENDER É USR*/            
-            //struct feedback vai ser uma lista com todos os feedbacks do programa com as informações de quem enviou e quem recebeu
-            /*
-            armazena o user sender e o receiver na struct feedback
-            dps inserir data do cometario
-            armazena esses dados na struct feedback
-            escrever no arquivo as infos da struct estilo oq pires botou
-            */
+          }
+          else printf("Opçao invalida!\n");
           
+          
+          pause();
+          goto preceptorMenu;
           break;
 
         case 3:
@@ -289,6 +282,42 @@ int main() {
           goto residenteMenu;
           break;
         
+        case 2:
+          clearScreen();
+          printf("Seus feedbacks:\n");
+          printFeedbacksByName(usr->name);
+
+          printf("Gostaria de enviar algum feedback?[s/n]\n");
+          scanf(" %c", &confirm_feedback);
+
+          if(confirm_feedback == 's' || confirm_feedback == 'S')
+          {
+            printf("Seus preceptores:\n");
+            printList(head, "preceptor", 0);
+
+            printf("Digite o nome do preceptor que gostaria de enviar um feedback:\n");
+            scanf(" %[^\n]s", receiver_name);
+
+            User * receiver = findUserByName(head, receiver_name);
+
+            if(receiver != NULL) create_feedback(&feedback, usr, receiver);
+            
+            else printf("Usuario nao encontrado\n");
+            
+
+          }else if (confirm_feedback == 'n' || confirm_feedback == 'N')
+          {
+            pause();
+            goto preceptorMenu;
+            break;
+          }
+          else printf("Opçao invalida!\n");
+          
+          
+          pause();
+          goto preceptorMenu;
+          break;
+
         case 3:
           exit(0);
 
