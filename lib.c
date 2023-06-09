@@ -526,29 +526,22 @@ void create_feedback(Feedbacks **feedback, User * sender, User * receiver)
 {
   char tag_list[4][20] = {"Comunicativo", "Dedicado", "Atencioso", "Disperso"};
   char add_comment, add_tag;
-  char selected_tags[10][20];
+  int selected_tags[4];
   char input[200]; 
   int i, num_tags = 0;
 
   for (i = 0; i < 4; i++) printf("%d - %s\n", i, tag_list[i]);
-  //lendo as tags
-  fgets(input, sizeof(input), stdin);
-  //armazenando tags em um array de strings
-  char *token = strtok(input, " ");
-  while (token != NULL) {
-    strcpy(tag_list[num_tags], token);
-    num_tags++; 
-    if (num_tags >= 10) {
-      printf("Limite maximo de tags atingido.\n");
-      break;
-    }
-    token = strtok(NULL, " ");
+  printf("Quantas tags voce gostaria de inserir?\n");
+  scanf("%d", &num_tags);
+
+  for(int j=0; j<num_tags; j++){
+    printf("Digite a tag: ");
+    scanf("%d", &selected_tags[j]);
   }
-  
+
   printf("Tags selecionadas:\n");
-  for (i = 0; i < num_tags; i++) {
-    printf("%d - %s\n", i + 1, selected_tags[i]);
-  }
+  for (i = 0; i < num_tags; i++) printf("%d - %d\n", i + 1, selected_tags[i]);
+  
 
   printf("Deseja inserir um comentário extra?[s/n]\n");
   scanf(" %c", &add_comment);
@@ -559,13 +552,10 @@ void create_feedback(Feedbacks **feedback, User * sender, User * receiver)
     printf("Digite o comentário extra:\n");
     scanf(" %[^\n]", comment);
   }
-  else
-  {
-    // Comentário vazio
-    strcpy(comment,"");
-  }
+  else strcpy(comment,""); // Comentário vazio
+  
 
-  // Adicionar o feedback à estrutura Feedbacks
+  // criando o feedback 
   Feedbacks *new_feedback = (Feedbacks *)malloc(sizeof(Feedbacks));
   new_feedback->sender = sender;
   new_feedback->receiver = receiver;

@@ -251,12 +251,10 @@ int main() {
             pause();
             goto preceptorMenu;
             break;
-            /*SENDER É USUARIO LOGADO*/            
+            /*SENDER É USR*/            
             //struct feedback vai ser uma lista com todos os feedbacks do programa com as informações de quem enviou e quem recebeu
-            /*pedir pra inserir email do receiver
-            procurar na lista o user
+            /*
             armazena o user sender e o receiver na struct feedback
-            insere tags + comentarios
             dps inserir data do cometario
             armazena esses dados na struct feedback
             escrever no arquivo as infos da struct estilo oq pires botou
