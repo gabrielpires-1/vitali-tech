@@ -97,4 +97,7 @@ int check_email( const char *email, User *head);
 // printa as atividades do residente com email "residenteEmail"
 void printEvaluations(char *residenteEmail);
 
+//libera a memória da lista encadeada criada por create_list()
+void freelist(User** head);
+
 #endif

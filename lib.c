@@ -853,6 +853,19 @@ void printEvaluations(char *residenteEmail){
 
 }
 
+void freelist(User** head) {
+    User* current = *head;
+    User* next;
+
+    while (current != NULL) {
+        next = current->next;
+        freeUser(current);
+        current = next;
+    }
+
+    *head = NULL;
+}
+
 // nome do preceptor, email do residente, nome da atividade, nota do critério 1, resposta1(tag),nota2, resposta2(tag), nota3,resposta3(tag).......,comentario-opcional
 
 /*printf("Qual o email do residente que voce deseja avaliar?\n");

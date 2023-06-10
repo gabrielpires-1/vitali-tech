@@ -174,6 +174,7 @@ int main() {
         case 6:
           clearScreen();
           freeUser(usr); // libera a memória alocada para encontrar o usu�rio
+          freelist(&head);
           exit(1);
           break;
         default:
@@ -265,6 +266,7 @@ int main() {
           break;
 
         case 3:
+          freelist(&head);
           exit(1);
           break;
         
@@ -292,6 +294,7 @@ int main() {
           break;
         
         case 3:
+          freelist(&head);
           exit(0);
 
         default:
