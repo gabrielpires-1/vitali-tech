@@ -20,22 +20,24 @@ void clearInputBuffer()
 #endif
 
 // limpa a tela
-void clearScreen() {
-  #ifdef __linux__
-    system("clear");
-  #elif _WIN32
-    system("CLS");
-  #else
-    system("clear");
-  #endif  
+void clearScreen()
+{
+#ifdef __linux__
+  system("clear");
+#elif _WIN32
+  system("CLS");
+#else
+  system("clear");
+#endif
 }
 
 // aloca memória para os tipos de dado da estrutura User
-void allocMemoryForUser(User * usr){
+void allocMemoryForUser(User *usr)
+{
   usr->name = malloc(51 * sizeof(char));
   usr->email = malloc(51 * sizeof(char));
   usr->password = malloc(51 * sizeof(char));
-  usr->cpf =  malloc(12 * sizeof(char));
+  usr->cpf = malloc(12 * sizeof(char));
   usr->role = malloc(51 * sizeof(char));
 }
 
@@ -43,7 +45,7 @@ void allocMemoryForUser(User * usr){
 void pause()
 {
   printf("\n\nPressione qualquer tecla para continuar...\n");
-  getch(); // curses.h no linux multipass 
+  getch(); // curses.h no linux multipass
 }
 
 // cria um novo usuário do tipo User, retorna um ponteiro User para esse usuário
@@ -221,11 +223,11 @@ void create_list(User **head)
 // deve-se lembrar de utilizar a função 'save_list()' para salvar a nova lista no txt
 void deleteByName(User **head, char name[])
 {
-  User *current = (User *) malloc(sizeof(User));
+  User *current = (User *)malloc(sizeof(User));
   current = *head;
-  User *temp = (User *) malloc(sizeof(User));
+  User *temp = (User *)malloc(sizeof(User));
   temp = NULL;
-  User *temp2 = (User *) malloc(sizeof(User));
+  User *temp2 = (User *)malloc(sizeof(User));
   temp2 = NULL;
   if (current != NULL && strcmp(current->name, name) == 0)
   { // se for o primeiro elemento
@@ -253,17 +255,19 @@ void deleteByName(User **head, char name[])
   pause();
 }
 
-User * findUserByName(User* head, const char* name) {
-  User* current = head;
-  while (current != NULL) {
-    if (strcmp(current->name, name) == 0) {
+User *findUserByName(User *head, const char *name)
+{
+  User *current = head;
+  while (current != NULL)
+  {
+    if (strcmp(current->name, name) == 0)
+    {
       return current; // Retorna o usuário quando o nome corresponde
     }
     current = current->next;
   }
   return NULL; // Retorna NULL se o usuário não for encontrado
 }
-
 
 // recebe a head da lista e uma string que representa o cargo
 // imprime os elementos da lista filtrando pelo cargo
@@ -335,31 +339,31 @@ void residentEvaluation(User **head, char email[], char role[], char namePrecept
                                "O residente lida bem com criticas e possui um bom senso critico? Avalie de 1 a 10", "O residente comunica bem seus pensamentos? Avalie de 1 a 10",
                                "O residente estabelece prioridades e estrutura suas atividades bem? Avalie de 1 a 10", "O residente demonstra habilidade e segurança nos procedimentos realizados? Avalie de 1 a 10",
                                "O residente registra de maneira clara e concisa as sua observaçoes? Avalie de 1 a 10", "O residente partilha bem seu conhecimento e lidera bem sua equipe? Avalie de 1 a 10"};
-  char taglistGood[24][200] = {"O residente cumpre seus açoes consistentemente e com excelencia", "O residente desempenha bem suas tarefas", 
-                           "O residente cumpre seus horarios e dias.", "O residente falta ocasionalmente as suas atividades porem continua acima da media", 
-                           "O residente veste-se apropriadamente.", "O residente quase sempre veste-se apropriadamente.", 
-                           "O residente é nato em lidar com situações do hospital no dia-a-dia.", "O residente desempenha normalmente suas funçoes.", 
-                           "O residente respeita os valores de seus pacientes e trata informações com cuidado e sigilo", "O residente poderia demonstrar mais atenção ao sigilo profissional e com os valores do paciente", 
-                           "O residente trabalha excelentemente com seus superiores e pacientes", "O residente tem dificuldade em trabalhar com seus superiores. Apesar disso, trabalha bem de forma geral",
-                           "O residente lida tranquilamente com criticas e possui tambem um bom senso critico", "O residente aceita criticas de forma construtiva.",
-                           "O residente transmite suas ideias perfeitamente e escuta as ideias de seus colegas de trabalho", "O residente transmite bem suas ideias.",
-                           "O residente planeja sua rotina muito bem", "O residente planeja sua rotina bem",
-                           "O residente demonstra segurança e habilidade nas suas atividades", "O residente tem bom domínio das praticas.", 
-                           "O residente realiza detalhadas e curtas observaçoes", "O residente realiza boas observaçoes.", 
-                           "O residente lidera seu grupo com eficiência e respeito", "O residente lidera seu grupo com respeito mas de forma pouco eficiente"};
-   char taglistBad[24][200] = {"O residente poderia se empenhar mais nas tarefas de seu dia-a-dia", "O residente deixa a desejar no compromisso com a instituiçao",
-                           "O residente falta mais dias que o aceito", "O residente nao cumpre seus dias ou horarios",
-                           "O residente as vezes se esquece do vestimento adequado.", "O residente frequentemente ignora as regras de prevenção de infecçoes.",
-                           "O residente poderia lidar melhor com situaçoes habituais", "O residente gerencia mal as complexidades de sua rotina",
-                           "O residente nao respeita o sigilo profissional", "O residente demonstra descaso com as informaçoes dos pacientes e da instituiçao e falta profissionalismo",
-                           "O residente possui dificuldade em trabalhar com pacientes trabalhando abaixo do esperado", "O residente nao trabalha bem com pacientes e superiores",
-                           "O residente possui a habilidade de criticar mas nao lida bem com criticas", "O residente lida mal com criticas de forma geral.",
-                           "O residente compreende ideias transmitidas pelos colegas mas possui dificuldade em se comunicar", "O residente transmite mal suas ideias.",
-                           "O residente planeja sua rotina mal", "O residente planeja sua rotina muito mal",
-                           "O residente possui alguns problemas no domínio das tarefas.", "O residente demonstra problemas graves no entendimento e segurança com os procedimentos.",
-                           "O residente deixa a desejar nas observaçoes sendo elas muito longas ou muito confusas", "O residente escreve observações longas e confusas",
-                           "O residente nao respeita seus integrantes comprometendo o dsempenho da equipe", "O residente nao lidera bem os integrantes do seu grupo e falta respeito com eles."};
-  float PesoArray[12] = {0.03,0.03,0.04,0.05,0.1,0.05,0.1,0.05,0.15,0.15,0.15,0.1};
+  char taglistGood[24][200] = {"O residente cumpre seus açoes consistentemente e com excelencia", "O residente desempenha bem suas tarefas",
+                               "O residente cumpre seus horarios e dias.", "O residente falta ocasionalmente as suas atividades porem continua acima da media",
+                               "O residente veste-se apropriadamente.", "O residente quase sempre veste-se apropriadamente.",
+                               "O residente é nato em lidar com situações do hospital no dia-a-dia.", "O residente desempenha normalmente suas funçoes.",
+                               "O residente respeita os valores de seus pacientes e trata informações com cuidado e sigilo", "O residente poderia demonstrar mais atenção ao sigilo profissional e com os valores do paciente",
+                               "O residente trabalha excelentemente com seus superiores e pacientes", "O residente tem dificuldade em trabalhar com seus superiores. Apesar disso, trabalha bem de forma geral",
+                               "O residente lida tranquilamente com criticas e possui tambem um bom senso critico", "O residente aceita criticas de forma construtiva.",
+                               "O residente transmite suas ideias perfeitamente e escuta as ideias de seus colegas de trabalho", "O residente transmite bem suas ideias.",
+                               "O residente planeja sua rotina muito bem", "O residente planeja sua rotina bem",
+                               "O residente demonstra segurança e habilidade nas suas atividades", "O residente tem bom domínio das praticas.",
+                               "O residente realiza detalhadas e curtas observaçoes", "O residente realiza boas observaçoes.",
+                               "O residente lidera seu grupo com eficiência e respeito", "O residente lidera seu grupo com respeito mas de forma pouco eficiente"};
+  char taglistBad[24][200] = {"O residente poderia se empenhar mais nas tarefas de seu dia-a-dia", "O residente deixa a desejar no compromisso com a instituiçao",
+                              "O residente falta mais dias que o aceito", "O residente nao cumpre seus dias ou horarios",
+                              "O residente as vezes se esquece do vestimento adequado.", "O residente frequentemente ignora as regras de prevenção de infecçoes.",
+                              "O residente poderia lidar melhor com situaçoes habituais", "O residente gerencia mal as complexidades de sua rotina",
+                              "O residente nao respeita o sigilo profissional", "O residente demonstra descaso com as informaçoes dos pacientes e da instituiçao e falta profissionalismo",
+                              "O residente possui dificuldade em trabalhar com pacientes trabalhando abaixo do esperado", "O residente nao trabalha bem com pacientes e superiores",
+                              "O residente possui a habilidade de criticar mas nao lida bem com criticas", "O residente lida mal com criticas de forma geral.",
+                              "O residente compreende ideias transmitidas pelos colegas mas possui dificuldade em se comunicar", "O residente transmite mal suas ideias.",
+                              "O residente planeja sua rotina mal", "O residente planeja sua rotina muito mal",
+                              "O residente possui alguns problemas no domínio das tarefas.", "O residente demonstra problemas graves no entendimento e segurança com os procedimentos.",
+                              "O residente deixa a desejar nas observaçoes sendo elas muito longas ou muito confusas", "O residente escreve observações longas e confusas",
+                              "O residente nao respeita seus integrantes comprometendo o dsempenho da equipe", "O residente nao lidera bem os integrantes do seu grupo e falta respeito com eles."};
+  float PesoArray[12] = {0.03, 0.03, 0.04, 0.05, 0.1, 0.05, 0.1, 0.05, 0.15, 0.15, 0.15, 0.1};
   User *current = *head;
   FILE *notas;
   notas = fopen("notas.txt", "a");
@@ -370,8 +374,8 @@ void residentEvaluation(User **head, char email[], char role[], char namePrecept
   }
 
   // Printando o nome do preceptor
-  Epointer->preceptor = malloc(strlen(namePreceptor)+1);//armazendo o nome do preceptor na Struct
-  strcpy(Epointer->preceptor,namePreceptor);
+  Epointer->preceptor = malloc(strlen(namePreceptor) + 1); // armazendo o nome do preceptor na Struct
+  strcpy(Epointer->preceptor, namePreceptor);
   fprintf(notas, "%s", namePreceptor);
 
   while (current != NULL)
@@ -379,8 +383,8 @@ void residentEvaluation(User **head, char email[], char role[], char namePrecept
     if (strcmp(current->email, email) == 0 && strcmp(current->role, role) == 0)
     {
       // Se o nome for encontrado e role for "residente", ele entra e printa o nome
-      Epointer->residente = malloc(strlen(current->email)+1);//Armazenando o nome do residente na Struct
-      strcpy(Epointer->residente,current->email);
+      Epointer->residente = malloc(strlen(current->email) + 1); // Armazenando o nome do residente na Struct
+      strcpy(Epointer->residente, current->email);
       fprintf(notas, ";%s", current->email);
       break;
     }
@@ -405,62 +409,82 @@ void residentEvaluation(User **head, char email[], char role[], char namePrecept
 
   // codigo incompleto
   int j = 0;
-  int cont_tag=0;
+  int cont_tag = 0;
   int index, ToInt;
   float acumulador = 0;
-  
-  for (int i=0;i<12;i++){
+
+  for (int i = 0; i < 12; i++)
+  {
     float notafinal;
     system("cls");
-    printf("Criterio %i: %s\n",i+1,criterios[i]);
-    printf("%s\n",norteadoras[i]);
-    scanf("%s",Epointer->grade);
+    printf("Criterio %i: %s\n", i + 1, criterios[i]);
+    printf("%s\n", norteadoras[i]);
+    scanf("%s", Epointer->grade);
     ToInt = atoi(Epointer->grade);
     printf("Agora vamos inserir tags, preceptor! escolha baseado no índicie à esquerda!\n");
-    if(ToInt>5){
-      printf("0: %s\n 1: %s\n",taglistGood[j],taglistGood[j+1]);
-    }else{
-       printf("0: %s\n 1: %s\n",taglistBad[j],taglistBad[j+1]);
+    if (ToInt > 5)
+    {
+      printf("0: %s\n 1: %s\n", taglistGood[j], taglistGood[j + 1]);
     }
-    scanf("%d",&index);
+    else
+    {
+      printf("0: %s\n 1: %s\n", taglistBad[j], taglistBad[j + 1]);
+    }
+    scanf("%d", &index);
     index = index + cont_tag;
-    acumulador = acumulador+(atoi(Epointer->grade)*PesoArray[i]);
-    if(index != j && index!=j+1){
-      while(index != j && index!=j+1){
-      printf("Tag inválida! selecione uma tag conforme os critérios.\n");
-      if(ToInt>5){
-        printf("0: %s\n 1: %s\n",taglistGood[j],taglistGood[j+1]);
-      }else{
-         printf("0: %s\n 1: %s\n",taglistBad[j],taglistBad[j+1]);
+    acumulador = acumulador + (atoi(Epointer->grade) * PesoArray[i]);
+    if (index != j && index != j + 1)
+    {
+      while (index != j && index != j + 1)
+      {
+        printf("Tag inválida! selecione uma tag conforme os critérios.\n");
+        if (ToInt > 5)
+        {
+          printf("0: %s\n 1: %s\n", taglistGood[j], taglistGood[j + 1]);
+        }
+        else
+        {
+          printf("0: %s\n 1: %s\n", taglistBad[j], taglistBad[j + 1]);
+        }
+        scanf("%d", &index);
+        index = index + cont_tag;
       }
-      scanf("%d",&index);
-      index = index + cont_tag;
-      }
-    }if(ToInt>5){
-        Epointer->tag = malloc(strlen(taglistGood[index])+1);
-        strcpy(Epointer->tag,taglistGood[index]);
-    }else{
-        Epointer->tag = malloc(strlen(taglistBad[index])+1);
-        strcpy(Epointer->tag,taglistBad[index]);
     }
-      fprintf(notas, ";%s",Epointer->grade);
-      fprintf(notas,";%s",Epointer->tag);
-      Epointer->next;
-      j=j+2;
-  
-      cont_tag += 2;
-  }
-  char choice;
-  printf("Ótimo. Estamos quase lá! Você gostaria de deixar um comentário opcional? (s/n)\n");
-  scanf(" %c", &choice);
-  if (choice == 's') {
-    printf("Insira seu comentário! (máximo de 200 caracteres):\n");
-    scanf(" %[^\n]", Epointer->comentario);
-    fprintf(notas, ";%s", Epointer->comentario);
-}
+    if (ToInt > 5)
+    {
+      Epointer->tag = malloc(strlen(taglistGood[index]) + 1);
+      strcpy(Epointer->tag, taglistGood[index]);
+    }
+    else
+    {
+      Epointer->tag = malloc(strlen(taglistBad[index]) + 1);
+      strcpy(Epointer->tag, taglistBad[index]);
+    }
+    fprintf(notas, ";%s", Epointer->grade);
+    fprintf(notas, ";%s", Epointer->tag);
+    Epointer->next;
+    j = j + 2;
 
-  
-  fprintf(notas,";%.2f\n",acumulador);
+    cont_tag += 2;
+  }
+  char choice = 'b';
+  fprintf(notas, ";%.2f", acumulador);
+  printf("Ótimo. Estamos quase lá! Você gostaria de deixar um comentário opcional? (s/n)\n");
+  while(choice!='s'&&choice!='n'){
+    scanf(" %c", &choice);
+    if (choice == 's')
+    {
+      printf("Insira seu comentário! (máximo de 200 caracteres):\n");
+      scanf(" %[^\n]", Epointer->comentario);
+      fprintf(notas, ";%s\n", Epointer->comentario);
+    }else if (choice == 'n'){
+      fprintf(notas,";Não existe comentário opcional.");
+    }else{
+      printf("Escolha inválida\n");
+    }
+  }
+
+ 
   free(Epointer->preceptor);
   free(Epointer->residente);
   free(Epointer->tag);
@@ -468,7 +492,7 @@ void residentEvaluation(User **head, char email[], char role[], char namePrecept
   free(Epointer);
   fclose(notas);
 }
-int check_email( const char *email, User *head)
+int check_email(const char *email, User *head)
 {
   User *current = head;
   int arroba = 0, ponto = 0;
@@ -489,7 +513,9 @@ int check_email( const char *email, User *head)
   if (arroba != 1 || ponto != 1)
   {
     return 0;
-  }else{
+  }
+  else
+  {
     return 1;
   }
 }
@@ -530,7 +556,7 @@ int check_delete(const char *name, const char *email, User *head)
   return 0;
 }
 
-void create_feedback(Feedbacks **feedback, User * sender, User * receiver)
+void create_feedback(Feedbacks **feedback, User *sender, User *receiver)
 {
   char tag_list[4][20] = {"Comunicativo", "Dedicado", "Atencioso", "Disperso"};
   char add_comment, add_tag;
@@ -544,12 +570,13 @@ void create_feedback(Feedbacks **feedback, User * sender, User * receiver)
   }
   printf("Quantas tags voce gostaria de inserir?\n");
   scanf("%d", &num_tags);
-  if(num_tags >= MAX_TAGS){
+  if (num_tags >= MAX_TAGS)
+  {
     printf("voce so pode inserir ate %d tags!\n", MAX_TAGS);
     return;
   }
 
-  for(int j=0; j<num_tags; j++)
+  for (int j = 0; j < num_tags; j++)
   {
     printf("Digite a tag: ");
     scanf("%d", &selected_tags[j]);
@@ -570,18 +597,20 @@ void create_feedback(Feedbacks **feedback, User * sender, User * receiver)
     printf("Digite o comentario com ate 100 caracteres:\n");
     scanf(" %[^\n]", comment);
   }
-  else strcpy(comment, ""); // Comentário vazio
-  
+  else
+    strcpy(comment, "Feedback sem comentário");// Comentário vazio
+
   clearScreen();
   printf("\t\t\tSeu feedback para o usuário %s", receiver->name);
   printf("\n\nTags:\n");
-  for(int i = 0; i < num_tags; i++) printf("%s\n", tag_list[selected_tags[i]]);
+  for (int i = 0; i < num_tags; i++)
+    printf("%s\n", tag_list[selected_tags[i]]);
   printf("\nSeu comentário: %s", comment);
 
   Feedbacks *new_feedback = (Feedbacks *)malloc(sizeof(Feedbacks));
   new_feedback->sender = sender;
   new_feedback->receiver = receiver;
-  new_feedback -> comment = (char *) malloc(sizeof(char)*500);
+  new_feedback->comment = (char *)malloc(sizeof(char) * 500);
   strcpy(new_feedback->comment, comment);
   new_feedback->tags = (char **)malloc(sizeof(char *) * num_tags);
 
@@ -596,24 +625,24 @@ void create_feedback(Feedbacks **feedback, User * sender, User * receiver)
   saveFeedbackInFile(new_feedback, num_tags);
 
   printf("\nFeedback enviado com sucesso!\n");
-  //ver se precisa tirar o free
+  // ver se precisa tirar o free
   free(new_feedback);
 }
 
 // printando no arquivo feedback.txt
-void saveFeedbackInFile(Feedbacks * feedback, int num_tags)
+void saveFeedbackInFile(Feedbacks *feedback, int num_tags)
 {
   FILE *feedbackFile = fopen("feedback.txt", "a");
 
-  if(feedbackFile == NULL)
+  if (feedbackFile == NULL)
   {
     printf("Erro ao abrir o arquivo feedback.txt!\n");
     return;
   }
-  
+
   fprintf(feedbackFile, "%s;%s;%s;", feedback->sender->name, feedback->receiver->name, feedback->comment);
-  
-  for(int i = 0; i < num_tags; i++)
+
+  for (int i = 0; i < num_tags; i++)
   {
     fprintf(feedbackFile, "%s;", feedback->tags[i]);
   }
@@ -623,35 +652,33 @@ void saveFeedbackInFile(Feedbacks * feedback, int num_tags)
   return;
 }
 
-void printFeedbacksByName(const char * user)
+void printFeedbacksByName(const char *user)
 {
-  FILE * feedbackFile = fopen("feedback.txt", "r");
+  FILE *feedbackFile = fopen("feedback.txt", "r");
   char line[500];
 
-  
-  if (feedbackFile == NULL) 
+  if (feedbackFile == NULL)
   {
     printf("Erro ao abrir o arquivo feedback.txt!\n");
     return;
-
   }
 
-  while (fgets(line, sizeof(line), feedbackFile)) 
+  while (fgets(line, sizeof(line), feedbackFile))
   {
-    char* sender = strtok(line, ";");
-    char* receiver = strtok(NULL, ";");
-    char* comment = strtok(NULL, ";");
+    char *sender = strtok(line, ";");
+    char *receiver = strtok(NULL, ";");
+    char *comment = strtok(NULL, ";");
 
     // Verifica se o usuário é o receiver
-    if (strcmp(receiver, user) == 0) 
+    if (strcmp(receiver, user) == 0)
     {
       printf("Feedback do preceptor %s\n", sender);
       printf("Comentario: %s\n", comment);
 
       printf("Tags: ");
-      char* tag = strtok(NULL, ";");
+      char *tag = strtok(NULL, ";");
 
-      while (tag != NULL) 
+      while (tag != NULL)
       {
         printf("%s ", tag);
         tag = strtok(NULL, ";");
@@ -860,92 +887,105 @@ void changeUser(User **head, char *email)
 }
 #endif
 
-
-void printEvaluations(char *residenteEmail){
+void printEvaluations(char *residenteEmail)
+{
   char criterios_nomes[12][50] = {"Assisuidade", "Pontualidade", "Vestuario", "Iniciativa", "Postura Etico-Profissional", "Relacionamento em equipe", "Espirito Cretico",
-                            "Comunicaçao", "Planejamento das atividades de enfermagem", "Dominio dos procedimentos", "Evoluçao", "Liderança"};
+                                  "Comunicaçao", "Planejamento das atividades de enfermagem", "Dominio dos procedimentos", "Evoluçao", "Liderança"};
   FILE *fileActivities;
   fileActivities = fopen("notas.txt", "r");
   char line[2000];
   int activiesNumber = 0;
 
-  if (fileActivities == NULL) {
-    printf("Failed to open the file.\n");
-    return;  
+  if (fileActivities == NULL)
+  {
+    printf("Impossivel abrir arquivo.\n");
+    return;
   }
 
-  while (fgets(line, sizeof(line), fileActivities)) {
-        char *token = strtok(line, ";");
-        int i = 0;
+  while (fgets(line, sizeof(line), fileActivities))
+  {
+    char *token = strtok(line, ";");
+    int i = 0;
 
-        char preceptor[100];
-        char residente[100];
-        char atividade[100];
-        char tags[12][100];
-        int notas[12];
-        int notaFinal;
-        int posNotas = 0;
-        int posTag = 0;
+    char preceptor[100];
+    char residente[100];
+    char atividade[100];
+    char tags[12][100];
+    char comentariofinal[200];
+    int notas[12];
+    int notaFinal;
+    int posNotas = 0;
+    int posTag = 0;
 
-        while (token != NULL) {
-            switch (i) {
-                case 0:
-                    strcpy(preceptor, token);
-                    break;
-                case 1:
-                    strcpy(residente, token);
-                    break;
-                case 2:
-                    strcpy(atividade, token);
-                    break;
-                default:
-                    if (i % 2 == 1 && i != 27) { 
-                        notas[posNotas] = atoi(token);
-                        posNotas++;
-                    } else if (i % 2 == 0) {
-                        strcpy(tags[posTag], token);
-                        posTag++;
-                    } else if (i == 27) {
-                        notaFinal = atoi(token);
-                    }
-                    break;
-            }
-
-            token = strtok(NULL, ";");
-            i++;
+    while (token != NULL)
+    {
+      switch (i)
+      {
+      case 0:
+        strcpy(preceptor, token);
+        break;
+      case 1:
+        strcpy(residente, token);
+        break;
+      case 2:
+        strcpy(atividade, token);
+        break;
+      default:
+        if (i % 2 == 1 && i != 27)
+        {
+          notas[posNotas] = atoi(token);
+          posNotas++;
         }
-
-        if (strcmp(residente, residenteEmail) == 0) {
-          activiesNumber++;
-          printf("\nPreceptor: %s | Residente: %s | Nome da atividade: %s\n\n", preceptor, residente, atividade);
-          for (int j = 0; j < 12; j++) {
-            printf("%s: %s, Nota: %d\n", criterios_nomes[j], tags[j], notas[j]);
-          }
-          printf("Nota Final: %d\n", notaFinal);
+        else if (i % 2 == 0)
+        {
+          strcpy(tags[posTag], token);
+          posTag++;
         }
-        printf("--------------------------------------------------------------------------------------------------------------");
+        else if (i == 27)
+        {
+          notaFinal = atoi(token);
+        }
+        break;
+      }
 
+      token = strtok(NULL, ";");
+      i++;
+    }
+
+    if (strcmp(residente, residenteEmail) == 0)
+    {
+      activiesNumber++;
+      printf("\nPreceptor: %s | Residente: %s | Nome da atividade: %s\n\n", preceptor, residente, atividade);
+      for (int j = 0; j < 12; j++)
+      {
+        printf("%s: %s, Nota: %d\n", criterios_nomes[j], tags[j], notas[j]);
+      }
+      printf("Nota Final: %d\n", notaFinal);
+    }
+    printf("--------------------------------------------------------------------------------------------------------------");
   }
 
-  if(activiesNumber == 0){
+  if (activiesNumber == 0)
+  {
     printf("Voce nao possui nenhuma atividade no momento!\n");
   }
 
   fclose(fileActivities);
-
 }
 
-void freelist(User** head) {
-    User* current = *head;
-    User* next;
+void freelist(User **head)
+{
+  User *current = *head;
+  User *next;
 
-    while (current != NULL) {
-        next = current->next;
-        freeUser(current);
-        current = next;
-    }
+  while (current != NULL)
+  {
+    next = current->next;
+    freeUser(current);
+    current = next;
+  }
 
-    *head = NULL;
+  *head = NULL;
 }
 
 // nome do preceptor, email do residente, nome da atividade, nota do critério 1, resposta1(tag),nota2, resposta2(tag), nota3,resposta3(tag).......,comentario-opcional
