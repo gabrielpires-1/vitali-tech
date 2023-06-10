@@ -915,9 +915,9 @@ void printEvaluations(char *residenteEmail)
     char residente[100];
     char atividade[100];
     char tags[12][100];
-    char comentariofinal[200];
+    char comentarioFinal[200];
     int notas[12];
-    int notaFinal;
+    float notaFinal;
     int posNotas = 0;
     int posTag = 0;
 
@@ -940,14 +940,17 @@ void printEvaluations(char *residenteEmail)
           notas[posNotas] = atoi(token);
           posNotas++;
         }
-        else if (i % 2 == 0)
+        else if (i % 2 == 0 && i != 28)
         {
           strcpy(tags[posTag], token);
           posTag++;
         }
         else if (i == 27)
         {
-          notaFinal = atoi(token);
+          notaFinal = atof(token);
+        }
+        else if (i == 28){
+          strcpy(comentarioFinal, token);
         }
         break;
       }
@@ -964,16 +967,15 @@ void printEvaluations(char *residenteEmail)
       {
         printf("%s: %s, Nota: %d\n", criterios_nomes[j], tags[j], notas[j]);
       }
-      printf("Nota Final: %d\n", notaFinal);
+      printf("Nota Final: %.2f\n", notaFinal);
+      printf("Comentario: %s\n", comentarioFinal);
     }
     printf("--------------------------------------------------------------------------------------------------------------");
   }
-
   if (activiesNumber == 0)
   {
     printf("Voce nao possui nenhuma atividade no momento!\n");
   }
-
   fclose(fileActivities);
 }
 
