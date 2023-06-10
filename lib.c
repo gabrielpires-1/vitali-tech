@@ -335,7 +335,7 @@ void residentEvaluation(User **head, char email[], char role[], char namePrecept
                                "O residente lida bem com criticas e possui um bom senso critico? Avalie de 1 a 10", "O residente comunica bem seus pensamentos? Avalie de 1 a 10",
                                "O residente estabelece prioridades e estrutura suas atividades bem? Avalie de 1 a 10", "O residente demonstra habilidade e segurança nos procedimentos realizados? Avalie de 1 a 10",
                                "O residente registra de maneira clara e concisa as sua observaçoes? Avalie de 1 a 10", "O residente partilha bem seu conhecimento e lidera bem sua equipe? Avalie de 1 a 10"};
-  char taglistGood[24][200] = {"0: O residente cumpre seus açoes consistentemente e com excelencia", "1: O residente desempenha bem suas tarefas", 
+  char taglistGood[24][200] = {"O residente cumpre seus açoes consistentemente e com excelencia", "O residente desempenha bem suas tarefas", 
                            "O residente cumpre seus horarios e dias.", "O residente falta ocasionalmente as suas atividades porem continua acima da media", 
                            "O residente veste-se apropriadamente.", "O residente quase sempre veste-se apropriadamente.", 
                            "O residente é nato em lidar com situações do hospital no dia-a-dia.", "O residente desempenha normalmente suas funçoes.", 
@@ -636,8 +636,8 @@ void printFeedbacksByName(const char * user)
     // Verifica se o usuário é o receiver
     if (strcmp(receiver, user) == 0) 
     {
-      printf("%s:\n", sender);
-      printf("Comentario extra: %s\n", comment);
+      printf("Feedback do preceptor %s\n", sender);
+      printf("Comentario: %s\n", comment);
 
       printf("Tags: ");
       char* tag = strtok(NULL, ";");
@@ -866,7 +866,7 @@ void printEvaluations(char *residenteEmail){
   }
 
   while (fgets(line, sizeof(line), fileActivities)) {
-        char *token = strtok(line, ",");
+        char *token = strtok(line, ";");
         int i = 0;
 
         char preceptor[100];
@@ -902,18 +902,19 @@ void printEvaluations(char *residenteEmail){
                     break;
             }
 
-            token = strtok(NULL, ",");
+            token = strtok(NULL, ";");
             i++;
         }
 
         if (strcmp(residente, residenteEmail) == 0) {
           activiesNumber++;
-          printf("\nPreceptor: %s, Residente: %s, Nome da atividade: %s\n\n", preceptor, residente, atividade);
+          printf("\nPreceptor: %s | Residente: %s | Nome da atividade: %s\n\n", preceptor, residente, atividade);
           for (int j = 0; j < 12; j++) {
             printf("%s: %s, Nota: %d\n", criterios_nomes[j], tags[j], notas[j]);
           }
           printf("Nota Final: %d\n", notaFinal);
         }
+        printf("--------------------------------------------------------------------------------------------------------------");
 
   }
 

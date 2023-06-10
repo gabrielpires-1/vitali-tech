@@ -277,7 +277,7 @@ int main() {
         switch (choice)
         {
         case 1:
-          printEvaluations(usr->email);
+          printEvaluations("gabi@hospital.com");
           pause();
           goto residenteMenu;
           break;
