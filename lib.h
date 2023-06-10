@@ -90,12 +90,18 @@ void CreateEvaluationsAttributes(Evaluations *Epointer);
 //Valida e-mail e nome pra deletar um usuário 
 int check_delete(const char* name, const char* email, User* head);
 
+//recebe o usuario cria o feedback pra ser escrito no arquivo de forma: sender; receiver; comentario opcional; tag(s)
 void create_feedback(Feedbacks **feedback, User * sender, User * receiver);
 
+//salva feedback no arquivo
+void saveFeedbackInFile(Feedbacks * feedback, int num_tags);
+//valida email, retorna 1 se estiver correto, 0 se estiver incorreto
 int check_email( const char *email, User *head);
 
-// printa as atividades do residente com email "residenteEmail"
+//printa as atividades do residente com email "residenteEmail"
 void printEvaluations(char *residenteEmail);
+//imprime historico dos feedbacks do usuario
+void printFeedbacksByName(const char * user);
 
 //libera a memória da lista encadeada criada por create_list()
 void freelist(User** head);

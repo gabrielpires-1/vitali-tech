@@ -6,8 +6,7 @@
 #include <locale.h>
 #include <time.h>
 
-#define MAX_COMMENTS 10
-#define MAX_TAGS 10
+#define MAX_TAGS 4
 
 // limpa o buffer
 #if (1)
@@ -336,7 +335,7 @@ void residentEvaluation(User **head, char email[], char role[], char namePrecept
                                "O residente lida bem com criticas e possui um bom senso critico? Avalie de 1 a 10", "O residente comunica bem seus pensamentos? Avalie de 1 a 10",
                                "O residente estabelece prioridades e estrutura suas atividades bem? Avalie de 1 a 10", "O residente demonstra habilidade e segurança nos procedimentos realizados? Avalie de 1 a 10",
                                "O residente registra de maneira clara e concisa as sua observaçoes? Avalie de 1 a 10", "O residente partilha bem seu conhecimento e lidera bem sua equipe? Avalie de 1 a 10"};
-  char taglistGood[24][200] = {"0: O residente cumpre seus açoes consistentemente e com excelencia", "1: O residente desempenha bem suas tarefas", 
+  char taglistGood[24][200] = {"O residente cumpre seus açoes consistentemente e com excelencia", "O residente desempenha bem suas tarefas", 
                            "O residente cumpre seus horarios e dias.", "O residente falta ocasionalmente as suas atividades porem continua acima da media", 
                            "O residente veste-se apropriadamente.", "O residente quase sempre veste-se apropriadamente.", 
                            "O residente é nato em lidar com situações do hospital no dia-a-dia.", "O residente desempenha normalmente suas funçoes.", 
@@ -526,60 +525,133 @@ void create_feedback(Feedbacks **feedback, User * sender, User * receiver)
 {
   char tag_list[4][20] = {"Comunicativo", "Dedicado", "Atencioso", "Disperso"};
   char add_comment, add_tag;
-  char selected_tags[10][20];
-  char input[200]; 
-  int i, num_tags = 0;
+  int selected_tags[4];
+  char input[200];
+  int num_tags = 0;
 
-  for (i = 0; i < 4; i++) printf("%d - %s\n", i, tag_list[i]);
-  //lendo as tags
-  fgets(input, sizeof(input), stdin);
-  //armazenando tags em um array de strings
-  char *token = strtok(input, " ");
-  while (token != NULL) {
-    strcpy(tag_list[num_tags], token);
-    num_tags++; 
-    if (num_tags >= 10) {
-      printf("Limite maximo de tags atingido.\n");
-      break;
-    }
-    token = strtok(NULL, " ");
+  for (int i = 0; i < 4; i++)
+  {
+    printf("%d - %s\n", i, tag_list[i]);
   }
-  
+  printf("Quantas tags voce gostaria de inserir?\n");
+  scanf("%d", &num_tags);
+  if(num_tags >= MAX_TAGS){
+    printf("voce so pode inserir ate %d tags!\n", MAX_TAGS);
+    return;
+  }
+
+  for(int j=0; j<num_tags; j++)
+  {
+    printf("Digite a tag: ");
+    scanf("%d", &selected_tags[j]);
+  }
+
   printf("Tags selecionadas:\n");
-  for (i = 0; i < num_tags; i++) {
-    printf("%d - %s\n", i + 1, selected_tags[i]);
+  for (int i = 0; i < num_tags; i++)
+  {
+    printf("%d - %s\n", i + 1, tag_list[selected_tags[i]]);
   }
 
-  printf("Deseja inserir um comentário extra?[s/n]\n");
+  printf("Deseja inserir um comentario extra?[s/n]\n");
   scanf(" %c", &add_comment);
 
-  char comment[100];
+  char comment[500];
   if (add_comment == 's' || add_comment == 'S')
   {
-    printf("Digite o comentário extra:\n");
+    printf("Digite o comentario com ate 100 caracteres:\n");
     scanf(" %[^\n]", comment);
   }
-  else
-  {
-    // Comentário vazio
-    strcpy(comment,"");
-  }
+  else strcpy(comment, ""); // Comentário vazio
+  
+  clearScreen();
+  printf("\t\t\tSeu feedback para o usuário %s", receiver->name);
+  printf("\n\nTags:\n");
+  for(int i = 0; i < num_tags; i++) printf("%s\n", tag_list[selected_tags[i]]);
+  printf("\nSeu comentário: %s", comment);
 
-  // Adicionar o feedback à estrutura Feedbacks
   Feedbacks *new_feedback = (Feedbacks *)malloc(sizeof(Feedbacks));
   new_feedback->sender = sender;
   new_feedback->receiver = receiver;
+  new_feedback -> comment = (char *) malloc(sizeof(char)*500);
   strcpy(new_feedback->comment, comment);
+  new_feedback->tags = (char **)malloc(sizeof(char *) * num_tags);
 
-  for (i = 0; i < num_tags; i++) {
+  for (int i = 0; i < num_tags; i++)
+  {
+    new_feedback->tags[i] = (char *)malloc(sizeof(char) * (strlen(tag_list[i]) + 1));
     strcpy(new_feedback->tags[i], tag_list[i]);
   }
-  
+
   new_feedback->next = NULL;
-  //fazer funçao pra colocar na lista encadeada de feedback
-  //CRIAR FUNÇÃO PRA ESCREVER NO ARQUIVO
+
+  saveFeedbackInFile(new_feedback, num_tags);
 
   printf("\nFeedback enviado com sucesso!\n");
+  //ver se precisa tirar o free
+  free(new_feedback);
+}
+
+// printando no arquivo feedback.txt
+void saveFeedbackInFile(Feedbacks * feedback, int num_tags)
+{
+  FILE *feedbackFile = fopen("feedback.txt", "a");
+
+  if(feedbackFile == NULL)
+  {
+    printf("Erro ao abrir o arquivo feedback.txt!\n");
+    return;
+  }
+  
+  fprintf(feedbackFile, "%s;%s;%s;", feedback->sender->name, feedback->receiver->name, feedback->comment);
+  
+  for(int i = 0; i < num_tags; i++)
+  {
+    fprintf(feedbackFile, "%s;", feedback->tags[i]);
+  }
+  fprintf(feedbackFile, "\n");
+
+  fclose(feedbackFile);
+  return;
+}
+
+void printFeedbacksByName(const char * user)
+{
+  FILE * feedbackFile = fopen("feedback.txt", "r");
+  char line[500];
+
+  
+  if (feedbackFile == NULL) 
+  {
+    printf("Erro ao abrir o arquivo feedback.txt!\n");
+    return;
+
+  }
+
+  while (fgets(line, sizeof(line), feedbackFile)) 
+  {
+    char* sender = strtok(line, ";");
+    char* receiver = strtok(NULL, ";");
+    char* comment = strtok(NULL, ";");
+
+    // Verifica se o usuário é o receiver
+    if (strcmp(receiver, user) == 0) 
+    {
+      printf("Feedback do preceptor %s\n", sender);
+      printf("Comentario: %s\n", comment);
+
+      printf("Tags: ");
+      char* tag = strtok(NULL, ";");
+
+      while (tag != NULL) 
+      {
+        printf("%s ", tag);
+        tag = strtok(NULL, ";");
+      }
+      printf("\n\n");
+    }
+  }
+
+  fclose(feedbackFile);
 }
 
 #if (1)
@@ -794,7 +866,7 @@ void printEvaluations(char *residenteEmail){
   }
 
   while (fgets(line, sizeof(line), fileActivities)) {
-        char *token = strtok(line, ",");
+        char *token = strtok(line, ";");
         int i = 0;
 
         char preceptor[100];
@@ -830,18 +902,19 @@ void printEvaluations(char *residenteEmail){
                     break;
             }
 
-            token = strtok(NULL, ",");
+            token = strtok(NULL, ";");
             i++;
         }
 
         if (strcmp(residente, residenteEmail) == 0) {
           activiesNumber++;
-          printf("\nPreceptor: %s, Residente: %s, Nome da atividade: %s\n\n", preceptor, residente, atividade);
+          printf("\nPreceptor: %s | Residente: %s | Nome da atividade: %s\n\n", preceptor, residente, atividade);
           for (int j = 0; j < 12; j++) {
             printf("%s: %s, Nota: %d\n", criterios_nomes[j], tags[j], notas[j]);
           }
           printf("Nota Final: %d\n", notaFinal);
         }
+        printf("--------------------------------------------------------------------------------------------------------------");
 
   }
 
