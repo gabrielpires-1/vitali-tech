@@ -19,6 +19,7 @@ typedef struct Evaluations {
   char *activityName; // nome da atividade
   char *grade; 
   char *tag; 
+  char comentario[200];
   struct Evaluations *next; // ponteiro para a próxima struct atividade
 } Evaluations;
 

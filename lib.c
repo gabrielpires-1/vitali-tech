@@ -450,6 +450,15 @@ void residentEvaluation(User **head, char email[], char role[], char namePrecept
   
       cont_tag += 2;
   }
+  char choice;
+  printf("Ótimo. Estamos quase lá! Você gostaria de deixar um comentário opcional? (s/n)\n");
+  scanf(" %c", &choice);
+  if (choice == 's') {
+    printf("Insira seu comentário! (máximo de 200 caracteres):\n");
+    scanf(" %[^\n]", Epointer->comentario);
+    fprintf(notas, ";%s", Epointer->comentario);
+}
+
   
   fprintf(notas,";%.2f\n",acumulador);
   free(Epointer->preceptor);
