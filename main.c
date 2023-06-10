@@ -20,10 +20,6 @@ int main() {
   User *usr = (User *)malloc(sizeof(User));
   allocMemoryForUser(usr);
   User *head = NULL;
-  Evaluations *Epointer = (Evaluations *) malloc(sizeof(Evaluations));
-  Epointer->activityName =malloc(strlen(activityName));
-  Epointer->grade = malloc(strlen(grade));
-  Epointer->tag = malloc(strlen(tag));
   Feedbacks * feedback = NULL;
   create_list(&head);
 
@@ -188,6 +184,10 @@ int main() {
       else if (!strcmp(usr->role, "preceptor")) {
         preceptorMenu:
         clearScreen();
+        Evaluations *Epointer = (Evaluations *) malloc(sizeof(Evaluations));
+        Epointer->activityName =malloc(strlen(activityName));
+        Epointer->grade = malloc(strlen(grade));
+        Epointer->tag = malloc(strlen(tag));
         printf("\n\n\t\t\tO que voce gostaria de fazer hoje?\n");
         printf("1 - Aba de notas\n");
         printf("2 - Aba de feedbacks\n");

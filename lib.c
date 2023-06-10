@@ -78,7 +78,6 @@ User *createUser(char *newName, char *newEmail, char *newPassword, char *newCpf,
 
 void CreateEvaluationsAttributes(Evaluations *Epointer)
 {
-
   Epointer->activityName = malloc(strlen(Epointer->activityName) + 1);
   Epointer->grade = malloc(strlen(Epointer->grade) + 1);
 }
@@ -484,6 +483,7 @@ void residentEvaluation(User **head, char email[], char role[], char namePrecept
     }
   }
 
+  fprintf(notas, "\n");
  
   free(Epointer->preceptor);
   free(Epointer->residente);
@@ -509,15 +509,19 @@ int check_email(const char *email, User *head)
       ponto++;
     }
   }
-
   if (arroba != 1 || ponto != 1)
   {
     return 0;
   }
-  else
+  while (current != NULL)
   {
-    return 1;
+    if (strcmp(current->email, email) == 0)
+    {
+      return 1;
+    }
+    current = current->next;
   }
+  return 0;
 }
 
 int check_delete(const char *name, const char *email, User *head)
