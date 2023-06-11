@@ -4,3 +4,6 @@ rossiter;gabi;perfeita;Comunicativo;Dedicado;
 gabi;rossiter;muito bom!;Comunicativo;Dedicado;
 rossiter;Usuariodeteste;testador massa;Comunicativo;
 gabi;rossiter;Muito muito muito disperso;Comunicativo;Dedicado;Atencioso;
+rossiter;gabi;sem comentario;Comunicativo;Dedicado;Atencioso;
+gabi;gabi;sem comentario;Comunicativo;Dedicado;Atencioso;
+rossiter;gabi;sem comentario;Comunicativo;Dedicado;

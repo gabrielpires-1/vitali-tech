@@ -562,13 +562,13 @@ int check_delete(const char *name, const char *email, User *head)
 
 void create_feedback(Feedbacks **feedback, User *sender, User *receiver)
 {
-  char tag_list[4][20] = {"Comunicativo", "Dedicado", "Atencioso", "Disperso"};
+  char tag_list[4][20] = {"Comunicativo", "Dedicado", "Atencioso", "Descuidado"};
   char add_comment, add_tag;
   int selected_tags[4];
   char input[200];
   int num_tags = 0;
 
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < MAX_TAGS; i++)
   {
     printf("%d - %s\n", i, tag_list[i]);
   }
@@ -582,9 +582,10 @@ void create_feedback(Feedbacks **feedback, User *sender, User *receiver)
 
   for (int j = 0; j < num_tags; j++)
   {
-    printf("Digite a tag: ");
+    printf("Digite a tag %d: ", j+1);
     scanf("%d", &selected_tags[j]);
   }
+  clearScreen();
 
   printf("Tags selecionadas:\n");
   for (int i = 0; i < num_tags; i++)
@@ -595,21 +596,22 @@ void create_feedback(Feedbacks **feedback, User *sender, User *receiver)
   printf("Deseja inserir um comentario extra?[s/n]\n");
   scanf(" %c", &add_comment);
 
-  char comment[500];
+  char comment[100];
   if (add_comment == 's' || add_comment == 'S')
   {
     printf("Digite o comentario com ate 100 caracteres:\n");
     scanf(" %[^\n]", comment);
   }
-  else
-    strcpy(comment, "Feedback sem comentário");// Comentário vazio
+  else strcpy(comment, "sem comentario");// Comentário vazio
 
   clearScreen();
-  printf("\t\t\tSeu feedback para o usuário %s", receiver->name);
+  printf("\t\t\tSeu feedback para o usuario %s", receiver->name);
   printf("\n\nTags:\n");
   for (int i = 0; i < num_tags; i++)
+  {
     printf("%s\n", tag_list[selected_tags[i]]);
-  printf("\nSeu comentário: %s", comment);
+  }
+  printf("\nSeu comentario: %s", comment);
 
   Feedbacks *new_feedback = (Feedbacks *)malloc(sizeof(Feedbacks));
   new_feedback->sender = sender;

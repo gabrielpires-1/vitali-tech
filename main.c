@@ -238,9 +238,19 @@ int main() {
             scanf(" %[^\n]s", receiver_name);
             User * receiver = findUserByName(head, receiver_name);
 
-            if(receiver != NULL) create_feedback(&feedback, usr, receiver);
+            if(receiver == NULL)
+            {
+              printf("Usuario nao encontrado\n");
+
+            }else if (strcmp(receiver->role, "preceptor") == 0 || strcmp(receiver->role, "gestor") == 0)
+            {
+              printf("O usuario que voce digitou nao e um residente\n");
+            }
             
-            else printf("Usuario nao encontrado\n");
+            else 
+            {
+              create_feedback(&feedback, usr, receiver);
+            }
             
 
           }else if (confirm_feedback == 'n' || confirm_feedback == 'N')
@@ -294,6 +304,7 @@ int main() {
 
           if(confirm_feedback == 's' || confirm_feedback == 'S')
           {
+            clearScreen();
             printf("Seus preceptores:\n");
             printList(head, "preceptor", 0);
 
@@ -302,9 +313,15 @@ int main() {
 
             User * receiver = findUserByName(head, receiver_name);
 
-            if(receiver != NULL) create_feedback(&feedback, usr, receiver);
+            if(receiver == NULL) printf("Usuario nao encontrado\n");
+
+            else if (strcmp(receiver->role, "residente") == 0 || strcmp(receiver->role, "gestor") == 0)
+            {
+              printf("O usuario que voce digitou nao e um preceptor\n");
+            }
             
-            else printf("Usuario nao encontrado\n");
+            else create_feedback(&feedback, usr, receiver);
+            
             
 
           }else if (confirm_feedback == 'n' || confirm_feedback == 'N')
