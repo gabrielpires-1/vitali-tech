@@ -574,17 +574,26 @@ void create_feedback(Feedbacks **feedback, User *sender, User *receiver)
   }
   printf("Quantas tags voce gostaria de inserir?\n");
   scanf("%d", &num_tags);
-  if (num_tags >= MAX_TAGS)
+  if (num_tags > MAX_TAGS)
   {
     printf("voce so pode inserir ate %d tags!\n", MAX_TAGS);
     return;
   }
 
-  for (int j = 0; j < num_tags; j++)
+  int j = 0;
+  while (j < num_tags)
   {
     printf("Digite a tag %d: ", j+1);
     scanf("%d", &selected_tags[j]);
+    
+    if(selected_tags[j] > 3 || selected_tags[j] < 0){
+      printf("Digite um valor entre 0 e 3.\n");
+      continue;
+    }
+    
+    j++; // Increment j to move to the next iteration
   }
+
   clearScreen();
 
   printf("Tags selecionadas:\n");
@@ -678,7 +687,6 @@ void printFeedbacksByName(const char *user)
     // Verifica se o usuário é o receiver
     if (strcmp(receiver, user) == 0)
     {
-      printf("Feedback do preceptor %s\n", sender);
       printf("Comentario: %s\n", comment);
 
       printf("Tags: ");
