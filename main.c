@@ -267,8 +267,9 @@ int main() {
 
           printf("Gostaria de enviar algum feedback?[s/n]\n");
           scanf(" %c", &confirm_feedback);
-
-          if (confirm_feedback == 's' || confirm_feedback == 'S') {
+          
+          while(1){
+            if (confirm_feedback == 's' || confirm_feedback == 'S') {
             clearScreen();
             printf("Seus residentes:\n");
             printList(head, "residente", 0);
@@ -298,6 +299,7 @@ int main() {
             printf("Opçao invalida!\n");
 
           multipause();
+          }
           goto preceptorMenu;
           break;
 
@@ -337,7 +339,8 @@ int main() {
           printf("Gostaria de enviar algum feedback?[s/n]\n");
           scanf(" %c", &confirm_feedback);
 
-          if (confirm_feedback == 's' || confirm_feedback == 'S') {
+          while(1){
+            if (confirm_feedback == 's' || confirm_feedback == 'S') {
             clearScreen();
             printf("Seus preceptores:\n");
             printList(head, "preceptor", 0);
@@ -361,14 +364,15 @@ int main() {
 
           } else if (confirm_feedback == 'n' || confirm_feedback == 'N') {
             multipause();
-            goto preceptorMenu;
+            goto residenteMenu;
             break;
           } else
             printf("Opçao invalida!\n");
 
           multipause();
-          goto preceptorMenu;
-          break;
+          }
+          goto residenteMenu;
+          break; 
 
         case 3:
           freelist(&head);
