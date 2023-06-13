@@ -84,7 +84,29 @@ int main() {
           printf("Qual o nome do usuario?\n");
           scanf("%s", newName);
           printf("Qual o email do usuario?\n");
-          scanf("%s", newEmail);
+          int arrouba =0;
+          int ponto = 0;
+          do {
+            arrouba =0;
+            ponto =0;
+            scanf("%s", newEmail);
+            for(int x =0; x<strlen(newEmail);x++){
+            if(newEmail[x]=='@'){
+              arrouba++;
+            }else if (newEmail[x] == '.'){
+              ponto++;
+            
+            }
+
+          }
+          if(arrouba!=1 && ponto!=1){
+            printf("Insira um e-mail valido.\n");
+          }
+          }while(arrouba!=1 && ponto!=1);
+
+          
+          
+        
           printf("Qual a senha do usuario?\n");
           scanf("%s", newPassword);
           do {
@@ -98,7 +120,13 @@ int main() {
             }
           } while (cpfAux);
           printf("Qual o cargo do usuario? (Digite \"preceptor\" ou \"residente\")");
-          scanf("%s", newRole);
+           do {
+            scanf("%s", newRole);
+            if((strcmp(newRole,"preceptor")!=0) && (strcmp(newRole,"residente")!=0)){
+              printf("insira um cargo valido. (preceptor ou residente) \n");
+            }  
+          }while((strcmp(newRole,"preceptor")!=0) && (strcmp(newRole,"residente")!=0));
+
 
           User *newUser = createUser(newName, newEmail, newPassword, newCpf, newRole);
           append(&head, newUser->name,newUser->email, newUser->password, newUser->cpf, newUser->role);
