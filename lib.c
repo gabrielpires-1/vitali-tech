@@ -4,6 +4,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#ifdef _WIN32
+#include <conio.h>
+int verSystem = 1; 
+#endif
 #define MAX_TAGS 4
 
 // função para solicitar que o usuário tecle alguma tecla para continuar
