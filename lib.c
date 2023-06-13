@@ -468,16 +468,16 @@ void residentEvaluation(User **head, char email[], char role[], char namePrecept
   }
   char choice = 'b';
   fprintf(notas, ";%.2f", acumulador);
-  printf("Ótimo. Estamos quase lá! Você gostaria de deixar um comentário opcional? (s/n)\n");
+  printf("Ótimo. Estamos quase lá! Você gostaria de deixar um comentario opcional? (s/n)\n");
   while(choice!='s'&&choice!='n'){
     scanf(" %c", &choice);
     if (choice == 's')
     {
-      printf("Insira seu comentário! (máximo de 200 caracteres):\n");
+      printf("Insira seu comentário! (maximo de 200 caracteres):\n");
       scanf(" %[^\n]", Epointer->comentario);
-      fprintf(notas, ";%s\n", Epointer->comentario);
+      fprintf(notas, ";%s", Epointer->comentario);
     }else if (choice == 'n'){
-      fprintf(notas,";Não existe comentário opcional.");
+      fprintf(notas,";Não existe comentario opcional.");
     }else{
       printf("Escolha inválida\n");
     }
