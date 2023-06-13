@@ -43,31 +43,32 @@ int main() {
     printf("Senha:");
 
     if (VER_SYSTEM == 1) {
-  // Aparecer * na senha
-    while (1) {
-      ch = getch();
+      // Aparecer * na senha
+      while (1) {
+        ch = getch();
 
-      if (ch == 13) {  // Verifica se Enter foi pressionada, em relação a tabela ascii
-        password[i] = '\0';  // Termina a string
-        i = 0; // Zera os caracters da strings
-        break;
-      }
-
-      if (ch == 8) {  // Verifica se a tecla de voltar caracter foi pressionada, em relação a tabela ascii
-        if (i > 0) {
-          printf("\b \b");  // Apaga o último caractere
-          i--;
+        if (ch == 13) { // Verifica se Enter foi pressionada, em relação a
+                        // tabela ascii
+          password[i] = '\0'; // Termina a string
+          i = 0;              // Zera os caracters da strings
+          break;
         }
-      } else {
-        password[i] = ch;
-        printf("*");  // Mostra o * ao inves do caracter
-        i++;
+
+        if (ch == 8) { // Verifica se a tecla de voltar caracter foi
+                       // pressionada, em relação a tabela ascii
+          if (i > 0) {
+            printf("\b \b"); // Apaga o último caractere
+            i--;
+          }
+        } else {
+          password[i] = ch;
+          printf("*"); // Mostra o * ao inves do caracter
+          i++;
+        }
       }
-    }
-    }else{
+    } else {
       scanf("%s", password);
     }
-    
 
     if (isLoggedIn = login(email, password, usr)) {
       clearScreen();
