@@ -4,7 +4,6 @@
 #include <string.h>
 #include <locale.h>
 #include <ctype.h>
-#include <conio.h>
 
 int choice;
 
@@ -32,30 +31,9 @@ int main() {
   do {  
     printf("\nLogin (email):");
     scanf("%s", email);
-    printf("Senha: ");
+    printf("Senha:");
+    scanf("%s", password);
     
-    // Aparecer * na senha
-    while (1) {
-      ch = getch();
-
-      if (ch == 13) {  // Verifica se Enter foi pressionada, em relação a tabela ascii
-        password[i] = '\0';  // Termina a string
-        i = 0; // Zera os caracters da strings
-        break;
-      }
-
-      if (ch == 8) {  // Verifica se a tecla de voltar caracter foi pressionada, em relação a tabela ascii
-        if (i > 0) {
-          printf("\b \b");  // Apaga o último caractere
-          i--;
-        }
-      } else {
-        password[i] = ch;
-        printf("*");  // Mostra o * ao inves do caracter
-        i++;
-      }
-    }
-
     if (isLoggedIn = login(email, password, usr)) {
       clearScreen();
       printf("\n\t\t\tBem vindo, %s!", usr->name);
@@ -164,7 +142,7 @@ int main() {
           } else {
             printf("Opçao invalida. Operaçao de exclusao cancelada.\n");
           }
-          pause();
+          multipause();
 
           goto managementMenu;
           break;
@@ -178,21 +156,21 @@ int main() {
           changeUser(&head, email);
           saveList(&head, "Register.txt");
           }
-          pause();
+          multipause();
           goto managementMenu;
           break;
         //Visualizar lista de residentes cadastrados no sistema
         case 4:
           clearScreen();
           printList(head, "residente", 1);
-          pause();
+          multipause();
           goto managementMenu;
           break;
         //Visualizar lista de preceptores cadastrados no sistema
         case 5:
           clearScreen();
           printList(head, "preceptor", 1);
-          pause();
+          multipause();
           goto managementMenu;
           break;
         case 6:
@@ -203,7 +181,7 @@ int main() {
           break;
         default:
           printf("\nInforme um comando valido! ");
-          pause();
+          multipause();
           goto managementMenu;
           break;
         }
@@ -242,7 +220,7 @@ int main() {
             residentEvaluation(&head,email, "residente", usr->name, Epointer);
           }
           printf("Avaliaçao realizada!\n");
-          pause();
+          multipause();
           goto preceptorMenu;
           break;
 
@@ -283,14 +261,14 @@ int main() {
 
           }else if (confirm_feedback == 'n' || confirm_feedback == 'N')
           {
-            pause();
+            multipause();
             goto preceptorMenu;
             break;
           }
           else printf("Opçao invalida!\n");
           
           
-          pause();
+          multipause();
           goto preceptorMenu;
           break;
 
@@ -301,7 +279,7 @@ int main() {
         
         default:
           printf("\nInforme um comando valido! ");
-          pause();
+          multipause();
           goto preceptorMenu;
           break;
         }
@@ -318,7 +296,7 @@ int main() {
         {
         case 1:
           printEvaluations("gabi@hospital.com");
-          pause();
+          multipause();
           goto residenteMenu;
           break;
         
@@ -354,14 +332,14 @@ int main() {
 
           }else if (confirm_feedback == 'n' || confirm_feedback == 'N')
           {
-            pause();
+            multipause();
             goto preceptorMenu;
             break;
           }
           else printf("Opçao invalida!\n");
           
           
-          pause();
+          multipause();
           goto preceptorMenu;
           break;
 
@@ -371,7 +349,7 @@ int main() {
 
         default:
           printf("\nInforme um comando valido! ");
-          pause();
+          multipause();
           goto residenteMenu;
           break;
         }
