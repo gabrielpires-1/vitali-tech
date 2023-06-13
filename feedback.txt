@@ -9,3 +9,4 @@ gabi;gabi;sem comentario;Comunicativo;Dedicado;Atencioso;
 rossiter;gabi;sem comentario;Comunicativo;Dedicado;
 rossiter;gabi;sem comentario;Comunicativo;Dedicado;Atencioso;Descuidado;
 rossiter;gabi;muito legal :);Comunicativo;Dedicado;Atencioso;
+rossiter;gabi;sem comentario;Comunicativo;
