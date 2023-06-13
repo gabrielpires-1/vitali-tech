@@ -468,7 +468,7 @@ void residentEvaluation(User **head, char email[], char role[], char namePrecept
   }
   char choice = 'b';
   fprintf(notas, ";%.2f", acumulador);
-  printf("Ótimo. Estamos quase lá! Você gostaria de deixar um comentario opcional? (s/n)\n");
+  printf("Ótimo. Estamos quase la! Você gostaria de deixar um comentario opcional? (s/n)\n");
   while(choice!='s'&&choice!='n'){
     scanf(" %c", &choice);
     if (choice == 's')
