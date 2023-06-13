@@ -1,17 +1,20 @@
 # VitaliTech
-Repositório utilizado para a disciplina de Projetos 2 - 2º período de Ciência da Computação na CESAR School
+Repositório utilizado para a disciplina de Projetos 2 - 2º período de Ciência da Computação na CESAR School.
 
 # VitaliTech
+Vitali-Tech é uma aplicação que visa auxiliar no monitoramento de notas e avaliações de residentes e preceptores, além de fornecer feedbacks com base em tags. A aplicação também inclui um gestor responsável por registrar novos usuários, fazer modificações e excluí-los.
 
-Vitali-Tech é uma aplicação que visa em ajudar o monitoramento de notas e avaliações dos residentes e preceptores e dar Feedbacks com base em tags, onde que também possui a presença do gestor para registrar novos usuarios, modifica-los ou apaga-los.
+# Como funciona
+Inicialmente, o gestor deve cadastrar os usuários, fornecendo nome, email, senha, CPF e selecionando o tipo de função que desempenham (Preceptor/Residente). Após o cadastro, os preceptores e residentes poderão acessar o site fazendo login com seu email e senha. Ao entrar no site, eles serão apresentados a duas opções: aba de avaliação e aba de feedback.
 
-# Como usar
+Na aba de avaliação, o preceptor poderá atribuir notas para cada critério, selecionar tags (comentários pré-definidos) para o residente e, ao final, gerar uma nota final. Além disso, o preceptor terá a opção de adicionar um comentário opcional sobre o residente. Na aba de avaliação, o residente poderá visualizar sua nota por critério, as tags atribuídas pelo preceptor, a nota final e o comentário gerado pelo preceptor.
 
-Primeiramente o gestor deve cadastrar os usuarios colocando seu nome, email, senha, cpf e escolher que tipo de função que ele realiza(Preceptor/Residente).
-Apos o cadastro feito, os Preceptores e Residente poderam acessar o site pelo login inserindo seu email e senha, entrando no site os dois iram se deparar com 2 escolhas possiveis, aba de avaliação e aba de Feedback.<br>
-Na aba de avaliação o Preceptor terá a possibilidade de colocar suas notas por cada criterio e escolher tags(Comentarios já definidos) para o residente e no final ira gerar uma nota final e ele terá a possibilidade de colocar um comentario opicional sobre o residente. Já o prceptor na aba de avaliação terá a possibilidade de ver sua nota por criterio, tags e a nota final e o comentario gerado pelo preceptor.<br>
-Na aba de Feedback tanto o preceptor quanto o residente teram a possibilidade de enviar tags já determinadas e e enviar comentarios opicionais. E tambem poderam ver os Feedbacks enviados para ele, mas todos os Feedbacks são anônimos.<br>
+Na aba de feedback, tanto o preceptor quanto o residente terão a possibilidade de enviar tags pré-definidas e comentários opcionais. Além disso, eles poderão visualizar os feedbacks recebidos, que serão anônimos.
 
-# Como pegar o repositorio do projeto:
+# Como utilizar nosso protótipo:
+Primeiramente, é necessário ter um compilador C instalado em sua máquina. Em seguida, instale o Git Bash. No terminal do Git Bash, navegue até o diretório correto do seu projeto. Para clonar o repositório, utilize o comando <br>'git clone https://github.com/gabrielpires-1/vitali-tech.git'<br> Com isso, o repositório será baixado para a sua IDE.<br>
 
-Primeiramente tem que ter instalado em sua maquina uma IDE, depois deve-se instalar o git bash. No terminal do git bash você deve entrar no diretorio certo do seu projeto, depois você deve pegar seu link do repositorio no GitHub. Então você já estará com o repositorio na sua IDE, e para rodar o codigo deve abrir o terminal e colocar os comandos:<br> "gcc -o executavel main.c lib.c" <br> ".\executavel"<br> e o executavel você pode colocar qualquer nome que quiser.
+Para compilar e executar o código, abra o terminal e execute os seguintes comandos:<br>
+gcc -o executavel main.c lib.c<br>
+.\executavel<br>
+Você pode substituir o nome "executavel" por qualquer nome de sua preferência.
