@@ -90,7 +90,7 @@ int login(char email[50], char password[50], User *usr)
   int usrFound = 0;
   if (usr == NULL)
   {
-    printf("Erro na alocação de memoria.\n");
+    printf("Erro na alocaçao de memoria.\n");
     return 1;
   }
   FILE *users;
@@ -332,7 +332,7 @@ void residentEvaluation(User **head, char email[], char role[], char namePrecept
   // Criterios e perguntas norteadoras
   char criterios[12][50] = {"Assisuidade", "Pontualidade", "Vestuario", "Iniciativa", "Postura Etico-Profissional", "Relacionamento em equipe", "Espirito Critico",
                             "Comunicaçao", "Planejamento das atividades de enfermagem", "Dominio dos procedimentos", "Evoluçao", "Liderança"};
-  char norteadoras[12][200] = {"O residente cumpre suas açoes e obrigaçoes com frequencia e esforço? Avalie de 1 a 10", "O residente frequentemente cumpre seus horarios e é presente nas horas exigidas? Avalie de 1 a 10",
+  char norteadoras[12][200] = {"O residente cumpre suas açoes e obrigaçoes com frequencia e esforço? Avalie de 1 a 10", "O residente frequentemente cumpre seus horarios e e presente nas horas exigidas? Avalie de 1 a 10",
                                "O residente demonstra cuidado com as normas de prevençao a infecçoes equipando-se adequadamente? Avalie de 1 a 10", "O residente lida bem com situaçoes imprevistas propondo situaçoes viaveis? Avalie de 1 a 10",
                                "O residente trabalha respeitando os valores do paciente e seu sigilo profissional? Avalie de 1 a 10", "O residente trabalha com exelencia com seus pacientes, superiores e profissionais de saude? Avalie de 1 a 10",
                                "O residente lida bem com criticas e possui um bom senso critico? Avalie de 1 a 10", "O residente comunica bem seus pensamentos? Avalie de 1 a 10",
@@ -341,27 +341,27 @@ void residentEvaluation(User **head, char email[], char role[], char namePrecept
   char taglistGood[24][200] = {"O residente cumpre seus açoes consistentemente e com excelencia", "O residente desempenha bem suas tarefas",
                                "O residente cumpre seus horarios e dias.", "O residente falta ocasionalmente as suas atividades porem continua acima da media",
                                "O residente veste-se apropriadamente.", "O residente quase sempre veste-se apropriadamente.",
-                               "O residente é nato em lidar com situações do hospital no dia-a-dia.", "O residente desempenha normalmente suas funçoes.",
-                               "O residente respeita os valores de seus pacientes e trata informações com cuidado e sigilo", "O residente poderia demonstrar mais atenção ao sigilo profissional e com os valores do paciente",
+                               "O residente e nato em lidar com situaçoes do hospital no dia-a-dia.", "O residente desempenha normalmente suas funçoes.",
+                               "O residente respeita os valores de seus pacientes e trata informaçoes com cuidado e sigilo", "O residente poderia demonstrar mais atençao ao sigilo profissional e com os valores do paciente",
                                "O residente trabalha excelentemente com seus superiores e pacientes", "O residente tem dificuldade em trabalhar com seus superiores. Apesar disso, trabalha bem de forma geral",
                                "O residente lida tranquilamente com criticas e possui tambem um bom senso critico", "O residente aceita criticas de forma construtiva.",
                                "O residente transmite suas ideias perfeitamente e escuta as ideias de seus colegas de trabalho", "O residente transmite bem suas ideias.",
                                "O residente planeja sua rotina muito bem", "O residente planeja sua rotina bem",
-                               "O residente demonstra segurança e habilidade nas suas atividades", "O residente tem bom domínio das praticas.",
+                               "O residente demonstra segurança e habilidade nas suas atividades", "O residente tem bom dominio das praticas.",
                                "O residente realiza detalhadas e curtas observaçoes", "O residente realiza boas observaçoes.",
-                               "O residente lidera seu grupo com eficiência e respeito", "O residente lidera seu grupo com respeito mas de forma pouco eficiente"};
+                               "O residente lidera seu grupo com eficiencia e respeito", "O residente lidera seu grupo com respeito mas de forma pouco eficiente"};
   char taglistBad[24][200] = {"O residente poderia se empenhar mais nas tarefas de seu dia-a-dia", "O residente deixa a desejar no compromisso com a instituiçao",
                               "O residente falta mais dias que o aceito", "O residente nao cumpre seus dias ou horarios",
-                              "O residente as vezes se esquece do vestimento adequado.", "O residente frequentemente ignora as regras de prevenção de infecçoes.",
+                              "O residente as vezes se esquece do vestimento adequado.", "O residente frequentemente ignora as regras de prevençao de infecçoes.",
                               "O residente poderia lidar melhor com situaçoes habituais", "O residente gerencia mal as complexidades de sua rotina",
                               "O residente nao respeita o sigilo profissional", "O residente demonstra descaso com as informaçoes dos pacientes e da instituiçao e falta profissionalismo",
                               "O residente possui dificuldade em trabalhar com pacientes trabalhando abaixo do esperado", "O residente nao trabalha bem com pacientes e superiores",
                               "O residente possui a habilidade de criticar mas nao lida bem com criticas", "O residente lida mal com criticas de forma geral.",
                               "O residente compreende ideias transmitidas pelos colegas mas possui dificuldade em se comunicar", "O residente transmite mal suas ideias.",
                               "O residente planeja sua rotina mal", "O residente planeja sua rotina muito mal",
-                              "O residente possui alguns problemas no domínio das tarefas.", "O residente demonstra problemas graves no entendimento e segurança com os procedimentos.",
-                              "O residente deixa a desejar nas observaçoes sendo elas muito longas ou muito confusas", "O residente escreve observações longas e confusas",
-                              "O residente nao respeita seus integrantes comprometendo o dsempenho da equipe", "O residente nao lidera bem os integrantes do seu grupo e falta respeito com eles."};
+                              "O residente possui alguns problemas no dominio das tarefas.", "O residente demonstra problemas graves no entendimento e segurança com os procedimentos.",
+                              "O residente deixa a desejar nas observaçoes sendo elas muito longas ou muito confusas", "O residente escreve observaçoes longas e confusas",
+                              "O residente nao respeita seus integrantes comprometendo o desempenho da equipe", "O residente nao lidera bem os integrantes do seu grupo e falta respeito com eles."};
   float PesoArray[12] = {0.03, 0.03, 0.04, 0.05, 0.1, 0.05, 0.1, 0.05, 0.15, 0.15, 0.15, 0.1};
   User *current = *head;
   FILE *notas;
@@ -397,7 +397,7 @@ void residentEvaluation(User **head, char email[], char role[], char namePrecept
     printf("\nErro ao ler as notas");
     return;
   }
-  printf("\t\tVamos iniciar a avaliação, preceptor!\n Insira o nome da atividade:\n");
+  printf("\t\tVamos iniciar a avaliaçao, preceptor!\n Insira o nome da atividade:\n");
 
   // Lendo o nome da avaliação
   scanf(" %[^\n]", Epointer->activityName);
@@ -420,7 +420,7 @@ void residentEvaluation(User **head, char email[], char role[], char namePrecept
     printf("%s\n", norteadoras[i]);
     scanf("%s", Epointer->grade);
     ToInt = atoi(Epointer->grade);
-    printf("Agora vamos inserir tags, preceptor! escolha baseado no índicie à esquerda!\n");
+    printf("Agora vamos inserir tags, preceptor! escolha baseado no indicie a esquerda!\n");
     if (ToInt > 5)
     {
       printf("0: %s\n 1: %s\n", taglistGood[j], taglistGood[j + 1]);
@@ -436,7 +436,7 @@ void residentEvaluation(User **head, char email[], char role[], char namePrecept
     {
       while (index != j && index != j + 1)
       {
-        printf("Tag inválida! selecione uma tag conforme os critérios.\n");
+        printf("Tag invalida! selecione uma tag conforme os criterios.\n");
         if (ToInt > 5)
         {
           printf("0: %s\n 1: %s\n", taglistGood[j], taglistGood[j + 1]);
@@ -468,18 +468,18 @@ void residentEvaluation(User **head, char email[], char role[], char namePrecept
   }
   char choice = 'b';
   fprintf(notas, ";%.2f", acumulador);
-  printf("Ótimo. Estamos quase la! Você gostaria de deixar um comentario opcional? (s/n)\n");
+  printf("Otimo. Estamos quase la! Voce gostaria de deixar um comentario opcional? (s/n)\n");
   while(choice!='s'&&choice!='n'){
     scanf(" %c", &choice);
     if (choice == 's')
     {
-      printf("Insira seu comentário! (maximo de 200 caracteres):\n");
+      printf("Insira seu comentario! (maximo de 200 caracteres):\n");
       scanf(" %[^\n]", Epointer->comentario);
       fprintf(notas, ";%s", Epointer->comentario);
     }else if (choice == 'n'){
-      fprintf(notas,";Não existe comentario opcional.");
+      fprintf(notas,";Nao existe comentario opcional.");
     }else{
-      printf("Escolha inválida\n");
+      printf("Escolha invalida\n");
     }
   }
 
@@ -576,7 +576,7 @@ void create_feedback(Feedbacks **feedback, User *sender, User *receiver)
   scanf("%d", &num_tags);
   if (num_tags > MAX_TAGS)
   {
-    printf("voce so pode inserir ate %d tags!\n", MAX_TAGS);
+    printf("Voce so pode inserir ate %d tags!\n", MAX_TAGS);
     return;
   }
 
@@ -722,7 +722,7 @@ void changeUser(User **head, char *email)
     printf("\n\nNome do residente: %s\n", current->name);
     printf("Email do residente: %s\n", current->email);
     printf("CPF do residente: %s\n", current->cpf);
-    printf("\nVocê gostaria de alterar o nome desse usuario?(s/n)\n");
+    printf("\nVoce gostaria de alterar o nome desse usuario?(s/n)\n");
     clearInputBuffer();
     scanf("%c", &choice);
     clearInputBuffer();
@@ -747,7 +747,7 @@ void changeUser(User **head, char *email)
     }
     else
       printf("\nOk! O email permanecera %s!\n", current->email);
-    printf("\nVocê gostaria de alterar o cpf desse usuário?(s/n)\n");
+    printf("\nVoce gostaria de alterar o cpf desse usuario?(s/n)\n");
     scanf("%c", &choice);
     clearInputBuffer();
     if (choice == 's')
@@ -755,7 +755,7 @@ void changeUser(User **head, char *email)
       int cpfAux = 0;
       do
       {
-        printf("Informe o novo cpf desse usuário: ");
+        printf("Informe o novo cpf desse usuario: ");
         fgets(newCpf, sizeof(newCpf), stdin);
         newCpf[strcspn(newCpf, "\n")] = '\0';
         if (strlen(newCpf) != 11)
@@ -794,7 +794,7 @@ void changeUser(User **head, char *email)
     clearInputBuffer();
     if (choice == 's')
     {
-      printf("Informe a nova senha desse usuário: ");
+      printf("Informe a nova senha desse usuario: ");
       fgets(newPassword, sizeof(newPassword), stdin);
       newPassword[strcspn(newPassword, "\n")] = '\0';
       strcpy(current->password, newPassword);
@@ -811,7 +811,7 @@ void changeUser(User **head, char *email)
 
   if (current == NULL)
   {
-    printf("O usuário com o email '%s' nao foi encontrado.\n", email);
+    printf("O usuario com o email '%s' nao foi encontrado.\n", email);
     return;
   }
 
@@ -878,7 +878,7 @@ void changeUser(User **head, char *email)
       fgets(newRole, sizeof(newRole), stdin);
       newRole[strcspn(newRole, "\n")] = '\0';
       if (strcmp(newRole, "residente") != 0 && strcmp(newRole, "preceptor") != 0)
-        printf("\nCargo inválido! Digite novamente!\n");
+        printf("\nCargo invalido! Digite novamente!\n");
     } while (strcmp(newRole, "residente") != 0 && strcmp(newRole, "preceptor") != 0);
     strcpy(current->role, newRole);
   }
