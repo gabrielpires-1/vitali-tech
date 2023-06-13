@@ -71,7 +71,7 @@ int main() {
         printf("\t\t\tO que voce gostaria de fazer %s?\n", usr->name);
         printf("1 - Cadastrar um novo residente ou preceptor\n");
         printf("2 - Apagar um residente ou preceptor do sistema\n");
-        printf("3 - Alterar um usuário existente\n");
+        printf("3 - Alterar um usuario existente\n");
         printf("4 - Visualizar lista de residentes cadastrados no sistema\n");
         printf("5 - Visualizar lista de preceptores cadastrados no sistema\n");
         printf("6 - sair do programa\n");
@@ -116,7 +116,7 @@ int main() {
           printf("Digite o e-mail do perfil a ser removido:\n");
           scanf("%s", delEmail);
           fflush(stdin);
-          printf("Tem certeza que deseja apagar o usuário %s com o email %s[s/n]?\n", delName, delEmail);
+          printf("Tem certeza que deseja apagar o usuario %s com o email %s[s/n]?\n", delName, delEmail);
           scanf("%c", &confirm_user);
           fflush(stdin);
 
@@ -131,7 +131,7 @@ int main() {
               printf("Usuario nao encontrado. Remoçao cancelada.\n");
             }
           } else if (confirm_user == 'n'   || confirm_user == 'N' ) {
-            printf("Operaçao de exclusão cancelada pelo usuario.\n");
+            printf("Operaçao de exclusao cancelada pelo usuario.\n");
 
           } else {
             printf("Opçao invalida. Operaçao de exclusao cancelada.\n");
