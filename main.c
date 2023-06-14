@@ -1,9 +1,15 @@
 #include "lib.h"
+#include <ctype.h>
+#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <locale.h>
-#include <ctype.h>
+#ifdef _WIN32
+#include <conio.h>
+#define VER_SYSTEM 1
+#else
+#define VER_SYSTEM 0
+#endif
 
 int choice;
 
@@ -12,27 +18,57 @@ int main() {
   char email[50];
   char password[50];
   char newName[50], newEmail[50], newPassword[50], newCpf[12], newRole[50];
-  char delName[50], delEmail[50], nome[50],activityName[70],grade[10],tag[20], confirm_user, confirm_feedback, ch, receiver_name[100];;
+  char delName[50], delEmail[50], nome[50], activityName[70], grade[10],
+      tag[20], confirm_user, confirm_feedback, ch, receiver_name[100];
+  ;
   int i = 0, cont_comments = 0;
   clearScreen();
   User *usr = (User *)malloc(sizeof(User));
   allocMemoryForUser(usr);
   User *head = NULL;
-  Feedbacks * feedback = NULL;
+  Feedbacks *feedback = NULL;
   create_list(&head);
 
   // use o código abaixo para criar um gestor, caso o txt seja apagado.
-  // storeRegister(createUser("diretor","diretor@hospital.com", "senha123", "99999999999", "gestor"));
+  // storeRegister(createUser("diretor","diretor@hospital.com", "senha123",
+  // "99999999999", "gestor"));
 
   int isLoggedIn = 0, cpfAux = 0;
 
   printf("\t\t\tSeja bem-vindo ao VitaliJourney! Seu hospital virtual!\n");
-  do {  
+  do {
     printf("\nLogin (email):");
     scanf("%s", email);
     printf("Senha:");
-    scanf("%s", password);
-    
+
+    if (VER_SYSTEM == 1) {
+      // Aparecer * na senha
+      while (1) {
+        ch = getch();
+
+        if (ch == 13) { // Verifica se Enter foi pressionada, em relação a
+                        // tabela ascii
+          password[i] = '\0'; // Termina a string
+          i = 0;              // Zera os caracters da strings
+          break;
+        }
+
+        if (ch == 8) { // Verifica se a tecla de voltar caracter foi
+                       // pressionada, em relação a tabela ascii
+          if (i > 0) {
+            printf("\b \b"); // Apaga o último caractere
+            i--;
+          }
+        } else {
+          password[i] = ch;
+          printf("*"); // Mostra o * ao inves do caracter
+          i++;
+        }
+      }
+    } else {
+      scanf("%s", password);
+    }
+
     if (isLoggedIn = login(email, password, usr)) {
       clearScreen();
       printf("\n\t\t\tBem vindo, %s!", usr->name);
@@ -40,9 +76,9 @@ int main() {
       printf("\n|CPF:\t\t%s", usr->cpf);
       printf("\n|Cargo: \t%s", usr->role);
 
-      //Interface do gestor
+      // Interface do gestor
       if (!strcmp(usr->role, "gestor")) {
-        //Coloquei o choise como varivel global
+        // Coloquei o choise como varivel global
       managementMenu:
         clearScreen();
         printf("\t\t\tO que voce gostaria de fazer %s?\n", usr->name);
@@ -54,36 +90,31 @@ int main() {
         printf("6 - sair do programa\n");
         scanf("%d", &choice);
         switch (choice) {
-        //cadastrar usuarios:
+        // cadastrar usuarios:
         case 1:
           clearScreen();
           printf("\n\t\t\tVamos cadastrar um novo usuario!\n");
           printf("Qual o nome do usuario?\n");
           scanf("%s", newName);
           printf("Qual o email do usuario?\n");
-          int arrouba =0;
+          int arrouba = 0;
           int ponto = 0;
           do {
-            arrouba =0;
-            ponto =0;
+            arrouba = 0;
+            ponto = 0;
             scanf("%s", newEmail);
-            for(int x =0; x<strlen(newEmail);x++){
-            if(newEmail[x]=='@'){
-              arrouba++;
-            }else if (newEmail[x] == '.'){
-              ponto++;
-            
+            for (int x = 0; x < strlen(newEmail); x++) {
+              if (newEmail[x] == '@') {
+                arrouba++;
+              } else if (newEmail[x] == '.') {
+                ponto++;
+              }
             }
+            if (arrouba != 1 && ponto != 1) {
+              printf("Insira um e-mail valido.\n");
+            }
+          } while (arrouba != 1 && ponto != 1);
 
-          }
-          if(arrouba!=1 && ponto!=1){
-            printf("Insira um e-mail valido.\n");
-          }
-          }while(arrouba!=1 && ponto!=1);
-
-          
-          
-        
           printf("Qual a senha do usuario?\n");
           scanf("%s", newPassword);
           do {
@@ -96,23 +127,27 @@ int main() {
               cpfAux = 0;
             }
           } while (cpfAux);
-          printf("Qual o cargo do usuario? (Digite \"preceptor\" ou \"residente\")");
-           do {
+          printf("Qual o cargo do usuario? (Digite \"preceptor\" ou "
+                 "\"residente\")");
+          do {
             scanf("%s", newRole);
-            if((strcmp(newRole,"preceptor")!=0) && (strcmp(newRole,"residente")!=0)){
+            if ((strcmp(newRole, "preceptor") != 0) &&
+                (strcmp(newRole, "residente") != 0)) {
               printf("insira um cargo valido. (preceptor ou residente) \n");
-            }  
-          }while((strcmp(newRole,"preceptor")!=0) && (strcmp(newRole,"residente")!=0));
+            }
+          } while ((strcmp(newRole, "preceptor") != 0) &&
+                   (strcmp(newRole, "residente") != 0));
 
-
-          User *newUser = createUser(newName, newEmail, newPassword, newCpf, newRole);
-          append(&head, newUser->name,newUser->email, newUser->password, newUser->cpf, newUser->role);
+          User *newUser =
+              createUser(newName, newEmail, newPassword, newCpf, newRole);
+          append(&head, newUser->name, newUser->email, newUser->password,
+                 newUser->cpf, newUser->role);
           saveList(&head, "Register.txt");
           freeUser(newUser);
           goto managementMenu;
           break;
-        //deletar usuarios:
-        case 2: 
+        // deletar usuarios:
+        case 2:
           clearScreen();
           printf("\n\t\t\tVamos apagar um usuario do sistema!\n");
           printf("Digite o nome do perfil a ser removido:\n");
@@ -121,11 +156,13 @@ int main() {
           printf("Digite o e-mail do perfil a ser removido:\n");
           scanf("%s", delEmail);
           fflush(stdin);
-          printf("Tem certeza que deseja apagar o usuario %s com o email %s[s/n]?\n", delName, delEmail);
+          printf("Tem certeza que deseja apagar o usuario %s com o email "
+                 "%s[s/n]?\n",
+                 delName, delEmail);
           scanf("%c", &confirm_user);
           fflush(stdin);
 
-          if (confirm_user == 's'   || confirm_user == 'S' ) {
+          if (confirm_user == 's' || confirm_user == 'S') {
 
             if (check_delete(delName, delEmail, head)) {
               deleteByName(&head, delName);
@@ -135,7 +172,7 @@ int main() {
             } else {
               printf("Usuario nao encontrado. Remoçao cancelada.\n");
             }
-          } else if (confirm_user == 'n'   || confirm_user == 'N' ) {
+          } else if (confirm_user == 'n' || confirm_user == 'N') {
             printf("Operaçao de exclusao cancelada pelo usuario.\n");
 
           } else {
@@ -145,27 +182,28 @@ int main() {
 
           goto managementMenu;
           break;
-        
+
         // Alterar um usuário já existente
         case 3:
           clearScreen();
-          printf("Qual o email do usuario que voce gostaria de alterar os dados?\n");
+          printf("Qual o email do usuario que voce gostaria de alterar os "
+                 "dados?\n");
           scanf("%s", email);
-          if(1){
-          changeUser(&head, email);
-          saveList(&head, "Register.txt");
+          if (1) {
+            changeUser(&head, email);
+            saveList(&head, "Register.txt");
           }
           multipause();
           goto managementMenu;
           break;
-        //Visualizar lista de residentes cadastrados no sistema
+        // Visualizar lista de residentes cadastrados no sistema
         case 4:
           clearScreen();
           printList(head, "residente", 1);
           multipause();
           goto managementMenu;
           break;
-        //Visualizar lista de preceptores cadastrados no sistema
+        // Visualizar lista de preceptores cadastrados no sistema
         case 5:
           clearScreen();
           printList(head, "preceptor", 1);
@@ -187,36 +225,33 @@ int main() {
       }
       // caso o usuário seja um Preceptor, esse bloco de código será executado.
       else if (!strcmp(usr->role, "preceptor")) {
-        preceptorMenu:
+      preceptorMenu:
         clearScreen();
-        Evaluations *Epointer = (Evaluations *) malloc(sizeof(Evaluations));
-        Epointer->activityName =malloc(strlen(activityName));
+        Evaluations *Epointer = (Evaluations *)malloc(sizeof(Evaluations));
+        Epointer->activityName = malloc(strlen(activityName));
         Epointer->grade = malloc(strlen(grade));
         Epointer->tag = malloc(strlen(tag));
         printf("\n\n\t\t\tO que voce gostaria de fazer hoje?\n");
         printf("1 - Aba de notas\n");
         printf("2 - Aba de feedbacks\n");
         printf("3 - Sair do programa\n");
-        scanf("%d",&choice);
+        scanf("%d", &choice);
         switch (choice) {
         case 1:
           clearScreen();
           printList(head, "residente", 1);
           printf("Insira o e-mail do residente que desejas avaliar: \n");
-          scanf("%s",email);
-          if (check_email(email, head)!=0)
-          {
-            residentEvaluation(&head,email, "residente", usr->name, Epointer);
-          }else
-          {
-            while(check_email(email,head)==0)
-            {
+          scanf("%s", email);
+          if (check_email(email, head) != 0) {
+            residentEvaluation(&head, email, "residente", usr->name, Epointer);
+          } else {
+            while (check_email(email, head) == 0) {
               printf("E-mail invalido!\n");
-              printf("Insira um e-mail valido do residente que desejas avaliar: \n");
-              scanf("%s",email);
-              
+              printf("Insira um e-mail valido do residente que desejas "
+                     "avaliar: \n");
+              scanf("%s", email);
             }
-            residentEvaluation(&head,email, "residente", usr->name, Epointer);
+            residentEvaluation(&head, email, "residente", usr->name, Epointer);
           }
           printf("Avaliaçao realizada!\n");
           multipause();
@@ -225,49 +260,45 @@ int main() {
 
         case 2:
           clearScreen();
-          //imprimir lista de feedback
+          // imprimir lista de feedback
           printf("seus feedbacks:\n\n");
           printFeedbacksByName(usr->name);
 
-
           printf("Gostaria de enviar algum feedback?[s/n]\n");
           scanf(" %c", &confirm_feedback);
-
-          if(confirm_feedback == 's' || confirm_feedback == 'S')
-          {
+          
+          while(1){
+            if (confirm_feedback == 's' || confirm_feedback == 'S') {
             clearScreen();
             printf("Seus residentes:\n");
             printList(head, "residente", 0);
 
-            printf("Digite o nome do residente que gostaria de enviar um feedback:\n");
+            printf("Digite o nome do residente que gostaria de enviar um "
+                   "feedback:\n");
             scanf(" %[^\n]s", receiver_name);
-            User * receiver = findUserByName(head, receiver_name);
+            User *receiver = findUserByName(head, receiver_name);
 
-            if(receiver == NULL)
-            {
+            if (receiver == NULL) {
               printf("Usuario nao encontrado\n");
 
-            }else if (strcmp(receiver->role, "preceptor") == 0 || strcmp(receiver->role, "gestor") == 0)
-            {
+            } else if (strcmp(receiver->role, "preceptor") == 0 ||
+                       strcmp(receiver->role, "gestor") == 0) {
               printf("O usuario que voce digitou nao e um residente\n");
             }
-            
-            else 
-            {
+
+            else {
               create_feedback(&feedback, usr, receiver);
             }
-            
 
-          }else if (confirm_feedback == 'n' || confirm_feedback == 'N')
-          {
+          } else if (confirm_feedback == 'n' || confirm_feedback == 'N') {
             multipause();
             goto preceptorMenu;
             break;
-          }
-          else printf("Opçao invalida!\n");
-          
-          
+          } else
+            printf("Opçao invalida!\n");
+
           multipause();
+          }
           goto preceptorMenu;
           break;
 
@@ -275,7 +306,7 @@ int main() {
           freelist(&head);
           exit(1);
           break;
-        
+
         default:
           printf("\nInforme um comando valido! ");
           multipause();
@@ -285,20 +316,20 @@ int main() {
       }
       // caso o usuário seja um residente, esse bloco de código ser� executado.
       else if (!strcmp(usr->role, "residente")) {
-        residenteMenu:
+      residenteMenu:
         printf("\n\n\t\t\tO que voce gostaria de fazer hoje?\n");
-        printf("1 - Aba de notas\n"); //visualizar
-        printf("2 - Aba de feedbacks\n"); //igual preceptor, mas so pode enviar feedbacks a precetores
+        printf("1 - Aba de notas\n");     // visualizar
+        printf("2 - Aba de feedbacks\n"); // igual preceptor, mas so pode enviar
+                                          // feedbacks a precetores
         printf("3 - Sair do programa\n");
-        scanf("%d",&choice);
-        switch (choice)
-        {
+        scanf("%d", &choice);
+        switch (choice) {
         case 1:
           printEvaluations("gabi@hospital.com");
           multipause();
           goto residenteMenu;
           break;
-        
+
         case 2:
           clearScreen();
           printf("Seus feedbacks:\n");
@@ -307,40 +338,40 @@ int main() {
           printf("Gostaria de enviar algum feedback?[s/n]\n");
           scanf(" %c", &confirm_feedback);
 
-          if(confirm_feedback == 's' || confirm_feedback == 'S')
-          {
+          while(1){
+            if (confirm_feedback == 's' || confirm_feedback == 'S') {
             clearScreen();
             printf("Seus preceptores:\n");
             printList(head, "preceptor", 0);
 
-            printf("Digite o nome do preceptor que gostaria de enviar um feedback:\n");
+            printf("Digite o nome do preceptor que gostaria de enviar um "
+                   "feedback:\n");
             scanf(" %[^\n]s", receiver_name);
 
-            User * receiver = findUserByName(head, receiver_name);
+            User *receiver = findUserByName(head, receiver_name);
 
-            if(receiver == NULL) printf("Usuario nao encontrado\n");
+            if (receiver == NULL)
+              printf("Usuario nao encontrado\n");
 
-            else if (strcmp(receiver->role, "residente") == 0 || strcmp(receiver->role, "gestor") == 0)
-            {
+            else if (strcmp(receiver->role, "residente") == 0 ||
+                     strcmp(receiver->role, "gestor") == 0) {
               printf("O usuario que voce digitou nao e um preceptor\n");
             }
-            
-            else create_feedback(&feedback, usr, receiver);
-            
-            
 
-          }else if (confirm_feedback == 'n' || confirm_feedback == 'N')
-          {
+            else
+              create_feedback(&feedback, usr, receiver);
+
+          } else if (confirm_feedback == 'n' || confirm_feedback == 'N') {
             multipause();
-            goto preceptorMenu;
+            goto residenteMenu;
             break;
-          }
-          else printf("Opçao invalida!\n");
-          
-          
+          } else
+            printf("Opçao invalida!\n");
+
           multipause();
-          goto preceptorMenu;
-          break;
+          }
+          goto residenteMenu;
+          break; 
 
         case 3:
           freelist(&head);
@@ -410,7 +441,8 @@ estilo menu
       -perguntas norteadoras(responder de 0 a 5):
       Exemplo:
       -(0-5)o residente se mostrou capaz de se comunicar bem com seus colegas?
-      -(0-5)o residente conseguiu passar confiança dos conteudos aprendidos na faculdade?
+      -(0-5)o residente conseguiu passar confiança dos conteudos aprendidos na
+faculdade?
       -(0-5) outras perguntas (vamo ver ainda as perguntas)
       Tags:
       -deseja inserir alguma tag pra complementar a avaliação?
@@ -420,11 +452,10 @@ colegas -o residente nao passou confiança dos conhecimentos aprendidos na
 faculdade
 
     2- ABA de feedbacks
-      -exibir feedbacks do usuario 
+      -exibir feedbacks do usuario
       1- deseja enviar algum feedback?
-      -digite o nome da pessoa a quem voc� deseja enviar -> procura no arquivo a pessoa
-      -insira ou selecione tag (nao sei qual fica melhor)
-      Exemplos:
+      -digite o nome da pessoa a quem voc� deseja enviar -> procura no arquivo a
+pessoa -insira ou selecione tag (nao sei qual fica melhor) Exemplos:
       -comunicativo
       -dedicado
       -atencioso
