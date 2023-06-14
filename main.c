@@ -14,7 +14,6 @@ int main() {
   char newName[50], newEmail[50], newPassword[50], newCpf[12], newRole[50];
   char delName[50], delEmail[50], nome[50],activityName[70],grade[10],tag[20], confirm_user, confirm_feedback, ch, receiver_name[100];;
   int i = 0, cont_comments = 0;
-  system("color 0b");
   clearScreen();
   User *usr = (User *)malloc(sizeof(User));
   allocMemoryForUser(usr);

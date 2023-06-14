@@ -10,3 +10,5 @@ rossiter;gabi;sem comentario;Comunicativo;Dedicado;
 rossiter;gabi;sem comentario;Comunicativo;Dedicado;Atencioso;Descuidado;
 rossiter;gabi;muito legal :);Comunicativo;Dedicado;Atencioso;
 rossiter;gabi;sem comentario;Comunicativo;
+Gabriel Pires;gabi;sem comentario;Comunicativo;Dedicado;
+gabi;Gabriel Pires;preceptor excelente;Comunicativo;Dedicado;
